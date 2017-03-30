@@ -1,0 +1,9 @@
+{
+  "name": "Assassin",
+  "version": "1.0.0",
+  "description": "A friendly game of stalking",
+  "main": "server/server.js",
+  "repository": "https://github.com/Velikriss/Assassin",
+  "author": "Burk McRae, David Pollan, and Nathan Turinski",
+  "license": "MIT"
+}
