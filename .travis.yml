@@ -3,3 +3,4 @@ node_js:
   - 'node'
 services:
   - mongodb
+sudo: required
