@@ -4,6 +4,3 @@ node_js:
 services:
   - mongodb
 sudo: required
-before_install: 
-  - sudo apt-get -qq update
-  - sudo apt-get install -y mocha
