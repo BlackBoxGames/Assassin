@@ -19,7 +19,8 @@ before((done)=>{
 // the test script until an async action is complete
 beforeEach((done) => {
   // mongoose normalizes collection names to lowercase
-  const {users, games} = mongoose.connection.collections
+  var users = mongoose.connection.collections.users
+  var games = mongoose.connection.collections.games
 
   users.drop(() => {
     games.drop(() => {

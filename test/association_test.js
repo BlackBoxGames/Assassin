@@ -4,7 +4,7 @@ const User = require('../user.js')
 const Game = require('../game.js')
 
 describe('Associations', (done) => {
-  let user, target
+  var user
   beforeEach((done) => { 
     user1 = new User({ username: 'johnSnow'})
     user2 = new User({ username: 'jamieLanister'})

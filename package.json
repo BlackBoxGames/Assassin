@@ -7,7 +7,7 @@
   "author": "Burk McRae, David Pollan, and Nathan Turinski",
   "license": "MIT",
   "scripts": {
-    "test": "nodemon --exec 'mocha -R min'"
+    "test": "mocha -R min"
   },
   "repository": {
     "type": "git",
