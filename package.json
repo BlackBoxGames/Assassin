@@ -5,5 +5,25 @@
   "main": "server/server.js",
   "repository": "https://github.com/Velikriss/Assassin",
   "author": "Burk McRae, David Pollan, and Nathan Turinski",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha -R min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpollan/Assassin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dpollan/Assassin/issues"
+  },
+  "homepage": "https://github.com/dpollan/Assassin#readme",
+  "dependencies": {
+    "mongoose": "^4.9.2",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"}
 }
