@@ -4,5 +4,5 @@ node_js:
 services:
   - mongodb
 sudo: required
-before _install: 
+before _install:
   - apt-get update
