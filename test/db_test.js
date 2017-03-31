@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const expect = require('chai').expect
 const User = require('../server/models/user.js')
 const Game = require('../server/models/game.js')
