@@ -3,27 +3,27 @@
   "version": "1.0.0",
   "description": "A friendly game of stalking",
   "main": "server/server.js",
-  "repository": "https://github.com/Velikriss/Assassin",
-  "author": "Burk McRae, David Pollan, and Nathan Turinski",
-  "license": "MIT",
-  "scripts": {
-    "test": "mocha -R min"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dpollan/Assassin.git"
   },
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "test": "mocha -R min"
+  },
   "bugs": {
     "url": "https://github.com/dpollan/Assassin/issues"
   },
   "homepage": "https://github.com/dpollan/Assassin#readme",
   "dependencies": {
+    "express": "^4.15.2",
     "mongoose": "^4.9.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"}
+    "mocha": "^3.2.0"
+  }
 }
