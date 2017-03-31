@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dpollan/Assassin.git"
+    "url": "git+https://github.com/BlackBoxGames/Assassin.git"
   },
   "author": "",
   "license": "ISC",
