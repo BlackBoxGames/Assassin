@@ -50,8 +50,8 @@ xdescribe('Server to DB tests', () => {
 			.send({
 				player: userId,
 				target: userId,
-				active: 1
-				stats: {}
+				active: 1,
+				stats: {},
 				deviceId: 'abc123'
 			})
 			.expect(201)
