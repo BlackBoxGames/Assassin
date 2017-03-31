@@ -1,14 +1,13 @@
 const mongoose = require('mongoose')
 const expect = require('chai').expect
-const User = require('../user.js')
-const Game = require('../game.js')
+const User = require('../server/models/user.js')
+const Game = require('../server/models/game.js')
 
-describe('Associations', (done) => {
-  var user
+describe('Database tests', (done) => {
+
   beforeEach((done) => { 
     user1 = new User({ username: 'johnSnow'})
     user2 = new User({ username: 'jamieLanister'})
-
 
     // behind the scenes Mongo is, probably using a setter, setting up references to objectId
     // here rather than taking the whole object as if it were a subdocument
@@ -22,15 +21,14 @@ describe('Associations', (done) => {
       .catch((err) => console.error(err))   
     })
   
-  
-  it('should find the one freakin\' user I created', (done) => {
+  it('should be able to create and find a user in the database', (done) => {
     User.findOne({'username' : 'johnSnow'}, (err, user) => {
       expect(user.username).to.equal('johnSnow');
       done();
     })
   })
 
-  it('should be able to create a game', (done) => {
+  it('should be able to create and find a game in the database', (done) => {
     User.find({}, (err, users) => {
       var player1 = new Game({
         player: users[0]._id,
