@@ -5,4 +5,4 @@ services:
   - mongodb
 sudo: required
 before _install:
-  - apt-get update 
+  - apt-get update
