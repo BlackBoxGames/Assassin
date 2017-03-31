@@ -1,7 +1,15 @@
 var mongoose = require('mongoose');
 var path = require('path');
+var db = {};
 
-mongoose.connect('mongodb://localhost/assassin_db');
-var db = mongoose.connection; 
+db.connectToDb = () => {
+  mongoose.connect('mongodb://localhost/assassin_db');
+  return mongoose.connection; 
+}
+
+db.disconnectFromDb = () => {
+  mongoose.connection.close();
+}
+
 
 module.exports = db;

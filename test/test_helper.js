@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise
 
 before((done)=>{  
 
-  mongoose.connect('mongodb://localhost/assassin_db')
+  mongoose.connect('mongodb://localhost/assassin_test_db')
   mongoose.connection
     .once('open', () => { done() })
     .on('error', (e) => console.warn(e))
@@ -21,4 +21,8 @@ beforeEach((done) => {
     })
   })
 
+})
+
+after((done) => {
+  mongoose.connection.close(done);
 })
