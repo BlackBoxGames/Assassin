@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/BlackBoxGames/Assassin.git"
   },
-  "author": "",
+  "author": "Burk McRae, David Pollan, Nathan Turinski",
   "license": "ISC",
   "scripts": {
     "test": "mocha -R min"
