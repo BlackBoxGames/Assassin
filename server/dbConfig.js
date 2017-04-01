@@ -11,7 +11,7 @@ db.connectToDb = () => {
 }
 
 db.disconnectFromDb = () => {
-  mongoose.connection.close();
+  mongoose.disconnect();
 }
 
 
