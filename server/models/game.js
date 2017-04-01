@@ -26,7 +26,7 @@ const GameSchema = new Schema({
 const Game = mongoose.model('game',GameSchema);
 
 Game.findOnePlayer = (userId) => {
-  Game.findOne({ player: userId })
+  return Game.findOne({ player: userId })
   .then(response => {
     return response;
   })
@@ -36,7 +36,7 @@ Game.findOnePlayer = (userId) => {
 };
 
 Game.findAllPlayers = () => {
-  Game.find({})
+  return Game.find({})
   .then(response => {
     return response;
   })
@@ -46,7 +46,7 @@ Game.findAllPlayers = () => {
 };
 
 Game.insertPlayer = (user) => {
-  Game.insertOne(user)
+  return Game.create(user)
   .then(response => {})
   .catch(err => {
     console.error(err);
@@ -54,7 +54,7 @@ Game.insertPlayer = (user) => {
 };
 
 Game.updatePlayer = (user) => {
-  Game.updateOne(user)
+  return Game.updateOne(user)
   .then(response => {})
   .catch(err => {
     console.error(err);
@@ -62,7 +62,7 @@ Game.updatePlayer = (user) => {
 };
 
 Game.deletePlayer = (userId) => {
-  Game.deleteOne({ player: userId })
+  return Game.deleteOne({ player: userId })
   .then(response => {})
   .catch(err => {
     console.error(err);
