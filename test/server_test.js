@@ -74,7 +74,7 @@ xdescribe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should find all user in a game', done => {
+	it('Should find all users in a game', done => {
 		request(app)
 			.put('/games')
 			.send({
