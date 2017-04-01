@@ -6,11 +6,11 @@ var app = require('../server/server');
 var User = require('../server/models/user');
 var Game = require('../server/models/game');
 
-xdescribe('Server to DB tests', () => {
+describe('Server to DB tests', () => {
 	var userId = '';
 	it('Should create a new user in the user database', done => {
 		request(app)
-			.post('/users')
+			.put('/users')
 			.send({
 				username: 'Nathan_Dick'
 			})
@@ -20,7 +20,7 @@ xdescribe('Server to DB tests', () => {
 
 	it('Should find a user in the user database', done => {
 		request(app)
-			.get('/users' + 'Nathan_Dick')
+			.get('/users' + '?username=Nathan_Dick')
 			.expect(200)
 			.expect(res => {
 				expect(res.body._id).to.exist;
@@ -32,21 +32,24 @@ xdescribe('Server to DB tests', () => {
 
 	it('Should find all users in the user database', done => {
 		request(app)
-			.post('/users')
+			.put('/users')
 			.send({
 				username: 'Nathan_Niceguy'
 			})
 			.expect(201)
-			.get('/users')
-			.expect(200)
-			.expect(res => {
-				expect(res.body.users.length).to.equal(2)
-				expect(res.body.users[1].username).to.equal('Nathan_Niceguy');
-			})
+			.expect(() => {
+				request(app)
+					.get('/users')
+					.expect(200)
+					.expect(res => {
+						expect(res.body.length > 1).to.be.true;
+						expect(res.body[1].username).to.equal('Nathan_Niceguy');
+					})
+				})
 			.end(done)
 	})
 
-	it('Should insert a new player into the game database', done => {
+	xit('Should insert a new player into the game database', done => {
 		request(app)
 			.put('/games')
 			.send({
@@ -60,9 +63,9 @@ xdescribe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should find a user in a game', done => {
+	xit('Should find a player in a game', done => {
 		request(app)
-			.get('/games' + 'Nathan_Dick')
+			.get('/games' + '?username=Nathan_Dick')
 			.expect(200)
 			.expect(res => {
 				expect(res.body.player).to.deep.equal(userId);
@@ -74,7 +77,7 @@ xdescribe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should find all users in a game', done => {
+	xit('Should find all players in a game', done => {
 		request(app)
 			.put('/games')
 			.send({
@@ -94,7 +97,7 @@ xdescribe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should update a user in a game', done => {
+	xit('Should update a player in a game', done => {
 		request(app)
 			.put('/games')
 			.send({
@@ -112,11 +115,11 @@ xdescribe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should delete a user from the game', done => {
+	xit('Should delete a player from the game', done => {
 		app.removePlayerFromGame(userId)
 		.then(result => {
 			request(app)
-			.get('/games' + 'Nathan_Dick')
+			.get('/games' + '?username=Nathan_Dick')
 			.expect(404)
 			.expect(res => {
 				expect(res.body.player).to.not.exist;

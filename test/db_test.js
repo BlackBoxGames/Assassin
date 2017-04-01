@@ -1,24 +1,43 @@
 const expect = require('chai').expect
 const User = require('../server/models/user.js')
 const Game = require('../server/models/game.js')
+const mongoose = require('mongoose')
+const Promise = require('bluebird')
+
+mongoose.Promise = Promise;
 
 describe('Database tests', (done) => {
 
   beforeEach((done) => { 
-    user1 = new User({ username: 'johnSnow'})
-    user2 = new User({ username: 'jamieLanister'})
 
-    // behind the scenes Mongo is, probably using a setter, setting up references to objectId
-    // here rather than taking the whole object as if it were a subdocument
+    mongoose.connect('mongodb://localhost/assassin_test_db')
+    mongoose.connection
+    .on('error', (e) => console.warn(e))
 
-    Promise.all([
-      user1.save(),
-      user2.save()
+    var users = mongoose.connection.collections.users
+    var games = mongoose.connection.collections.games
 
-    ])
-      .then(() => done())
-      .catch((err) => console.error(err))   
+    users.drop(() => {
+      games.drop(() => {
+        user1 = new User({ username: 'johnSnow'})
+        user2 = new User({ username: 'jamieLanister'})
+
+        // behind the scenes Mongo is, probably using a setter, setting up references to objectId
+        // here rather than taking the whole object as if it were a subdocument
+
+        Promise.all([
+          user1.save(),
+          user2.save()
+
+        ])
+          .then(() => done())
+          .catch((err) => console.error(err))
+      })
     })
+  });
+  afterEach((done) => {
+    mongoose.connection.close(done);
+  });
   
   it('should be able to create and find a user in the database', (done) => {
     User.findOne({'username' : 'johnSnow'}, (err, user) => {
@@ -45,11 +64,11 @@ describe('Database tests', (done) => {
         deviceId: 'abcd1235'
       })
 
-      Promise.all([
-      player1.save(),
-      player2.save()
-
-    ])
+      
+      player1.save()
+      .then(() => {
+        return player2.save();
+      })
       .then(() => {
         Game.find({}, (err, game) => {
           expect(game[0].player).to.deep.equal(users[0]._id);
