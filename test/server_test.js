@@ -49,21 +49,15 @@ describe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	xit('Should insert a new player into the game database', done => {
+	it('Should insert a new player into the game database', done => {
 		request(app)
 			.put('/games')
-			.send({
-				player: userId,
-				target: userId,
-				active: 1,
-				stats: {},
-				deviceId: 'abc123'
-			})
+			.send({username: 'Nathan_Dick'})
 			.expect(201)
 			.end(done)
 	})
 
-	xit('Should find a player in a game', done => {
+	it('Should find a player in a game', done => {
 		request(app)
 			.get('/games' + '?username=Nathan_Dick')
 			.expect(200)
@@ -71,52 +65,49 @@ describe('Server to DB tests', () => {
 				expect(res.body.player).to.deep.equal(userId);
 				expect(res.body.target).to.deep.equal(userId);
 				expect(res.body.active).to.equal(1);
-				expect(res.body.stats).to.exist;
 				expect(res.body.deviceId).to.equal('abc123');
 			})
 			.end(done)
 	})
 
-	xit('Should find all players in a game', done => {
+	it('Should find all players in a game', done => {
 		request(app)
 			.put('/games')
-			.send({
-				player: userId,
-				target: userId,
-				active: 1,
-				stats: {},
-				deviceId: 'def456'
-			})
+			.send({username: 'Nathan_Niceguy'})
 			.expect(201)
-			.get('/games')
-			.expect(200)
-			.expect(res => {
-				expect(res.body.players.length).to.equal(2)
-				expect(res.body.players[1].deviceId).to.equal('def456')
+			.expect(() => {
+				request(app)
+					.get('/games')
+					.expect(200)
+					.expect(res => {
+						expect(res.body.players.length).to.equal(2)
+						expect(res.body.players[1].deviceId).to.equal('def456')
+					})
 			})
 			.end(done)
 	})
 
-	xit('Should update a player in a game', done => {
+	it('Should update a player in a game', done => {
 		request(app)
 			.put('/games')
 			.send({
-				player: userId,
-				target: userId,
-				active: 0,
-				stats: {},
-				deviceId: 'def456'
+				username: 'Nathan_Dick',
+				type: 'active',
+				data: 0
 			})
 			.expect(200)
-			.expect(res => {
-				expect(res.body.active).to.equal(0)
-				expect(res.body.deviceId).to.equal('def456')
+			.expect(() => {
+				request(app)
+				  .get('/games' + '?username=Nathan_Dick')
+				  .expect(res => {
+						expect(res.body.active).to.equal(0)
+				  })
 			})
 			.end(done)
 	})
 
-	xit('Should delete a player from the game', done => {
-		app.removePlayerFromGame(userId)
+	it('Should delete a player from the game', done => {
+		app.removePlayerFromGame('Nathan_Dick')
 		.then(result => {
 			request(app)
 			.get('/games' + '?username=Nathan_Dick')
@@ -124,8 +115,12 @@ describe('Server to DB tests', () => {
 			.expect(res => {
 				expect(res.body.player).to.not.exist;
 			})
+			.end(done)
 		})
-		.end(done)
+	})
+
+	after(done => {
+		app.removePlayerFromGame('Nathan_Niceguy').then(done)
 	})
 
 })

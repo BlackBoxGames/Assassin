@@ -46,7 +46,7 @@ Game.findAllPlayers = () => {
 };
 
 Game.insertPlayer = (user) => {
-  return Game.insertOne(user)
+  return Game.create(user)
   .then(response => {})
   .catch(err => {
     console.error(err);
