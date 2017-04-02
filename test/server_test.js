@@ -119,8 +119,21 @@ describe('Server to DB tests', () => {
 		})
 	})
 
-	after(done => {
-		app.removePlayerFromGame('Nathan_Niceguy').then(done)
+	it('Should remove a user from the database', done => {
+		request(app)
+		.delete('/users' + '?username=Nathan_Dick')
+		.expect(202)
+		.end(done)
 	})
 
+	after(done => {
+		app.removePlayerFromGame('Nathan_Niceguy')
+		.then(removed => {
+			request(app)
+			.delete('/users' + '?username=Nathan_Niceguy')
+			.then((removed) => {
+				return done()
+			})
+		});
+	})
 })
