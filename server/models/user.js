@@ -3,18 +3,15 @@ const Promise = require('bluebird')
 const Schema = mongoose.Schema;
 var db = require('../dbConfig');
 
-
 mongoose.Promise = Promise;
 
- 
 const UserSchema = new Schema({
   username: String,
 })
 
-var User = mongoose.model('user', UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 User.findOneUser = function(username) {
-
   return User.findOne({'username': username})
   .then((response) => {
     return response;
@@ -35,12 +32,12 @@ User.findAllUsers = function() {
 };
 
 User.insertUser = function(username) {
-  return User.findOne({username: username})
+  return User.findOne({'username': username})
   .then((response) => {
     if (response){
       //TODO: Add ability to change username 
     } else {
-      return User.create({username: username})
+      return User.create({'username': username})
       .then(result => {
       });
     }
@@ -51,12 +48,11 @@ User.insertUser = function(username) {
 }
 
 User.deleteUser = function(username) {
-  return User.findOne({username: username})
+  return User.findOne({'username': username})
   .then((response) => {
     if (response.username) {
-      return User.deleteOne({username: username})
+      return User.deleteOne({'username': username})
     }
-    return response;
   })
   .catch(err => {
     console.error(err);
