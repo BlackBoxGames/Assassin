@@ -122,5 +122,91 @@ describe('Server to DB tests', () => {
 	after(done => {
 		app.removePlayerFromGame('Nathan_Niceguy').then(done)
 	})
-
 })
+
+xdescribe('Server to client tests', () => {
+	var nathan = {
+		deviceId: '123abc',
+		lon: 50,
+		lat: 50
+	};
+	var burk = {
+		deviceId: '456def',
+		lon: 75,
+		lat: 75
+	};
+	var david = {
+		deviceId: '789ghi',
+		lon: 25,
+		lat: 25
+	};
+	var players = [nathan, burk, david];
+	it('Should change user and player locations', done => {
+		request(app)
+			.put('/loc')
+			.send(nathan)
+			.expect(201)
+			.expect(() => {
+				expect(app.players.length).to.equal(1);
+			})
+			.then(() => {
+				.put('/loc')
+				.send(burk)
+				.expect(201)
+				.expect(() => {
+					expect(app.players.length).to.equal(2);
+				})
+			})
+			.then(() => {
+				.put('/loc')
+				.send(david)
+				.expect(201)
+				.expect(() => {
+					expect(app.players.length).to.equal(3);
+				})
+			})
+			.then(() => {
+				.put('/loc')
+				.send({
+					deviceId: '789ghi',
+					lon: 100,
+					lat: 100
+				})
+				.expect(200)
+				.expect(() => {
+					expect(app.players.length).to.equal(3);
+					expect(app.players[2].lon).to.equal(100);
+					expect(app.players[2].lat).to.equal(100);
+				})
+			})
+			.done();
+	})
+	it('Should get all other players\' locations', done => {
+		request(app)
+			.get('/loc')
+			.expect(200)
+			.expect(res => {
+				expect(res.body.players.length).to.equal(3);
+			})
+			.done();
+	})
+
+
+	it('Should toggle activity', done => {
+		request(app)
+			.put('/log')
+			.send(david)
+			.expect(() => {
+				expect(app.players.length).to.equal(2);
+			})
+			.then(() => {
+				request(app)
+					.put('/log')
+					.send(david)
+					.expect(() => {
+						expect(app.players.length).to.equal(3);
+					})
+			})
+			.done();
+	})
+});
