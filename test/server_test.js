@@ -6,7 +6,7 @@ var app = require('../server/server');
 var User = require('../server/models/user');
 var Game = require('../server/models/game');
 
-describe('Server to DB tests', () => {
+xdescribe('Server to DB tests', () => {
 	var userId = '';
 	it('Should create a new user in the user database', done => {
 		request(app)
@@ -140,10 +140,9 @@ xdescribe('Server to client tests', () => {
 		lon: 25,
 		lat: 25
 	};
-	var players = [nathan, burk, david];
 	it('Should change user and player locations', done => {
 		request(app)
-			.put('/loc')
+			.put('/locations')
 			.send(nathan)
 			.expect(201)
 			.expect(() => {
@@ -151,7 +150,7 @@ xdescribe('Server to client tests', () => {
 			})
 			.then(() => {
 				request(app)
-					.put('/loc')
+					.put('/locations')
 					.send(burk)
 					.expect(201)
 					.expect(() => {
@@ -160,7 +159,7 @@ xdescribe('Server to client tests', () => {
 			})
 			.then(() => {
 				request(app)
-					.put('/loc')
+					.put('/locations')
 					.send(david)
 					.expect(201)
 					.expect(() => {
@@ -169,7 +168,7 @@ xdescribe('Server to client tests', () => {
 			})
 			.then(() => {
 				request(app)
-					.put('/loc')
+					.put('/locations')
 					.send({
 						deviceId: '789ghi',
 						lon: 100,
@@ -182,22 +181,23 @@ xdescribe('Server to client tests', () => {
 						expect(app.players[2].lat).to.equal(100);
 					})
 			})
-			.done();
-	})
-	it('Should get all other players\' locations', done => {
-		request(app)
-			.get('/loc')
-			.expect(200)
-			.expect(res => {
-				expect(res.body.players.length).to.equal(3);
-			})
-			.done();
+			.end(done);
 	})
 
+	it('Should get all other players\' locations', done => {
+		request(app)
+			.get('/locations')
+			.expect(200)
+			.expect(res => {
+				console.log('--------->', res.body)
+				expect(res.body.players.length).to.equal(3);
+			})
+			.end(done);
+	})
 
 	it('Should toggle activity', done => {
 		request(app)
-			.put('/log')
+			.put('/logs')
 			.send(david)
 			.expect(() => {
 				expect(app.players.length).to.equal(2);
@@ -210,6 +210,6 @@ xdescribe('Server to client tests', () => {
 						expect(app.players.length).to.equal(3);
 					})
 			})
-			.done();
+			.end(done);
 	})
 });
