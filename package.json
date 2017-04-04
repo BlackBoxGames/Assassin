@@ -23,6 +23,7 @@
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
+    "sinon": "^2.1.0",
     "supertest": "^3.0.0"
   },
   "devDependencies": {

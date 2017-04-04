@@ -3,10 +3,10 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var db = require('../dbConfig');
-var User = require('../models/user');
-var Game = require('../models/game');
 var request = require('request');
 
+var User = require('../models/user');
+var Game = require('../models/game');
 
 router.get('/', (request, response) => {
   var data = db.connectToDb();
@@ -21,10 +21,9 @@ router.get('/', (request, response) => {
     User.findOneUser(username)
     .then(data => {
       db.disconnectFromDb();
-      response.status(200).send(data);
+      data ? response.status(200).send(data) : response.status(404).send('User not found.');
     });
   }
-  
 });
 
 router.put('/', (request, response) => {
@@ -43,8 +42,8 @@ router.delete('/', (request, response) => {
   var data = db.connectToDb();
   var username = request.url.slice(request.url.indexOf('=') + 1);
   User.deleteUser(username)
-  .then(response => {
-  //  db.disconnectFromDb();
+  .then(deleted => {
+    db.disconnectFromDb();
     response.status(202).send()
   });
 })
