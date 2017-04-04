@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: W1: David
-  - __Scrum Master__: W1: Nathan
-  - __Producer__: W1: Burk
+  - __Product Owner__: W1: Burk, Nathan
+  - __Scrum Master__: W1: Nathan, David
+  - __Producer__: W1: David, Burk
 
 ## Table of Contents
 
