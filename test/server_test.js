@@ -150,34 +150,37 @@ xdescribe('Server to client tests', () => {
 				expect(app.players.length).to.equal(1);
 			})
 			.then(() => {
-				.put('/loc')
-				.send(burk)
-				.expect(201)
-				.expect(() => {
-					expect(app.players.length).to.equal(2);
-				})
+				request(app)
+					.put('/loc')
+					.send(burk)
+					.expect(201)
+					.expect(() => {
+						expect(app.players.length).to.equal(2);
+					})
 			})
 			.then(() => {
-				.put('/loc')
-				.send(david)
-				.expect(201)
-				.expect(() => {
-					expect(app.players.length).to.equal(3);
-				})
+				request(app)
+					.put('/loc')
+					.send(david)
+					.expect(201)
+					.expect(() => {
+						expect(app.players.length).to.equal(3);
+					})
 			})
 			.then(() => {
-				.put('/loc')
-				.send({
-					deviceId: '789ghi',
-					lon: 100,
-					lat: 100
-				})
-				.expect(200)
-				.expect(() => {
-					expect(app.players.length).to.equal(3);
-					expect(app.players[2].lon).to.equal(100);
-					expect(app.players[2].lat).to.equal(100);
-				})
+				request(app)
+					.put('/loc')
+					.send({
+						deviceId: '789ghi',
+						lon: 100,
+						lat: 100
+					})
+					.expect(200)
+					.expect(() => {
+						expect(app.players.length).to.equal(3);
+						expect(app.players[2].lon).to.equal(100);
+						expect(app.players[2].lat).to.equal(100);
+					})
 			})
 			.done();
 	})
