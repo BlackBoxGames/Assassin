@@ -124,7 +124,7 @@ describe('Server to DB tests', () => {
 	})
 })
 
-+describe('Server to client tests', () => {
+xdescribe('Server to client tests', () => {
 	var nathan = {
 		deviceId: '123abc',
 		lon: 50,
