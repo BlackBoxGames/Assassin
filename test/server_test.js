@@ -215,7 +215,7 @@ xdescribe('Server to client tests', () => {
 			})
 			.end(done);
 	})
-});
+
 	after(done => {
 		app.removePlayerFromGame('Nathan_Niceguy')
 		.then(removed => {
