@@ -9,13 +9,13 @@ var helper = {};
 
 helper.addOrUpdatePlayer = (user) => {
 	var created = false;
-	if (!user) { return 404 }
+	if (!user.deviceId) { return 404 }
 		//data was corrupt
 	if (!players[user.deviceId]) {
 		created = true;
 		players.length++;
 	}
-	
+
 	players[user.deviceId] = user;
 	return created ? 201 : 200;
 }

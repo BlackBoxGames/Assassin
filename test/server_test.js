@@ -221,20 +221,21 @@ describe('Server to client tests', () => {
 		request(app)
 			.put('/logs')
 			.send(david)
-			.expect(200)
-			.expect(() => {
-				expect(helper.getAllPlayers().length).to.equal(10);
-			})
-			.end(() => {
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers().length).to.equal(3);	
+				
 				request(app)
 					.put('/logs')
 					.send(david)
-					.expect(200)
-					.expect(() => {
-						expect(helper.getAllPlayers().length).to.equal(3);
+					.end((error, response) => {
+						expect(response.status).to.equal(200)
+						expect(helper.getAllPlayers().length).to.equal(2);
+						done();
 					})
-					.end(done);
 			})
+			
+			
 			
 	})
 
