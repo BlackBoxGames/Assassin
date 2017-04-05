@@ -6,20 +6,23 @@ var request = require('request');
 
 var User = require('../models/user')
 var Game = require('../models/game')
+var helper = require('../helpers/helperFunctions.js');
 
 router.put('/', (request, response) => {
 	var players = helper.getAllPlayers();
-	var deviceId = request.body.deviceId;
 	var player = request.body;
-	if (deviceId in players) {
-		helper.removePlayerFromGame(deviceId)
-		player = {
-			deviceId: deviceId,
-			lon: null,
-			lat: null
+	if (player.deviceId in players) {
+		if (players[player.deviceId].lon != null || players[player.deviceId].lat != null) {
+			helper.removePlayerFromGame(player.deviceId)
+			player = {
+				deviceId: player.deviceId,
+				lon: null,
+				lat: null
+			}
 		}
 	}
 	helper.addOrUpdatePlayer(player);
+	response.status(200).send();
 })
 
 module.exports = router;
