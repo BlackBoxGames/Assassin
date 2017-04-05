@@ -193,7 +193,6 @@ describe('Server to client tests', () => {
 									})
 									.expect(200)
 									.expect(() => {
-										console.log(helper.getAllPlayers());
 										expect(helper.getAllPlayers().length).to.equal(3);
 										expect(helper.getAllPlayers()['789ghi'].lon).to.equal(100);
 										expect(helper.getAllPlayers()['789ghi'].lat).to.equal(100);
@@ -217,27 +216,24 @@ describe('Server to client tests', () => {
 			.end(done);
 	})
 
-	xit('Should toggle activity', done => {
+	it('Should toggle activity', done => {
 		request(app)
 			.put('/logs')
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers().length).to.equal(3);	
-				
+				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
 				request(app)
 					.put('/logs')
 					.send(david)
 					.end((error, response) => {
 						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers().length).to.equal(2);
+						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
 						done();
 					})
-			})
-			
-			
-			
+			})	
 	})
-
 	
 })
