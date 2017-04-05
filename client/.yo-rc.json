@@ -1,0 +1,30 @@
+{
+  "generator-m-ionic": {
+    "answers": {
+      "appName": "Assassin",
+      "appId": "com.blackboxgames.assassin",
+      "ionicCss": true,
+      "bowerPackages": [
+        "localforage#~1.4.0"
+      ],
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "plugins": [
+        "cordova-plugin-device",
+        "cordova-plugin-dialogs",
+        "cordova-plugin-inappbrowser",
+        "ionic-plugin-keyboard",
+        "cordova-plugin-network-information",
+        "cordova-plugin-splashscreen",
+        "cordova-plugin-statusbar"
+      ],
+      "appModule": "Assassin",
+      "ecosystems": [
+        "ionic-cloud"
+      ],
+      "install": "yarn"
+    }
+  }
+}

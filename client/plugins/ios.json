@@ -13,6 +13,12 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
