@@ -13,7 +13,7 @@ var Game = require('./models/game')
 var userServer = require('./routes/userRoutes.js');
 var gameServer = require('./routes/gameRoutes.js');
 var locationServer = require('./routes/locationRoutes.js');
-//var logServer = require('./routes/logRoutes.js');
+var logServer = require('./routes/logRoutes.js');
 
 //Middleware
 
@@ -24,7 +24,7 @@ app.use(morgan('combined'));
 app.use('/users', userServer);
 app.use('/games', gameServer);
 app.use('/locations', locationServer);
-//app.use('/logs', logServer);
+app.use('/logs', logServer);
 
 var port = 4000;
 app.listen(port, function(){
