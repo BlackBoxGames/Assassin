@@ -2,11 +2,12 @@ var request = require('supertest');
 var express = require('express');
 var expect = require('chai').expect;
 var app = require('../server/server');
+var helper = require('../server/helpers/helperFunctions')
 
 var User = require('../server/models/user');
 var Game = require('../server/models/game');
 
-xdescribe('Server to DB tests', () => {
+describe('Server to DB tests', () => {
 	var userId = '';
 	it('Should create a new user in the user database', done => {
 		request(app)
@@ -37,7 +38,7 @@ xdescribe('Server to DB tests', () => {
 				username: 'Nathan_Niceguy'
 			})
 			.expect(201)
-			.expect(() => {
+			.end(() => {
 				request(app)
 					.get('/users')
 					.expect(200)
@@ -45,8 +46,9 @@ xdescribe('Server to DB tests', () => {
 						expect(res.body.length > 1).to.be.true;
 						expect(res.body[1].username).to.equal('Nathan_Niceguy');
 					})
+					.end(done)
 				})
-			.end(done)
+			
 	})
 
 	it('Should insert a new player into the game database', done => {
@@ -75,16 +77,16 @@ xdescribe('Server to DB tests', () => {
 			.put('/games')
 			.send({username: 'Nathan_Niceguy'})
 			.expect(201)
-			.expect(() => {
+			.end(() => {
 				request(app)
 					.get('/games')
 					.expect(200)
 					.expect(res => {
-						expect(res.body.players.length).to.equal(2)
-						expect(res.body.players[1].deviceId).to.equal('def456')
+						expect(res.body.length).to.equal(2)
 					})
+					.end(done)
 			})
-			.end(done)
+			
 	})
 
 	it('Should update a player in a game', done => {
@@ -107,7 +109,7 @@ xdescribe('Server to DB tests', () => {
 	})
 
 	it('Should delete a player from the game', done => {
-		app.removePlayerFromGame('Nathan_Dick')
+		helper.removePlayerFromGame('abc123')
 		.then(result => {
 			request(app)
 			.get('/games' + '?username=Nathan_Dick')
@@ -125,9 +127,22 @@ xdescribe('Server to DB tests', () => {
 		.expect(202)
 		.end(done)
 	})
+
+	after(done => {
+		helper.removePlayerFromGame('abc123')
+		.then(removed => {
+			request(app)
+			.delete('/users' + '?username=Nathan_Niceguy')
+			.then((removed) => {
+				return done()
+			})
+		});
+	})
 })
 
-xdescribe('Server to client tests', () => {
+
+
+describe('Server to client tests', () => {
 	var nathan = {
 		deviceId: '123abc',
 		lon: 50,
@@ -149,42 +164,47 @@ xdescribe('Server to client tests', () => {
 			.send(nathan)
 			.expect(201)
 			.expect(() => {
-				expect(app.players.length).to.equal(1);
+				expect(helper.getAllPlayers().length).to.equal(1);
 			})
-			.then(() => {
+			.end(() => {
 				request(app)
 					.put('/locations')
 					.send(burk)
 					.expect(201)
 					.expect(() => {
-						expect(app.players.length).to.equal(2);
+						console.log('The second request')
+						expect(helper.getAllPlayers().length).to.equal(2);
+					})
+					.end(() => {
+						request(app)
+							.put('/locations')
+							.send(david)
+							.expect(201)
+							.expect(() => {
+								expect(helper.getAllPlayers().length).to.equal(3);
+							})
+							.end(() => {
+								request(app)
+									.put('/locations')
+									.send({
+										deviceId: '789ghi',
+										lon: 100,
+										lat: 100
+									})
+									.expect(200)
+									.expect(() => {
+										console.log(helper.getAllPlayers());
+										expect(helper.getAllPlayers().length).to.equal(3);
+										expect(helper.getAllPlayers()['789ghi'].lon).to.equal(100);
+										expect(helper.getAllPlayers()['789ghi'].lat).to.equal(100);
+
+									})
+									.end(done);
+							})
 					})
 			})
-			.then(() => {
-				request(app)
-					.put('/locations')
-					.send(david)
-					.expect(201)
-					.expect(() => {
-						expect(app.players.length).to.equal(3);
-					})
-			})
-			.then(() => {
-				request(app)
-					.put('/locations')
-					.send({
-						deviceId: '789ghi',
-						lon: 100,
-						lat: 100
-					})
-					.expect(200)
-					.expect(() => {
-						expect(app.players.length).to.equal(3);
-						expect(app.players[2].lon).to.equal(100);
-						expect(app.players[2].lat).to.equal(100);
-					})
-			})
-			.end(done);
+
+			
 	})
 
 	it('Should get all other players\' locations', done => {
@@ -192,38 +212,31 @@ xdescribe('Server to client tests', () => {
 			.get('/locations')
 			.expect(200)
 			.expect(res => {
-				console.log('--------->', res.body)
-				expect(res.body.players.length).to.equal(3);
+				expect(helper.getAllPlayers().length).to.equal(3);
 			})
 			.end(done);
 	})
 
-	it('Should toggle activity', done => {
+	xit('Should toggle activity', done => {
 		request(app)
 			.put('/logs')
 			.send(david)
+			.expect(200)
 			.expect(() => {
-				expect(app.players.length).to.equal(2);
+				expect(helper.getAllPlayers().length).to.equal(10);
 			})
-			.then(() => {
+			.end(() => {
 				request(app)
-					.put('/log')
+					.put('/logs')
 					.send(david)
+					.expect(200)
 					.expect(() => {
-						expect(app.players.length).to.equal(3);
+						expect(helper.getAllPlayers().length).to.equal(3);
 					})
+					.end(done);
 			})
-			.end(done);
+			
 	})
 
-	after(done => {
-		app.removePlayerFromGame('Nathan_Niceguy')
-		.then(removed => {
-			request(app)
-			.delete('/users' + '?username=Nathan_Niceguy')
-			.then((removed) => {
-				return done()
-			})
-		});
-	})
+	
 })
