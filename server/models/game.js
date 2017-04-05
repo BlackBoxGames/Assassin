@@ -61,8 +61,8 @@ Game.updatePlayer = (user) => {
   })
 };
 
-Game.deletePlayer = (userId) => {
-  return Game.deleteOne({ player: userId })
+Game.deletePlayer = (deviceId) => {
+  return Game.deleteOne({ deviceId: deviceId })
   .then(response => {})
   .catch(err => {
     console.error(err);

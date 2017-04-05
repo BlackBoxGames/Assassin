@@ -1,6 +1,6 @@
-var db = require('./dbConfig')
-var User = require('./models/user')
-var Game = require('./models/game')
+var db = require('../dbConfig')
+var User = require('../models/user')
+var Game = require('../models/game')
 
 var players = {};
 players.length = 0;
@@ -8,11 +8,14 @@ players.length = 0;
 var helper = {};
 
 helper.addOrUpdatePlayer = (user) => {
+	var created = false;
 	if (!user) { return 404 }
+		//data was corrupt
 	if (!players[user.deviceId]) {
-		var created = true;
+		created = true;
 		players.length++;
 	}
+	
 	players[user.deviceId] = user;
 	return created ? 201 : 200;
 }
@@ -21,15 +24,12 @@ helper.getAllPlayers = () => {
 	return players;
 }
 
-helper.removePlayerFromGame = (username) => {
+helper.removePlayerFromGame = (deviceId) => {
 	db.connectToDb();
-	return User.findOneUser(username)
-	.then(data => {
-		return Game.deletePlayer(data._id);
-	})
+	return Game.deletePlayer(deviceId)
 	.then(() => {
 		db.disconnectFromDb();
-		console.log(username + ' was removed from the game');
+		console.log(deviceId + ' was removed from the game');
 	});
 }
 
