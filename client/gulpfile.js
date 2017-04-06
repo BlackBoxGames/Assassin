@@ -15,8 +15,7 @@ var paths = gulp.paths = {
   cssFiles: ['.tmp/*/styles/*.css'],
   templates: ['app/*/templates/**/*'],
   contrib: ['gulpfile.js', 'gulp/**/*.js', 'hooks/**/*.js'],
-  karma: ['test/karma/**/*.js'],
-  protractor: ['test/protractor/**/*.js']
+  karma: ['test/karma/**/*.js']
 };
 paths.watchFiles = paths.jsFiles
   .concat([
