@@ -30,7 +30,15 @@
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
+        },
+        "cordova-plugin-geolocation": {
+            "GEOLOCATION_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+        }
+    }
 }

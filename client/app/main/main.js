@@ -42,5 +42,14 @@ angular.module('main', [
             controller: 'DebugCtrl as ctrl'
           }
         }
+      })
+      .state('main.map', {
+        url: '/map',
+        views: {
+          'tab-map': {
+            templateUrl: 'main/templates/map.html',
+            controller: 'MapCtrl'
+          }
+        }
       });
 });
