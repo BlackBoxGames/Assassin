@@ -13,34 +13,68 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css main/styles/app.css -->
     <!-- inject:css -->
+    <link rel="stylesheet" href="main/styles/main.css">
     <!-- endinject -->
     <!-- endbuild -->
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+    
   </head>
   <body ng-app="Assassin">
 
     <!-- the nav bar will be updated as we navigate between views -->
     <!-- <ion-nav-bar> can be removed when using sidemenu (contained in menu.html) -->
-    <ion-nav-bar class="bar-">
-      <ion-nav-back-button></ion-nav-back-button>
-    </ion-nav-bar>
-    <!-- the current view will be rendered in the <ion-nav-view> directive -->
-    <ion-nav-view></ion-nav-view>
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Assassin App</h1>
+      </ion-header-bar>
+      <ion-nav-bar class="bar-">
+        <ion-nav-back-button></ion-nav-back-button>
+      </ion-nav-bar>
+      <!-- the current view will be rendered in the <ion-nav-view> directive -->
+      <ion-nav-view></ion-nav-view>
+    </ion-pane>
 
     <!-- will be a 404 during development -->
     <script src="cordova.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDih7wAzLLGmxTNErnarQShVDG-8FJhefk"></script>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/ionic/release/js/ionic.js"></script>
+    <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+    <script src="bower_components/localforage/dist/localforage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
+    <script src="main/main.js"></script>
+    <script src="main/services/main-serv.js"></script>
+    <script src="main/controllers/user-ctrl.js"></script>
+    <script src="main/controllers/map-ctrl.js"></script>
+    <script src="main/controllers/location-ctrl.js"></script>
+    <script src="main/controllers/debug-ctrl.js"></script>
+    <script src="main/constants/config-const.js"></script>
+    <script src="app.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
   </body>

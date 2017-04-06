@@ -30,6 +30,8 @@
 		74B6572334334B709CC47C55 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B6AADB27B3479CB91BB889 /* CDVSplashScreen.m */; };
 		ED1A872B10DB476BBE906ABE /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FE330DE076144FE9E857875 /* CDVViewController+SplashScreen.m */; };
 		A4616BC2AED4448C99D44A85 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D8314BC3751F40558F092B4F /* CDVStatusBar.m */; };
+		1E47BE7458C8408893602291 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 780A39E7585A4A0880D65DBB /* CDVLocation.m */; };
+		CABF73EA46A643F690FF2D74 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C82DCDD57242229E1BEAF5 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,9 @@
 		62257F051E04477BB94A2CEC /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		D8314BC3751F40558F092B4F /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		0BA7F901C5E54E5D8D415ACA /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		780A39E7585A4A0880D65DBB /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		863708B5CFC245B8B6DADD8F /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		13C82DCDD57242229E1BEAF5 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +110,7 @@
 				A1409639B7B54512B2CABB2E /* AudioToolbox.framework in Frameworks */,
 				514F09E7722B4075ABA52E6B /* SystemConfiguration.framework in Frameworks */,
 				31F00D8C76EB4B2F8E2A4C7B /* CoreTelephony.framework in Frameworks */,
+				CABF73EA46A643F690FF2D74 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +186,7 @@
 				189052813A164FC597047DF1 /* AudioToolbox.framework */,
 				4567F9BA7EDB4BDE9851020B /* SystemConfiguration.framework */,
 				D06491E26C63464A88B60C44 /* CoreTelephony.framework */,
+				13C82DCDD57242229E1BEAF5 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -223,6 +230,8 @@
 				62257F051E04477BB94A2CEC /* CDVViewController+SplashScreen.h */,
 				D8314BC3751F40558F092B4F /* CDVStatusBar.m */,
 				0BA7F901C5E54E5D8D415ACA /* CDVStatusBar.h */,
+				780A39E7585A4A0880D65DBB /* CDVLocation.m */,
+				863708B5CFC245B8B6DADD8F /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = "Assassin/Plugins";
@@ -345,6 +354,7 @@
 				74B6572334334B709CC47C55 /* CDVSplashScreen.m in Sources */,
 				ED1A872B10DB476BBE906ABE /* CDVViewController+SplashScreen.m in Sources */,
 				A4616BC2AED4448C99D44A85 /* CDVStatusBar.m in Sources */,
+				1E47BE7458C8408893602291 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
