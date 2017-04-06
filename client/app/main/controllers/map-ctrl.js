@@ -1,26 +1,29 @@
 'use strict';
 angular.module('main')
 .controller('MapCtrl', function ($scope, $state, $cordovaGeolocation) {
-  var options = {timeout: 10000, enableHighAccuracy: false};
-  var latLng;
+  $scope.latLng = {lat: null, lng: null};
+  $scope.locations = {};
+  // object of other player's locations.  Expecing an object with deviceIds as a key and
+  // {lat, lng, deviceId} as a value
 
-  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-    latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  // function to render the map, this should only have to be called once
+  // on the first location change
+  $scope.renderMap = (zoom, mapTypeId) => {
     var mapOptions = {
-      center: latLng,
+      center: $scope.latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    google.maps.event.addListenerOnce($scope.map, 'idle', function () {
-      new google.maps.Marker({
-        map: $scope.map,
-        animation: google.maps.Animation.DROP,
-        position: latLng
-      });
+    //TODO update the mapOptions with params, saved for reference for now
+  };
+
+  $scope.renderPoint = point => {
+    new google.maps.Point({
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      position: point
     });
-  }, function (error) {
-    console.log('Could not get location', error);
-  });
+  };
+
 });
