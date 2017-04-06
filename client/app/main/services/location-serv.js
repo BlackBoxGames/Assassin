@@ -1,12 +1,73 @@
-'use strict';
-angular.module('main')
-.factory('Location', ['$window', function(win) {
-  var msgs = [];
-  return function(msg) {
-    msgs.push(msg);
-    if (msgs.length === 3) {
-      win.alert(msgs.join('\n'));
-      msgs = [];
-    }
+angular.module('main', [])
+.factory('Location', function ($http, $cordovaGeolocation, $cordovaDevice) {
+
+  var allPlayers = {};
+
+  var sendLocation = function (userLocation) {
+    $http({
+      method: 'PUT',
+      url: '/locations',
+      data: userLocation
+    }).then(function (response) {
+      console.log(response);
+    }, function (err) {
+      console.error(err);
+    });
   };
-}]);
+
+  var getAllLocations = function () {
+    $http({
+      method: 'GET',
+      url: '/locations',
+    }).then(function (response) {
+      console.log(response);
+      allPlayers = response;
+    }, function (err) {
+      console.error(err);
+    });
+  };
+
+  //cordova Geolocation functions
+  var getUserLocation = function() {
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (/*position*/) {
+        // var lat = position.coords.latitude;
+        // var lng = position.coords.longitude;
+      }, function (err) {
+        console.error(err);
+      });
+
+    var watchOptions = {timeout: 3000, enableHighAccuracy: false};
+    var watch = $cordovageolocation.watchPosition(watchOptions);
+    watch.then(
+      null,
+      function (err) {
+        console.error(err);
+      },
+      function (position) {
+        var device = $cordova.getDevice();
+        var userLocation = {};
+        userLocation.deviceId = device.UUID;
+        userLocation.position.lat = position.coords.latitude;
+        userLocation.position.lng = position.coords.longitude;
+      });
+
+    $cordovaGeolocation.clearWatch(watch)
+    .then(
+      function (userLocation) {
+        sendLocation(userLocation);
+      },
+      function (err) {
+        console.error(err);
+      });
+  }
+
+  return {
+    getUerLocation: getUserLocation,
+    sendLocation: sendLocation,
+    getAllLocations: getAllLocations,
+  };
+});
+
