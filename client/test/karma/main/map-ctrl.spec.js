@@ -8,7 +8,7 @@ xdescribe('module: main, controller: MapCtrl', function () {
   beforeEach(module('ngHtml2Js'));
 
   // instantiate controller
-  var MapCtrl;
+  //var MapCtrl;
   beforeEach(inject(function ($controller) {
     MapCtrl = $controller('MapCtrl');
   }));
@@ -21,7 +21,7 @@ xdescribe('module: main, controller: MapCtrl', function () {
   });
 
   it('should render all player\'s locations on the map', () => {
-    for(var player in $LocationScope.players) {
+    for (var player in $LocationScope.players) {
       MapController.renderPoint(player.lon, player.lat);
       expect(Map.Controller.renderPoint).to.be.called;
     }
