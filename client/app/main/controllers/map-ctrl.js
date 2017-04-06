@@ -11,7 +11,7 @@ angular.module('main')
   $scope.renderMap = (zoom, mapTypeId) => {
     //we need an initial latLng to render the map, so grab the location once
     $cordovaGeolocation.getCurrentPosition(options)
-    .then(function(position){
+    .then(position => {
       $scope.latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       var mapOptions = {
         center: $scope.latLng,
@@ -31,7 +31,7 @@ angular.module('main')
     });
   };
 
-  var init = function () {
+  var init = () => {
     $scope.renderMap(15, google.maps.MapTypeId.ROADMAP);
   };
 

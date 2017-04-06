@@ -1,3 +1,4 @@
+<<<<<<< 049511c4f3954cbcf048bfd973aaa49dd1290794
 {
   "extends": "../.eslintrc",
   "env": {
@@ -19,3 +20,27 @@
     }
   }
 }
+=======
+{
+  "extends": "../.eslintrc",
+  "env": {
+    "node": false,
+    "browser": true
+  },
+  "globals": {
+    "angular": true,
+    "ionic": true,
+    "localforage": true
+  },
+  "rules": {
+    "no-console": 1
+  }, 
+
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+}
+>>>>>>> Fixes for eslinter
