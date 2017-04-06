@@ -1,5 +1,5 @@
 angular.module('main', [])
-.factory('Location', function ($http, $cordovaGeolocation, $cordovaDevice) {
+.factory('Location', function ($rootscope, $http, $cordovaGeolocation, $cordovaDevice) {
 
   var allPlayers = {};
 
@@ -21,7 +21,9 @@ angular.module('main', [])
       url: '/locations',
     }).then(function (response) {
       console.log(response);
+      $rootScope.allPlayers = response;
       allPlayers = response;
+      return allPlayers;
     }, function (err) {
       console.error(err);
     });
@@ -58,6 +60,7 @@ angular.module('main', [])
     .then(
       function (userLocation) {
         sendLocation(userLocation);
+        $rootScope.allplayers[userLocation.deviceId] = userLocation
       },
       function (err) {
         console.error(err);
