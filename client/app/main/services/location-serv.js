@@ -22,8 +22,7 @@ angular.module('main')
       url: '/locations',
     }).then(function (response) {
       console.log(response);
-      $rootScope.allPlayers = response;
-      allPlayers = response;
+      $rootScope.$emit('$rootScope.players', response)
       return allPlayers;
     }, function (err) {
       console.error(err);
@@ -53,8 +52,7 @@ angular.module('main')
         userLocation.deviceId = device.UUID;
         userLocation.position.lat = position.coords.latitude;
         userLocation.position.lng = position.coords.longitude;
-        $rootScope.allPlayers[userLocation.deviceId] = userLocation;
-        $rootScope.$emit('$rootscope:location', userLocation);
+        $rootScope.$emit('$rootScope:location', userLocation);
         sendLocation(userLocation);
       }
     );
