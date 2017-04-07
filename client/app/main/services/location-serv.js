@@ -1,4 +1,5 @@
-angular.module('main', [])
+'use strict';
+angular.module('main')
 .factory('Location', function ($rootScope, $http, $cordovaGeolocation, $cordovaDevice) {
 
   var allPlayers = {};
@@ -30,14 +31,11 @@ angular.module('main', [])
   };
 
   //cordova Geolocation functions
-
   var getUserLocation = function () {
     var posOptions = {timeout: 10000, enableHighAccuracy: false};
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
       .then(function (/*position*/) {
-        // var lat = position.coords.latitude;
-        // var lng = position.coords.longitude;
       }, function (err) {
         console.error(err);
       });
@@ -55,14 +53,16 @@ angular.module('main', [])
         userLocation.deviceId = device.UUID;
         userLocation.position.lat = position.coords.latitude;
         userLocation.position.lng = position.coords.longitude;
+        $rootScope.allPlayers[userLocation.deviceId] = userLocation;
+        $rootScope.$emit('$rootscope:location', userLocation);
+        sendLocation(userLocation);
       }
     );
 
     $cordovaGeolocation.clearWatch(watch)
     .then(
-      function (userLocation) {
-        sendLocation(userLocation);
-        $rootScope.allPlayers[userLocation.deviceId] = userLocation;
+      function (res) {
+        console.log(res);
       },
       function (err) {
         console.error(err);
@@ -73,7 +73,6 @@ angular.module('main', [])
   return {
     getUserLocation: getUserLocation,
     sendLocation: sendLocation,
-    getAllLocations: getAllLocations,
+    getAllLocations: getAllLocations
   };
-});
-
+})
