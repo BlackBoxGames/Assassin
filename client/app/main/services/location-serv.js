@@ -22,7 +22,7 @@ angular.module('main')
       url: '/locations',
     }).then(function (response) {
       console.log(response);
-      $rootScope.$emit('$rootScope.players', response)
+      $rootScope.$emit('$rootScope.players', response);
       return allPlayers;
     }, function (err) {
       console.error(err);
