@@ -1,11 +1,11 @@
 'use strict';
 angular.module('main')
-.controller('DebugCtrl', function ($log, $http, $timeout, Main, Config, $cordovaDevice) {
+.controller('DebugCtrl', function ($log, $http, $timeout, Location, $rootScope, Config, $cordovaDevice, $scope) {
 
   $log.log('Hello from your Controller: DebugCtrl in module main:. This is your controller:', this);
 
   // bind data from services
-  this.someData = Main.someData;
+  this.Location = Location;
   this.ENV = Config.ENV;
   this.BUILD = Config.BUILD;
   // get device info
@@ -33,20 +33,17 @@ angular.module('main')
   this.grade();
 
   // Proxy
-  this.proxyState = 'ready';
+  $scope.proxyState = 'ready';
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
 
   this.proxyTest = function () {
-    this.proxyState = '...';
+    $rootScope.$on('$rootScope:deviceTest', function(event, data) {
+      $scope.proxyState = data.uuid;
+      console.log(event, data);
+    });
 
-    $http.get(this.proxyRequestUrl)
-    .then(function (response) {
-      $log.log(response);
-      this.proxyState = 'success (result printed to browser console)';
-    }.bind(this))
-    .then($timeout(function () {
-      this.proxyState = 'ready';
-    }.bind(this), 6000));
+    $scope.proxyState = '...';
+    this.Location.getUserLocation();
   };
 
 });

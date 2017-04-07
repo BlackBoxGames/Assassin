@@ -1,22 +1,8 @@
 'use strict';
 angular.module('main')
 .controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation) {
-  var nathan = {
-    deviceId: '012',
-    lat: 30.569,
-    lng: -97.54};
-  var burk = {
-    deviceId: '345',
-    lat: 30.069,
-    lng: -97.34};
-  var david = {
-    deviceId: '678',
-    lat: 30.369,
-    lng: -97.44};
-  var players = {'012': nathan, '345': burk, '678': david, length: 3};
-
   $scope.latLng = {lat: null, lng: null};
-  $scope.locations = {};
+  $scope.players = {};
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -116,16 +102,18 @@ angular.module('main')
 
       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-      $rootScope.$on('rootScope:location', function (/*event, data*/) {
-        $scope.renderPoint($rootScope.location);
+      $rootScope.$on('rootScope:location', function (event, data) {
+        console.log(event); //for linter
+        $scope.latLng = {lat: data.lat, lng: data.lng, deviceId: data.deviceId};
+        $scope.renderPoint($scope.latLng);
       });
 
-      $rootScope.$on('rootScope:players', function (/*event, data*/) {
-        $scope.renderAllPlayers(players);
+      $rootScope.$on('rootScope:players', function (event, data) {
+        console.log(event); //for linter
+        $scope.players = data;
+        $scope.renderAllPlayers($scope.players);
       });
 
-      $rootScope.$emit('rootScope:location', {lat: 30.269, lng: -97.74}); // $rootScope.$on THIS IS FOR TESTING
-      $rootScope.$emit('rootScope:players', players); // $rootScope.$on THIS IS FOR TESTING
     })
     .catch(function(error) {
       console.log(error);
@@ -142,6 +130,7 @@ angular.module('main')
   };
 
   $scope.renderPoint = function(point) {
+    console.log('Rendering point');
     new google.maps.Marker({
       map: $scope.map,
       animation: google.maps.Animation.DROP,
