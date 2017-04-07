@@ -10,7 +10,7 @@
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-device"
+            "id": "cordova-plugin-device@~1.1.5"
         },
         "is_top_level": true,
         "variables": {}

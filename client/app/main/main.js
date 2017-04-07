@@ -1,9 +1,8 @@
-<<<<<<< 8eca2a2ae835cd3ab34c28556b836340b30bdd88
 'use strict';
 angular.module('main', [
   'ionic',
   'ngCordova',
-  'ui.router',
+  'ui.router'
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -35,4 +34,10 @@ angular.module('main', [
         }
       }
     });
+})
+.run(function(Location) {
+  console.log('Location Service Ready Loaded from Main.');
+  console.log(Location);
 });
+
+
