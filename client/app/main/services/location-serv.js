@@ -75,4 +75,4 @@ angular.module('main')
     sendLocation: sendLocation,
     getAllLocations: getAllLocations
   };
-})
+});
