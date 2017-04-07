@@ -37,7 +37,6 @@ angular.module('main', [
 })
 .run(function(Location) {
   console.log('Location Service Ready Loaded from Main.');
-  console.log(Location.dummyFunction('worked'));
 });
 
 
