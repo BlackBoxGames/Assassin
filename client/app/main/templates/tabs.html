@@ -1,4 +1,4 @@
-<ion-tabs class="tabs-icon-top tabs-assertive">
+<ion-tabs class="tabs-icon-top tabs-positive">
 
 <!-- Debug Tab -->
   <ion-tab title="Debug" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"
@@ -7,9 +7,16 @@
   </ion-tab>
 
 <!-- Map Tab -->
-  <ion-tab title="Map" icon-off="ion-ios-map-outline" icon-on="ion-ios-map"
+  <ion-tab title="Map" icon-off="ion-ios-location-outline" icon-on="ion-ios-location"
     ui-sref="main.map">
     <ion-nav-view name="tab-map"></ion-nav-view>
   </ion-tab>
+
+  <label class="toggle toggle-darkBlue">
+    <input type="checkbox">
+      <div class="track">
+        <div class="handle"></div>
+      </div>
+  </label>
 
 </ion-tabs>
