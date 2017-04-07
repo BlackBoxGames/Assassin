@@ -6,17 +6,16 @@
   height: 100%;
 }
 
-.toggle.toggle-darkBlue input:checked + .track {
-  border-color: #448;
-  background-color: #448; 
+.toggle {
+	margin-top: 2px;
+}
+
+.toggle-darkBlue input:checked + .track {
+  border-color: #226;
+  background-color: #226; 
 }
 
 .toggle .track {
-  border-color: #ddd;
-  background-color: #f3f3f3;
-}
-
-.toggle .handle {
-  border-color: #ddd;
-  background-color: #f3f3f3;
+  border-color: #ccc;
+  background-color: #fff;
 }
