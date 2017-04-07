@@ -1,3 +1,4 @@
+<<<<<<< 8eca2a2ae835cd3ab34c28556b836340b30bdd88
 'use strict';
 angular.module('main', [
   'ionic',

@@ -1,7 +1,22 @@
 .scroll {
-    height: 100%;
+  height: 100%;
 }
  
 #map {
-    height: 100%;
+  height: 100%;
+}
+
+.toggle.toggle-darkBlue input:checked + .track {
+  border-color: #448;
+  background-color: #448; 
+}
+
+.toggle .track {
+  border-color: #ddd;
+  background-color: #f3f3f3;
+}
+
+.toggle .handle {
+  border-color: #ddd;
+  background-color: #f3f3f3;
 }

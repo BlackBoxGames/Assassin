@@ -8,7 +8,7 @@ xdescribe('module: main, controller: MapCtrl', function () {
   beforeEach(module('ngHtml2Js'));
 
   // instantiate controller
-  //var MapCtrl;
+  // var MapCtrl;
   beforeEach(inject(function ($controller) {
     MapCtrl = $controller('MapCtrl');
   }));
