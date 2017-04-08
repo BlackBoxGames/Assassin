@@ -184,14 +184,9 @@ angular.module('main')
   };
 
   var init = function() {
-<<<<<<< ab34f4f7bab81c1adde0b2c375f6b1ff85470f5f
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
-=======
-    $rootScope.location = {lat: 30.269, lng: -97.74};
->>>>>>> visual styling
   };
 
   init();
 
 });
-
