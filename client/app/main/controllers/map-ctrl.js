@@ -5,6 +5,13 @@ angular.module('main')
   $scope.marker = null;
   $scope.players = {};
   $scope.currentLocation = {};
+
+  $rootScope.$on('rootScope: toggle', () => {
+    if ($rootScope.locationOn === true && !$scope.map) {
+      $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
+    }  
+  })
+
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -118,7 +125,7 @@ angular.module('main')
       });
     })
     .catch(function(error) {
-      console.log(error);
+      console.error(error);
     });
     //TODO update the mapOptions with params, saved for reference for now
   };

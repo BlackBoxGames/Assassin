@@ -10,7 +10,6 @@ angular.module('main')
     } else {
       $rootScope.locationOn = false;
     }
-    console.log('click', $rootScope.locationOn);
+    $rootScope.$emit('rootScope: toggle', $rootScope.locationOn);
   };
-
 });

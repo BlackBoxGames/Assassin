@@ -30,7 +30,16 @@ angular.module('main', [
       views: {
         'tab-map': {
           templateUrl: 'main/templates/map.html',
-          controller: 'MapCtrl'
+          controller: 'MapCtrl as ctrl'
+        }
+      }
+    })
+    .state('main.debug', {
+      url: '/debug',
+      views: {
+        'tab-debug': {
+          templateUrl: 'main/templates/debug.html',
+          controller: 'DebugCtrl as ctrl'
         }
       }
     });

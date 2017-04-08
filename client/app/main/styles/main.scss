@@ -1,18 +1,6 @@
-.scroll {
-  height: 100%;
-}
- 
-#map {
-  height: 100%;
-}
-
-.toggle {
-	margin-top: 52px;
-	left: 85.5%;
-}
-
 .tabs-top > .tabs {
 	top: 0px;
+	padding-top: 3px;
 }
 
 .tabs-striped .tabs {
@@ -22,8 +10,31 @@
 .padding {
 	padding-top: 55px;
 }
+
+.scroll {
+  height: 100%;
+}
+ 
+#map {
+  height: 100%;
+}
+
 .has-tabs-top {
    top: 49px;
+}
+
+@media screen and (orientation:landscape) {
+	.toggle {
+		margin-top: 52px;
+		left: 91.5%;
+	}
+}
+
+@media screen and (orientation:portrait) {
+	.toggle {
+		margin-top: 52px;
+		left: 85.5%;
+	}
 }
 
 .toggle .track {

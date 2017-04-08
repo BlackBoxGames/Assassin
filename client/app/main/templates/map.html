@@ -1,7 +1,7 @@
 <ion-view>
   <!-- do you want padding? -->
   <ion-content>
-    <div id="map"></div>
+    <div id="map" ng-controller="MapCtrl" ng-show="locationOn"></div>
   </ion-content>
   <label class="toggle toggle-positive" ng-controller="ToggleCtrl as toggle">
     <input type="checkbox" ng-click="toggle.toggleLocation()">
