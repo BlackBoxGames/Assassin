@@ -1,9 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function (
-  $log,
-  $ionicAuth
-) {
+.controller('UserCtrl', function ($log, $ionicAuth) {
 
   this.user = {
     email: '',
