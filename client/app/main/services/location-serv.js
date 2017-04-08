@@ -30,9 +30,13 @@ angular.module('main')
 
     var randomData = {};
     for (var i = 0; i < 10; i++) {
-      
+      var deviceId = Math.random()*11234546345436345;
+      var lat = Math.random() + 30;
+      var lng = Math.random() - 97.5;
+      randomData[deviceId] = {lat: lat, lng: lng};
     }
-    $rootScope.$emit('rootScope.players', randomData);
+    $rootScope.$emit('rootScope:players', randomData);
+    setTimeout(getAllLocations, 10000);
   };
 
   //cordova Geolocation functions
@@ -48,6 +52,7 @@ angular.module('main')
         userLocation.lng = position.coords.longitude;
         $rootScope.$emit('rootScope:location', userLocation);
         // sendLocation(userLocation);
+        setTimeout(getUserLocation, 3000);
       }, function (err) {
         console.error(err);
       });
@@ -55,9 +60,8 @@ angular.module('main')
 
   var initLocation = function() {
   //if ($rootScope.active) {
-    setTimeout(getUserLocation, 3000);
-    setTimeout(getAllLocations, 3000);
-    setTimeout(initLocation, 3000);
+    getUserLocation();
+    getAllLocations();
   };
 
   return {

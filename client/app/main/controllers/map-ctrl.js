@@ -3,6 +3,7 @@ angular.module('main')
 .controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation) {
   $scope.latLng = {lat: null, lng: null};
   $scope.players = {};
+  $scope.currentLocation = {};
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -103,16 +104,18 @@ angular.module('main')
       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
       $rootScope.$on('rootScope:location', function (event, data) {
-        console.log(event); //for linter
+        event = event; //for linter
         $scope.latLng = {lat: data.lat, lng: data.lng, deviceId: data.deviceId};
-        $scope.renderPoint($scope.latLng);
+        $scope.renderPoint($scope.latLng, 'user');
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        console.log(event); //for linter
-        $scope.players = data;
-        $scope.renderAllPlayers($scope.players);
+        console.log(data);
+        event = event; //for linter
+        $scope.renderAllPlayers(data);
       });
+
+
 
     })
     .catch(function(error) {
@@ -124,18 +127,33 @@ angular.module('main')
   $scope.renderAllPlayers = function(players) {
     for (var player in players) {
       if (player !== 'length') {
-        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng});
+        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng}, 'player');
       }
     }
   };
 
-  $scope.renderPoint = function(point) {
-    console.log('Rendering point');
-    new google.maps.Marker({
-      map: $scope.map,
+  $scope.renderPoint = function(point, type) {
+    
+    var src = 'ggm/pink_MarkerA.png'
+    if (type === 'user') {
+      src = 'ggm/blue_MarkerA.png'
+    }
+
+    var marker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
-      position: point
+      position: point,
+      icon: src
     });
+
+    if (type === 'player') {
+      if ($scope.players[point.deviceId]) {
+        $scope.players[point.deviceId].setMap(null);
+      }
+      
+      $scope.players[point.deviceId] = marker;
+    }
+
+    marker.setMap($scope.map)
   };
 
   var init = function() {
