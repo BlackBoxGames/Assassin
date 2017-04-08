@@ -1,13 +1,13 @@
 'use strict';
 angular.module('main')
-.factory('Location', function ($rootScope, $http, $cordovaGeolocation/*, $cordovaDevice*/) {
+.factory('Location', function ($rootScope, $http, $cordovaGeolocation, $cordovaDevice) {
 
-  var allPlayers = {};
+  //var allPlayers = {};
 
   var sendLocation = function (userLocation) {
     $http({
       method: 'PUT',
-      url: '/locations',
+      url: 'http://35.162.247.27:4000/locations',
       data: userLocation
     }).then(function (response) {
       console.log(response);
@@ -17,25 +17,25 @@ angular.module('main')
   };
 
   var getAllLocations = function () {
-    // $http({
-    //   method: 'GET',
-    //   url: '/locations',
-    // }).then(function (response) {
-    //   console.log(response);
-    //   $rootScope.$emit('rootScope.players', response);
-    //   return allPlayers;
-    // }, function (err) {
-    //   console.error(err);
-    // });
+    $http({
+      method: 'GET',
+      url: 'http://35.162.247.27:4000/locations',
+    }).then(function (response) {
+      console.log(response);
+      $rootScope.$emit('rootScope.players', response.body);
+      return allPlayers;
+    }, function (err) {
+      console.error(err);
+    });
 
-    var randomData = {};
-    var deviceId = [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10];
-    for (var i = 0; i < 10; i++) {
-      var lat = Math.random()*0.5 + 30;
-      var lng = Math.random()*0.5 - 97.5;
-      randomData[deviceId] = {lat: lat, lng: lng, deviceId: deviceId[i]};
-    }
-    $rootScope.$emit('rootScope:players', randomData);
+    // var randomData = {};
+    // var deviceId = [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10];
+    // for (var i = 0; i < 10; i++) {
+    //   var lat = Math.random()*0.5 + 30;
+    //   var lng = Math.random()*0.5 - 97.5;
+    //   randomData[deviceId[i]] = {lat: lat, lng: lng, deviceId: deviceId[i]};
+    // }
+    // $rootScope.$emit('rootScope:players', randomData);
     setTimeout(getAllLocations, 1000);
   };
 
@@ -45,13 +45,13 @@ angular.module('main')
     $cordovaGeolocation
       .getCurrentPosition(posOptions)
       .then(function (position) {
-        //var device = $cordovaDevice.getDevice();
+        var device = $cordovaDevice.getDevice();
         var userLocation = {};
-        //userLocation.deviceId = device.uuid;
+        userLocation.deviceId = device.uuid;
         userLocation.lat = position.coords.latitude;
         userLocation.lng = position.coords.longitude;
         $rootScope.$emit('rootScope:location', userLocation);
-        // sendLocation(userLocation);
+        sendLocation(userLocation);
         setTimeout(getUserLocation, 3000);
       }, function (err) {
         console.error(err);

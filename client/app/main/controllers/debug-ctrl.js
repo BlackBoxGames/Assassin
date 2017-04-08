@@ -37,12 +37,12 @@ angular.module('main')
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
 
   this.proxyTest = function () {
-    $rootScope.$on('$rootScope:deviceTest', function(event, data) {
-      $scope.proxyState = data.uuid;
+    $rootScope.$on('rootScope:location', function(event, data) {
+      $scope.proxyState = data.lat;
       console.log(event, data);
     });
 
-    $scope.proxyState = '...';
+    //$scope.proxyState = '...';
     this.Location.getUserLocation();
   };
 

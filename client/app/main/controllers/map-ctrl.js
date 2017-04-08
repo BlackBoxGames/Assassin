@@ -2,6 +2,7 @@
 angular.module('main')
 .controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation) {
   $scope.latLng = {lat: null, lng: null};
+  $scope.marker = null;
   $scope.players = {};
   $scope.currentLocation = {};
   // object of other player's locations.  Expecing an object with deviceIds as a key and
@@ -104,18 +105,17 @@ angular.module('main')
       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
       $rootScope.$on('rootScope:location', function (event, data) {
-        event = event; //for linter
-        $scope.latLng = {lat: data.lat, lng: data.lng, deviceId: data.deviceId};
-        $scope.renderPoint($scope.latLng, 'user');
+        if (event) { //for linter
+          $scope.latLng = {lat: data.lat, lng: data.lng, deviceId: data.deviceId};
+          $scope.renderPoint($scope.latLng, 'user');
+        }
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        event = event; //for linter
-        $scope.renderAllPlayers(data);
+        if (event) { //for linter
+          $scope.renderAllPlayers(data);
+        }
       });
-
-
-
     })
     .catch(function(error) {
       console.log(error);
@@ -129,7 +129,7 @@ angular.module('main')
     }
 
     $scope.players = {};
-  }
+  };
 
   $scope.renderAllPlayers = function(players) {
     //$scope.removeAllPoints();
@@ -141,34 +141,42 @@ angular.module('main')
   };
 
   $scope.renderPoint = function(point, type) {
-    
-    var src = 'ggm/pink_MarkerA.png'
-    if (type === 'user') {
-      src = 'ggm/blue_MarkerA.png'
-    }
-
-    var marker = new google.maps.Marker({
-      animation: google.maps.Animation.BOUNCE,
-      position: point,
-      icon: src
-    });
+    //code to either set a new marker if it doesn't exist or move an already existing one
+    var marker;
+    var latLng = new google.maps.LatLng(point.lat, point.lng);
 
     if (type === 'player') {
-      console.log($scope.players[point.deviceId]);
       if (!$scope.players[point.deviceId]) {
+        marker = new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
+          position: latLng
+          //icon: 'ggm/pink_MarkerA.png'
+        });
+
         $scope.players[point.deviceId] = marker;
-        marker.setMap($scope.map);  
+        marker.setMap($scope.map);
       } else {
-        $scope.players[point.deviceId].setPosition(new google.maps.LatLng(point.lat, point.lng));
+        $scope.players[point.deviceId].setPosition(latLng);
       }
     } else {
-      marker.setMap($scope.map)
+      //user render code
+      if ($scope.marker) {
+        $scope.marker.setPosition(latLng);
+      } else {
+
+        marker = new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
+          position: latLng
+          //icon: 'ggm/blue_MarkerA.png'
+        });
+
+        $scope.marker = marker;
+        $scope.marker.setMap($scope.map);
+      }
     }
-    
   };
 
   var init = function() {
-    $rootScope.location = {lat: 30.269, lng: -97.74};
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
   };
 
