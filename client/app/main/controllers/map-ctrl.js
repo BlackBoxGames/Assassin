@@ -1,16 +1,10 @@
 'use strict';
 angular.module('main')
-.controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation, Location) {
   $scope.latLng = {lat: null, lng: null};
   $scope.marker = null;
   $scope.players = {};
   $scope.currentLocation = {};
-
-  $rootScope.$on('rootScope: toggle', () => {
-    if ($rootScope.locationOn === true && !$scope.map) {
-      $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
-    }  
-  })
 
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
@@ -186,6 +180,11 @@ angular.module('main')
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
   };
 
-  init();
+  $rootScope.$on('rootScope: toggle', function () {
+    if ($rootScope.locationOn === true && !$scope.map) {
+      init();
+      Location.initLocation();
+    }
+  });
 
 });
