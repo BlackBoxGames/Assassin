@@ -43,15 +43,6 @@ angular.module('main', [
         }
       }
     })
-    .state('main.debug', {
-      url: '/debug',
-      views: {
-        'tab-debug': {
-          templateUrl: 'main/templates/debug.html',
-          controller: 'DebugCtrl as ctrl'
-        }
-      }
-    });
 })
 .run(function(Location) {
   Location.initLocation();
