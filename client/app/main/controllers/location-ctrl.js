@@ -5,7 +5,6 @@ angular.module('main')
   $rootScope.locationOn = false;
 
   this.toggleLocation = function () {
-    console.log('click');
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
     } else {

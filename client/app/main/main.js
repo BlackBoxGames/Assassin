@@ -16,12 +16,12 @@ angular.module('main', [
       abstract: true,
       templateUrl: 'main/templates/tabs.html'
     })
-    .state('main.debug', {
-      url: '/debug',
+    .state('main.user', {
+      url: '/user',
       views: {
-        'tab-debug': {
-          templateUrl: 'main/templates/debug.html',
-          controller: 'DebugCtrl as ctrl'
+        'tab-user': {
+          templateUrl: 'main/templates/user.html',
+          controller: 'UserCtrl as ctrl'
         }
       }
     })
