@@ -31,8 +31,8 @@ angular.module('main')
     var randomData = {};
     for (var i = 0; i < 10; i++) {
       var deviceId = Math.random()*11234546345436345;
-      var lat = Math.random() + 30;
-      var lng = Math.random() - 97.5;
+      var lat = Math.random()*0.5 + 30;
+      var lng = Math.random()*0.5 - 97.5;
       randomData[deviceId] = {lat: lat, lng: lng};
     }
     $rootScope.$emit('rootScope:players', randomData);
