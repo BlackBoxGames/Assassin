@@ -2,7 +2,7 @@
 angular.module('main', [
   'ionic',
   'ngCordova',
-  'ui.router'
+  'ui.router',
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -36,8 +36,7 @@ angular.module('main', [
     });
 })
 .run(function(Location) {
-  console.log('Location Service Ready Loaded from Main.');
-  console.log(Location);
+  Location.initLocation();
 });
 
 

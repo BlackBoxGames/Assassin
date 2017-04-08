@@ -1,22 +1,10 @@
 'use strict';
 angular.module('main')
 .controller('MapCtrl', function ($scope, $rootScope, $state, $cordovaGeolocation) {
-  var nathan = {
-    deviceId: '012',
-    lat: 30.569,
-    lng: -97.54};
-  var burk = {
-    deviceId: '345',
-    lat: 30.069,
-    lng: -97.34};
-  var david = {
-    deviceId: '678',
-    lat: 30.369,
-    lng: -97.44};
-  var players = {'012': nathan, '345': burk, '678': david, length: 3};
-
   $scope.latLng = {lat: null, lng: null};
-  $scope.locations = {};
+  $scope.marker = null;
+  $scope.players = {};
+  $scope.currentLocation = {};
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -116,16 +104,18 @@ angular.module('main')
 
       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-      $rootScope.$on('rootScope:location', function (/*event, data*/) {
-        $scope.renderPoint($rootScope.location);
+      $rootScope.$on('rootScope:location', function (event, data) {
+        if (event) { //for linter
+          $scope.latLng = {lat: data.lat, lng: data.lng, deviceId: data.deviceId};
+          $scope.renderPoint($scope.latLng, 'user');
+        }
       });
 
-      $rootScope.$on('rootScope:players', function (/*event, data*/) {
-        $scope.renderAllPlayers(players);
+      $rootScope.$on('rootScope:players', function (event, data) {
+        if (event) { //for linter
+          $scope.renderAllPlayers(data);
+        }
       });
-
-      $rootScope.$emit('rootScope:location', {lat: 30.269, lng: -97.74}); // $rootScope.$on THIS IS FOR TESTING
-      $rootScope.$emit('rootScope:players', players); // $rootScope.$on THIS IS FOR TESTING
     })
     .catch(function(error) {
       console.log(error);
@@ -133,24 +123,60 @@ angular.module('main')
     //TODO update the mapOptions with params, saved for reference for now
   };
 
+  $scope.removeAllPoints = function() {
+    for (var player in $scope.players) {
+      $scope.players[player].setMap(null);
+    }
+
+    $scope.players = {};
+  };
+
   $scope.renderAllPlayers = function(players) {
+    //$scope.removeAllPoints();
     for (var player in players) {
       if (player !== 'length') {
-        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng});
+        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, 'player');
       }
     }
   };
 
-  $scope.renderPoint = function(point) {
-    new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: point
-    });
+  $scope.renderPoint = function(point, type) {
+    //code to either set a new marker if it doesn't exist or move an already existing one
+    var marker;
+    var latLng = new google.maps.LatLng(point.lat, point.lng);
+
+    if (type === 'player') {
+      if (!$scope.players[point.deviceId]) {
+        marker = new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
+          position: latLng
+          //icon: 'ggm/pink_MarkerA.png'
+        });
+
+        $scope.players[point.deviceId] = marker;
+        marker.setMap($scope.map);
+      } else {
+        $scope.players[point.deviceId].setPosition(latLng);
+      }
+    } else {
+      //user render code
+      if ($scope.marker) {
+        $scope.marker.setPosition(latLng);
+      } else {
+
+        marker = new google.maps.Marker({
+          animation: google.maps.Animation.DROP,
+          position: latLng
+          //icon: 'ggm/blue_MarkerA.png'
+        });
+
+        $scope.marker = marker;
+        $scope.marker.setMap($scope.map);
+      }
+    }
   };
 
   var init = function() {
-    $rootScope.location = {lat: 30.269, lng: -97.74};
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
   };
 
