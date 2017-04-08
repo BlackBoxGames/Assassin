@@ -42,7 +42,7 @@ angular.module('main', [
           controller: 'DebugCtrl as ctrl'
         }
       }
-    })
+    });
 })
 .run(function(Location) {
   Location.initLocation();
