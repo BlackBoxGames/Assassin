@@ -7,12 +7,23 @@
 }
 
 .toggle {
-	margin-top: 2px;
+	margin-top: 52px;
+	left: 85.5%;
 }
 
-.toggle-darkBlue input:checked + .track {
-  border-color: #226;
-  background-color: #226; 
+.tabs-top > .tabs {
+	top: 0px;
+}
+
+.tabs-striped .tabs {
+  border-bottom: 0px;
+}
+
+.padding {
+	padding-top: 55px;
+}
+.has-tabs-top {
+   top: 49px;
 }
 
 .toggle .track {
