@@ -32,18 +32,24 @@ angular.module('main')
   };
   this.grade();
 
+  $rootScope.$on('rootScope:testing', function(event, data) {
+    $scope.proxyState = 'testing';
+    console.log(event, data);
+  });
+
   // Proxy
   $scope.proxyState = 'ready';
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
 
   this.proxyTest = function () {
-    $rootScope.$on('rootScope:location', function(event, data) {
-      $scope.proxyState = data.lat;
+    $rootScope.$on('rootScope:players', function(event, data) {
+      $scope.proxyState = data.length;
       console.log(event, data);
     });
 
+    $scope.proxyState = '. . .';
     //$scope.proxyState = '...';
-    this.Location.getUserLocation();
+    this.Location.getAllLocations();
   };
 
 });
