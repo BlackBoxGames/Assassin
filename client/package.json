@@ -78,5 +78,8 @@
         "proxyMapTo": "https://echo.getpostman.com"
       }
     ]
+  },
+  "dependencies": {
+    "@ionic/cloud-angular": "^0.12.0"
   }
 }
