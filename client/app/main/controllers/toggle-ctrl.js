@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('LocationCtrl', function ($rootScope) {
+.controller('ToggleCtrl', function ($rootScope) {
 
   $rootScope.locationOn = false;
 
@@ -10,6 +10,7 @@ angular.module('main')
     } else {
       $rootScope.locationOn = false;
     }
+    console.log('click', $rootScope.locationOn);
   };
 
 });
