@@ -110,7 +110,6 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        console.log(data);
         event = event; //for linter
         $scope.renderAllPlayers(data);
       });
@@ -124,10 +123,19 @@ angular.module('main')
     //TODO update the mapOptions with params, saved for reference for now
   };
 
+  $scope.removeAllPoints = function() {
+    for (var player in $scope.players) {
+      $scope.players[player].setMap(null);
+    }
+
+    $scope.players = {};
+  }
+
   $scope.renderAllPlayers = function(players) {
+    //$scope.removeAllPoints();
     for (var player in players) {
       if (player !== 'length') {
-        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng}, 'player');
+        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, 'player');
       }
     }
   };
@@ -140,20 +148,23 @@ angular.module('main')
     }
 
     var marker = new google.maps.Marker({
-      animation: google.maps.Animation.DROP,
+      animation: google.maps.Animation.BOUNCE,
       position: point,
       icon: src
     });
 
     if (type === 'player') {
-      if ($scope.players[point.deviceId]) {
-        $scope.players[point.deviceId].setMap(null);
+      console.log($scope.players[point.deviceId]);
+      if (!$scope.players[point.deviceId]) {
+        $scope.players[point.deviceId] = marker;
+        marker.setMap($scope.map);  
+      } else {
+        $scope.players[point.deviceId].setPosition(new google.maps.LatLng(point.lat, point.lng));
       }
-      
-      $scope.players[point.deviceId] = marker;
+    } else {
+      marker.setMap($scope.map)
     }
-
-    marker.setMap($scope.map)
+    
   };
 
   var init = function() {

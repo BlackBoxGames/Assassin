@@ -29,14 +29,14 @@ angular.module('main')
     // });
 
     var randomData = {};
+    var deviceId = [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10];
     for (var i = 0; i < 10; i++) {
-      var deviceId = Math.random()*11234546345436345;
       var lat = Math.random()*0.5 + 30;
       var lng = Math.random()*0.5 - 97.5;
-      randomData[deviceId] = {lat: lat, lng: lng};
+      randomData[deviceId] = {lat: lat, lng: lng, deviceId: deviceId[i]};
     }
     $rootScope.$emit('rootScope:players', randomData);
-    setTimeout(getAllLocations, 10000);
+    setTimeout(getAllLocations, 1000);
   };
 
   //cordova Geolocation functions
