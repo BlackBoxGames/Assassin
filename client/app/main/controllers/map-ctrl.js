@@ -119,9 +119,8 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        if (event) { //for linter
-          $scope.renderAllPlayers(data);
-        }
+        console.log(event); //for linter
+        $scope.renderAllPlayers(data);
       });
     })
     .catch(function(error) {
@@ -152,10 +151,10 @@ angular.module('main')
     var marker;
     var latLng = new google.maps.LatLng(point.lat, point.lng);
 
-    if (type === 'player') {
+    if (type === 'player' && $scope.latLng.deviceId !== point.deviceId) {
       if (!$scope.players[point.deviceId]) {
         marker = new google.maps.Marker({
-          animation: google.maps.Animation.DROP,
+          animation: google.maps.Animation.BOUNCE,
           position: latLng
           //icon: 'ggm/pink_MarkerA.png'
         });

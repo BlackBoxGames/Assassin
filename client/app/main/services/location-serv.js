@@ -17,26 +17,16 @@ angular.module('main')
   };
 
   var getAllLocations = function () {
-    $http({
-      method: 'GET',
-      url: 'http://35.162.247.27:4000/locations',
-    }).then(function (response) {
-      console.log(response);
-      $rootScope.$emit('rootScope.players', response.body);
-      return allPlayers;
-    }, function (err) {
-      console.error(err);
+    $http.get('http://35.162.247.27:4000/locations')
+    .success(function(data) {
+      console.log('Data from get', data);
+      $rootScope.$emit('rootScope:players', data);
+    })
+    .error(function (err) {
+      console.log(err);
+      $rootScope.$emit('rootScope:players', err);
     });
-
-    // var randomData = {};
-    // var deviceId = [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10];
-    // for (var i = 0; i < 10; i++) {
-    //   var lat = Math.random()*0.5 + 30;
-    //   var lng = Math.random()*0.5 - 97.5;
-    //   randomData[deviceId[i]] = {lat: lat, lng: lng, deviceId: deviceId[i]};
-    // }
-    // $rootScope.$emit('rootScope:players', randomData);
-    setTimeout(getAllLocations, 1000);
+    setTimeout(getAllLocations, 2000);
   };
 
   //cordova Geolocation functions
