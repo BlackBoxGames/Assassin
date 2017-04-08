@@ -5,6 +5,13 @@ angular.module('main')
   $scope.marker = null;
   $scope.players = {};
   $scope.currentLocation = {};
+
+  $rootScope.$on('rootScope: toggle', () => {
+    if ($rootScope.locationOn === true && !$scope.map) {
+      $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
+    }  
+  })
+
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -118,7 +125,7 @@ angular.module('main')
       });
     })
     .catch(function(error) {
-      console.log(error);
+      console.error(error);
     });
     //TODO update the mapOptions with params, saved for reference for now
   };
@@ -177,9 +184,14 @@ angular.module('main')
   };
 
   var init = function() {
+<<<<<<< ab34f4f7bab81c1adde0b2c375f6b1ff85470f5f
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
+=======
+    $rootScope.location = {lat: 30.269, lng: -97.74};
+>>>>>>> visual styling
   };
 
   init();
 
 });
+
