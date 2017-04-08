@@ -26,7 +26,10 @@ angular.module('main')
       console.log(err);
       $rootScope.$emit('rootScope:players', err);
     });
-    setTimeout(getAllLocations, 2000);
+
+    if ($rootScope.locationOn === true) {
+      setTimeout(getAllLocations, 2000);
+    }
   };
 
   //cordova Geolocation functions
@@ -42,14 +45,16 @@ angular.module('main')
         userLocation.lng = position.coords.longitude;
         $rootScope.$emit('rootScope:location', userLocation);
         sendLocation(userLocation);
-        setTimeout(getUserLocation, 3000);
+
+        if ($rootScope.locationOn === true) {
+          setTimeout(getUserLocation, 3000);
+        }
       }, function (err) {
         console.error(err);
       });
   };
 
   var initLocation = function() {
-  //if ($rootScope.active) {
     getUserLocation();
     getAllLocations();
   };
