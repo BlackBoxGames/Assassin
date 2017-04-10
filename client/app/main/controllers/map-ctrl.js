@@ -147,6 +147,8 @@ angular.module('main')
 
     if (!point.lat || !point.lng) {
       $scope.players[point.deviceId].setMap(null);
+      $scope.players[point.deviceId] = null;
+
       return;
     }
     if (type === 'player' && $scope.latLng.deviceId !== point.deviceId && $scope.latLng.deviceId) {
