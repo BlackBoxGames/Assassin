@@ -16,27 +16,27 @@ router.put('/in', (request, response) => {
 });
 
 router.put('/out', (request, response) => {
+	console.log('Starting log off process. . .');
 	var players = helper.getAllPlayers();
 	var player = request.body;
+	console.log('Current player:', player);
 	if (player.deviceId in players) {
+		console.log(players);
 		if (players[player.deviceId].lng != null || players[player.deviceId].lat != null) {
-			helper.removePlayerFromGame(player.deviceId)
-			.then(()=> {
-					player = {
+				player = {
 					deviceId: player.deviceId,
-					lgn: null,
+					lng: null,
 					lat: null
 				}	
-			})
-			.catch((error) => {
-				console.log('Error:' , error);
-			});
-			
+			console.log('Player is being updated. . .');
+			var status = helper.addOrUpdatePlayer(player);
+			response.status(status).send();
+		} else {
+			//user is already logged out, just send 200
+			response.status(200).send();
 		}
-		helper.addOrUpdatePlayer(player);
-		response.status(200).send();
 	} else {
-		respond.status(400).send();
+		response.status(400).send();
 	}
 	
 });

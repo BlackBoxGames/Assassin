@@ -145,17 +145,17 @@ describe('Server to DB tests', () => {
 describe('Server to client tests', () => {
 	var nathan = {
 		deviceId: '123abc',
-		lon: 50,
+		lng: 50,
 		lat: 50
 	};
 	var burk = {
 		deviceId: '456def',
-		lon: 75,
+		lng: 75,
 		lat: 75
 	};
 	var david = {
 		deviceId: '789ghi',
-		lon: 25,
+		lng: 25,
 		lat: 25
 	};
 	it('Should change user and player locations', done => {
@@ -188,13 +188,13 @@ describe('Server to client tests', () => {
 									.put('/locations')
 									.send({
 										deviceId: '789ghi',
-										lon: 100,
+										lng: 100,
 										lat: 100
 									})
 									.expect(200)
 									.expect(() => {
 										expect(helper.getAllPlayers().length).to.equal(3);
-										expect(helper.getAllPlayers()['789ghi'].lon).to.equal(100);
+										expect(helper.getAllPlayers()['789ghi'].lng).to.equal(100);
 										expect(helper.getAllPlayers()['789ghi'].lat).to.equal(100);
 
 									})
@@ -222,58 +222,56 @@ describe('Server to client tests', () => {
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
+				done();	
+			})	
+	})
+
+	xit('The user should not be in the database ', done => {
+		request(app)
+			.put('/logs/out')
+			.send(david)
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(null);	
 				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
 				request(app)
 					.put('/logs')
 					.send(david)
 					.end((error, response) => {
 						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(25);	
 						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
 						done();
 					})
 			})	
 	})
 
-	it('The user should not be in the database ', done => {
+	it('Should not do anything if the user is already logged out', done => {
 		request(app)
 			.put('/logs/out')
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(null);	
 				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
-				request(app)
-					.put('/logs')
-					.send(david)
-					.end((error, response) => {
-						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
-						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
-						done();
-					})
-			})	
+				done();
+			});
 	})
 
-	it('Should not do anything if the user is not found', done => {
+	it('Should not update the user if the user is not in the game', done => {
 		request(app)
 			.put('/logs/out')
-			.send(david)
-			.end((error, response) => {
-				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
-				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
-				request(app)
-					.put('/logs')
-					.send(david)
-					.end((error, response) => {
-						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
-						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
-						done();
+			.send({
+						deviceId: 'xxxxxx',
+						lng: 50,
+						lat: 50
 					})
-			})	
+			.end((error, response) => {
+				expect(response.status).to.equal(400);
+				done();
+			});
 	})
 
 	it('Should log the user in and update his location ', done => {
@@ -282,34 +280,26 @@ describe('Server to client tests', () => {
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
-				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
-				request(app)
-					.put('/logs')
-					.send(david)
-					.end((error, response) => {
-						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
-						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
-						done();
-					})
-			})	
+				expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(25);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
+				done();
+			});	
 	})
 
-	it('The user should be in the database ', done => {
+	xit('The user should be in the database ', done => {
 		request(app)
 			.put('/logs/in')
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
-				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(null);	
 				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
 				request(app)
 					.put('/logs')
 					.send(david)
 					.end((error, response) => {
 						expect(response.status).to.equal(200)
-						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lng).to.equal(25);	
 						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
 						done();
 					})

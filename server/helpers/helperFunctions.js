@@ -12,10 +12,11 @@ helper.addOrUpdatePlayer = (user) => {
 	if (!user.deviceId) { return 404 }
 		//data was corrupt
 	if (!players[user.deviceId]) {
+		//Game.insertPlayer();
 		created = true;
 		players.length++;
 	}
-
+	console.log('The user id', user.deviceId);
 	players[user.deviceId] = user;
 	return created ? 201 : 200;
 }

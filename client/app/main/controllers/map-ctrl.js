@@ -146,10 +146,10 @@ angular.module('main')
     var latLng = new google.maps.LatLng(point.lat, point.lng);
 
     if (!point.lat || !point.lng) {
-      !scope.players[point.deviceId].setMap(null);
+      $scope.players[point.deviceId].setMap(null);
       return;
     }
-    if (type === 'player' && $scope.latLng.deviceId !== point.deviceId) {
+    if (type === 'player' && $scope.latLng.deviceId !== point.deviceId && $scope.latLng.deviceId) {
       if (!$scope.players[point.deviceId]) {
         marker = new google.maps.Marker({
           animation: google.maps.Animation.BOUNCE,
