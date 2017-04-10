@@ -145,15 +145,19 @@ angular.module('main')
     var marker;
     var oldLatLng = $scope.players[point.deviceId].position;
     var latLng = new google.maps.LatLng(point.lat, point.lng);
+
     var interpolatePoint = function (type, latLng) {
       var step = 1;
       var maxSteps = 5;
+      var time = 500;
       intLat = (latLng.lat - oldLatLng.lat) / maxSteps;
       intLng = (latLng.lng - oldLatLng.lng) / maxSteps;
 
       while (maxSteps !== step) {
-        type.setPosition(oldLatLng.lat + intLat * step, oldLatLng.lng + intLng * step);
-        step++;
+        setTimeout(function() {
+          type.setPosition(oldLatLng.lat + intLat * step, oldLatLng.lng + intLng * step);
+          step++;
+        }, time / maxSteps);
       }
     };
 
