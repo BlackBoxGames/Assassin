@@ -216,7 +216,7 @@ describe('Server to client tests', () => {
 			.end(done);
 	})
 
-	it('Should toggle activity', done => {
+	xit('Should toggle activity', done => {
 		request(app)
 			.put('/logs')
 			.send(david)

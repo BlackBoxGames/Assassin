@@ -8,21 +8,28 @@ var User = require('../models/user')
 var Game = require('../models/game')
 var helper = require('../helpers/helperFunctions.js');
 
-router.put('/', (request, response) => {
+router.put('/in', (request, response) => {
+	var players = helper.getAllPlayers();
+	var player = request.body;
+	helper.addOrUpdatePlayer(player);
+	response.status(200).send();
+});
+
+router.put('/out', (request, response) => {
 	var players = helper.getAllPlayers();
 	var player = request.body;
 	if (player.deviceId in players) {
-		if (players[player.deviceId].lon != null || players[player.deviceId].lat != null) {
+		if (players[player.deviceId].lng != null || players[player.deviceId].lat != null) {
 			helper.removePlayerFromGame(player.deviceId)
 			player = {
 				deviceId: player.deviceId,
-				lon: null,
+				lgn: null,
 				lat: null
 			}
 		}
 	}
 	helper.addOrUpdatePlayer(player);
 	response.status(200).send();
-})
+});
 
 module.exports = router;

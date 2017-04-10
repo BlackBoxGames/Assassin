@@ -145,6 +145,10 @@ angular.module('main')
     var marker;
     var latLng = new google.maps.LatLng(point.lat, point.lng);
 
+    if (!point.lat || !point.lng) {
+      !scope.players[point.deviceId].setMap(null);
+      return;
+    }
     if (type === 'player' && $scope.latLng.deviceId !== point.deviceId) {
       if (!$scope.players[point.deviceId]) {
         marker = new google.maps.Marker({
@@ -183,8 +187,8 @@ angular.module('main')
   $rootScope.$on('rootScope: toggle', function () {
     if ($rootScope.locationOn === true && !$scope.map) {
       init();
-      Location.initLocation();
     }
+    Location.initLocation();
   });
 
 });
