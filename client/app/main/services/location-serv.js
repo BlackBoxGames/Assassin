@@ -17,41 +17,40 @@ angular.module('main')
   };
 
   var getAllLocations = function () {
-    $http.get('http://35.162.247.27:4000/locations')
-    .success(function(data) {
-      console.log('Data from get', data);
-      $rootScope.$emit('rootScope:players', data);
-    })
-    .error(function (err) {
-      console.log(err);
-      $rootScope.$emit('rootScope:players', err);
-    });
-
     if ($rootScope.locationOn === true) {
+      $http.get('http://35.162.247.27:4000/locations')
+      .success(function(data) {
+        console.log('Data from get', data);
+        $rootScope.$emit('rootScope:players', data);
+      })
+      .error(function (err) {
+        console.log(err);
+        $rootScope.$emit('rootScope:players', err);
+      });
+
       setTimeout(getAllLocations, 5000);
     }
   };
 
   //cordova Geolocation functions
   var getUserLocation = function () {
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-        var device = $cordovaDevice.getDevice();
-        var userLocation = {};
-        userLocation.deviceId = device.uuid;
-        userLocation.lat = position.coords.latitude;
-        userLocation.lng = position.coords.longitude;
-        $rootScope.$emit('rootScope:location', userLocation);
-        sendLocation(userLocation);
-
-        if ($rootScope.locationOn === true) {
+    if ($rootScope.locationOn === true) {
+      var posOptions = {timeout: 10000, enableHighAccuracy: false};
+      $cordovaGeolocation
+        .getCurrentPosition(posOptions)
+        .then(function (position) {
+          var device = $cordovaDevice.getDevice();
+          var userLocation = {};
+          userLocation.deviceId = device.uuid;
+          userLocation.lat = position.coords.latitude;
+          userLocation.lng = position.coords.longitude;
+          $rootScope.$emit('rootScope:location', userLocation);
+          sendLocation(userLocation);
           setTimeout(getUserLocation, 2500);
-        }
-      }, function (err) {
-        console.error(err);
-      });
+        }, function (err) {
+          console.error(err);
+        });
+    }
   };
 
   var initLocation = function() {

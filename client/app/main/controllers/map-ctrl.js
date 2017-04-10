@@ -143,14 +143,30 @@ angular.module('main')
   $scope.renderPoint = function(point, type) {
     //code to either set a new marker if it doesn't exist or move an already existing one
     var marker;
+    var oldLatLng = $scope.players[point.deviceId].position;
     var latLng = new google.maps.LatLng(point.lat, point.lng);
+    var interpolatePoint = function (type, latLng) {
+      var step = 1;
+      var maxSteps = 5;
+      intLat = (latLng.lat - oldLatLng.lat) / maxSteps;
+      intLng = (latLng.lng - oldLatLng.lng) / maxSteps;
+
+      while (maxSteps !== step) {
+        type.setPosition(oldLatLng.lat + intLat * step, oldLatLng.lng + intLng * step);
+        step++;
+      }
+    };
 
     if (!point.lat || !point.lng) {
       $scope.players[point.deviceId].setMap(null);
+      $scope.players[point.deviceId] = null;
+
       return;
     }
+
     if (type === 'player' && $scope.latLng.deviceId !== point.deviceId && $scope.latLng.deviceId) {
       if (!$scope.players[point.deviceId]) {
+
         marker = new google.maps.Marker({
           animation: google.maps.Animation.BOUNCE,
           position: latLng
@@ -160,12 +176,14 @@ angular.module('main')
         $scope.players[point.deviceId] = marker;
         marker.setMap($scope.map);
       } else {
-        $scope.players[point.deviceId].setPosition(latLng);
+        // $scope.players[point.deviceId].setPosition(latLng);
+        interpolatePoint($scope.players[point.deviceId], latLng);
       }
     } else {
       //user render code
       if ($scope.marker) {
-        $scope.marker.setPosition(latLng);
+        // $scope.marker.setPosition(latLng);
+        interpolatePoint($scope.marker, latLng);
       } else {
 
         marker = new google.maps.Marker({
