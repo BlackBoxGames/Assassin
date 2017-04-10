@@ -187,8 +187,8 @@ angular.module('main')
   $rootScope.$on('rootScope: toggle', function () {
     if ($rootScope.locationOn === true && !$scope.map) {
       init();
-      Location.initLocation();
     }
+    Location.initLocation();
   });
 
 });

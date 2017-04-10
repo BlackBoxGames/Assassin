@@ -5,9 +5,10 @@ angular.module('main')
   $rootScope.locationOn = false;
 
   this.toggleLocation = function () {
+    console.log('click', !$rootScope.locationOn);
     if ($rootScope.locationOn === false) {
+      $rootScope.locationOn = true;
       $rootScope.$on('rootScope:location', function (event, data) {
-        $rootScope.locationOn = true;
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
