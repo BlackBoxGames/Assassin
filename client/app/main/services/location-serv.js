@@ -28,7 +28,7 @@ angular.module('main')
     });
 
     if ($rootScope.locationOn === true) {
-      setTimeout(getAllLocations, 2000);
+      setTimeout(getAllLocations, 5000);
     }
   };
 
@@ -47,7 +47,7 @@ angular.module('main')
         sendLocation(userLocation);
 
         if ($rootScope.locationOn === true) {
-          setTimeout(getUserLocation, 3000);
+          setTimeout(getUserLocation, 2500);
         }
       }, function (err) {
         console.error(err);
