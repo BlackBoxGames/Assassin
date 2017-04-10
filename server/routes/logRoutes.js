@@ -21,15 +21,24 @@ router.put('/out', (request, response) => {
 	if (player.deviceId in players) {
 		if (players[player.deviceId].lng != null || players[player.deviceId].lat != null) {
 			helper.removePlayerFromGame(player.deviceId)
-			player = {
-				deviceId: player.deviceId,
-				lgn: null,
-				lat: null
-			}
+			.then(()=> {
+					player = {
+					deviceId: player.deviceId,
+					lgn: null,
+					lat: null
+				}	
+			})
+			.catch((error) => {
+				console.log('Error:' , error);
+			});
+			
 		}
+		helper.addOrUpdatePlayer(player);
+		response.status(200).send();
+	} else {
+		respond.status(400).send();
 	}
-	helper.addOrUpdatePlayer(player);
-	response.status(200).send();
+	
 });
 
 module.exports = router;

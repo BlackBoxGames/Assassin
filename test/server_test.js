@@ -216,9 +216,89 @@ describe('Server to client tests', () => {
 			.end(done);
 	})
 
-	xit('Should toggle activity', done => {
+	it('Should log the user out and delete his location', done => {
 		request(app)
-			.put('/logs')
+			.put('/logs/out')
+			.send(david)
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
+				request(app)
+					.put('/logs')
+					.send(david)
+					.end((error, response) => {
+						expect(response.status).to.equal(200)
+						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
+						done();
+					})
+			})	
+	})
+
+	it('The user should not be in the database ', done => {
+		request(app)
+			.put('/logs/out')
+			.send(david)
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
+				request(app)
+					.put('/logs')
+					.send(david)
+					.end((error, response) => {
+						expect(response.status).to.equal(200)
+						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
+						done();
+					})
+			})	
+	})
+
+	it('Should not do anything if the user is not found', done => {
+		request(app)
+			.put('/logs/out')
+			.send(david)
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
+				request(app)
+					.put('/logs')
+					.send(david)
+					.end((error, response) => {
+						expect(response.status).to.equal(200)
+						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
+						done();
+					})
+			})	
+	})
+
+	it('Should log the user in and update his location ', done => {
+		request(app)
+			.put('/logs/in')
+			.send(david)
+			.end((error, response) => {
+				expect(response.status).to.equal(200)
+				expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(null);	
+				expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(null);
+				request(app)
+					.put('/logs')
+					.send(david)
+					.end((error, response) => {
+						expect(response.status).to.equal(200)
+						expect(helper.getAllPlayers()[david.deviceId].lon).to.equal(25);	
+						expect(helper.getAllPlayers()[david.deviceId].lat).to.equal(25);
+						done();
+					})
+			})	
+	})
+
+	it('The user should be in the database ', done => {
+		request(app)
+			.put('/logs/in')
 			.send(david)
 			.end((error, response) => {
 				expect(response.status).to.equal(200)
