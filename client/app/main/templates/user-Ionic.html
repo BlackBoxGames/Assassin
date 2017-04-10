@@ -5,7 +5,10 @@
     <!-- content goes here -->
     <div class="list">
       <label class="item item-input">
-        <input name="username" type="username" placeholder="username" ng-model="ctrl.user.username">
+        <input name="email" type="email" placeholder="E-Mail" ng-model="ctrl.user.email">
+      </label>
+      <label class="item item-input">
+        <input name="password" type="password" placeholder="Password" ng-model="ctrl.user.password">
       </label>
     </div>
     <div class="padding">
@@ -17,6 +20,12 @@
         ng-click="ctrl.signin()">
         Sign in
       </button>
+    </div>
+    <div class="list" ng-if="ctrl.user.resultType">
+      <ion-item class="item item-divider">{{ctrl.user.resultType}} for {{ctrl.user.email}}:</ion-item>
+      <ion-item class="item item-text-wrap">
+        <pre>{{ctrl.user.result | json}}</pre>
+      </ion-item>
     </div>
 
   </ion-content>
