@@ -27,6 +27,7 @@ angular.module('main')
         console.log(err);
         $rootScope.$emit('rootScope:players', err);
       });
+
       setTimeout(getAllLocations, 5000);
     }
   };
