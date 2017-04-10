@@ -38,3 +38,7 @@ yarn.lock
 
 # npm
 npm-debug.log
+
+Assassin.apk
+my-release-key.keystore
+
