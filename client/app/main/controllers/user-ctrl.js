@@ -1,35 +1,51 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function ($log, $ionicAuth) {
+.controller('UserCtrl', function ($log, $http, $scope) {
+
+  $scope.announcer = '';
 
   this.user = {
-    email: '',
-    password: ''
+    username: ''
   };
-  this.updateResult = function (type, result) {
-    $log.log(type, result);
-    this.user.resultType = type;
-    this.user.result = result;
-  };
-
-  var responseCB = function (response) {
-    this.updateResult('Response', response);
-  }.bind(this);
-
-  var rejectionCB = function (rejection) {
-    this.updateResult('Rejection', rejection);
-  }.bind(this);
-
   // tries to sign the user up and displays the result in the UI
   this.signup = function () {
-    $ionicAuth.signup(this.user)
-    .then(responseCB)
-    .catch(rejectionCB);
+    $scope.announcer = 'That username is already taken.';
+    $http({
+      method: 'GET',
+      url: 'http://localhost:4000/users?username=' + this.user.username
+    }).then(function (response) {
+      if (response.status === 404) {
+        $http({
+          method: 'PUT',
+          url: 'http://localhost:4000/users',
+          data: this.user
+        }).then(function (response) {
+          console.log(response); //for linter
+        }, function (err) {
+          console.error(err);
+        });
+      } else {
+        $scope.announcer = 'That username is already taken.';
+      }
+    });
   };
-  // tries to sign in the user and displays the result in the UI
-  this.signin = function () {
-    $ionicAuth.login('basic', this.user)
-    .then(responseCB)
-    .catch(rejectionCB);
+
+  this.signin = function() {
+    $scope.announcer = 'User  does not exist, click the sign up button to create a new account';
+    $http({
+      method: 'GET',
+      url: 'http://localhost:4000/users?username=' + this.user.username
+    }).then(function (response) {
+      if (response.status === 200) {
+        //authenticate the user TODO: add google Auth stuff
+        $scope.announcer = 'Logged in as ' + this.user.username;
+      } else {
+        //Prompt user to create a new account
+        $scope.announcer = 'User  does not exist, click the sign up button to create a new account';
+        console.log($scope.announcer);
+      }
+    }, function (err) {
+      console.error(err);
+    });
   };
 });

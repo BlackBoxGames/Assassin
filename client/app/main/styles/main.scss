@@ -7,6 +7,14 @@
   border-bottom: 0px;
 }
 
+.item-input input{
+  width: 10% !important;
+}
+
+.item-input {
+  padding: 0 0 0 0;
+}
+
 .padding {
 	padding-top: 55px;
 }
@@ -14,7 +22,7 @@
 .scroll {
   height: 100%;
 }
- 
+
 #map {
   height: 100%;
 }
