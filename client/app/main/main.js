@@ -3,9 +3,15 @@ angular.module('main', [
   'ionic',
   'ngCordova',
   'ui.router',
+  'ionic.cloud',
   // TODO: load other modules selected during generation
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
+  $ionicCloudProvider.init({
+    'core': {
+      app_id: '824b4476'
+    }
+  });
 
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main/user');
@@ -44,7 +50,7 @@ angular.module('main', [
       }
     });
 })
-.run(function(Location) {
+.run(function(Location, $ionicPlatform) {
   Location.initLocation();
 });
 
