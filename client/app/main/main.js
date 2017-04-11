@@ -1,9 +1,9 @@
 'use strict';
 angular.module('main', [
   'ionic',
+  'ionic.cloud',
   'ngCordova',
   'ui.router',
-  'ionic.cloud',
   // TODO: load other modules selected during generation
 ])
 .config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
