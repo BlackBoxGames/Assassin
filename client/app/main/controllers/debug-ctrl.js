@@ -32,14 +32,13 @@ angular.module('main')
   };
   this.grade();
 
-  $rootScope.$on('rootScope:testing', function(event, data) {
-    $scope.proxyState = 'testing';
-    console.log(event, data);
-  });
-
   // Proxy
   $scope.proxyState = 'ready';
   this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
+  $rootScope.$on('latlngtest', function(event, data) {
+    $scope.proxyState = 'Lat: ' + data.lat + 'Lng: ' + data.lng;
+  });
+
 
   this.proxyTest = function () {
     $rootScope.$on('rootScope:players', function(event, data) {

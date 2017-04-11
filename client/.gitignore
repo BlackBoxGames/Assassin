@@ -42,3 +42,7 @@ npm-debug.log
 Assassin.apk
 my-release-key.keystore
 
+#unless you wanna copy it every time
+!bower_components/ionic.cloud.min.js
+
+
