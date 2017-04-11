@@ -9,6 +9,7 @@ angular.module('main')
   };
   // tries to sign the user up and displays the result in the UI
   this.signup = function () {
+    $scope.announcer = 'That username is already taken.';
     $http({
       method: 'GET',
       url: 'http://localhost:4000/users?username=' + this.user.username
@@ -30,6 +31,7 @@ angular.module('main')
   };
 
   this.signin = function() {
+    $scope.announcer = 'User  does not exist, click the sign up button to create a new account';
     $http({
       method: 'GET',
       url: 'http://localhost:4000/users?username=' + this.user.username
