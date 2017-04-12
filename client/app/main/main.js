@@ -8,8 +8,17 @@ angular.module('main', [
 ])
 .config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
   $ionicCloudProvider.init({
-    'core': {
+    core: {
       app_id: '824b4476'
+    },
+
+    'push': {
+      'sender_id': '862559983879',
+      'pluginConfig': {
+        'android': {
+          'iconColor': '#343434'
+        }
+      }
     }
   });
 

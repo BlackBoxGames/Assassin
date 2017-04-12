@@ -43,6 +43,6 @@ Assassin.apk
 my-release-key.keystore
 
 #unless you wanna copy it every time
-!/app/bower_components/ionic.cloud.min.js
+!client/app/bower_components/ionic.cloud.min.js
 
 
