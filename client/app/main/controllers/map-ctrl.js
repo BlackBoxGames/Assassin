@@ -200,8 +200,8 @@ angular.module('main')
 
   function interpolatePoint(oldMarker, latLng) {
     var oldLatLng = oldMarker.getPosition();
-    var maxSteps = 5;
-    var time = 500;
+    var maxSteps = 100;
+    var time = 1000;
     var intLat = (latLng.lat() - oldLatLng.lat()) / maxSteps;
     var intLng = (latLng.lng() - oldLatLng.lng()) / maxSteps;
 

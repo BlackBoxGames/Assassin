@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "862559983879",
+    "firebase_url": "https://assassin-1491409872784.firebaseio.com",
+    "project_id": "assassin-1491409872784",
+    "storage_bucket": "assassin-1491409872784.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862559983879:android:4f4376284013f8f5",
+        "android_client_info": {
+          "package_name": "com.blackboxgames.assassin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862559983879-epdind3jdgvdrgu4tmuvfd093mjns7a3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdGVYb30N_lXFFpLK4MvRkcs-1Ol8ttWc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
