@@ -130,6 +130,21 @@ angular.module('main')
     $scope.players = {};
   };
 
+  var interpolatePoint = function (oldPoint) {
+    var step = 1;
+    var maxSteps = 10;
+    var time = 500;
+    deltaLat = (latLng.lat - oldPoint.lat) / maxSteps;
+    deltaLng = (latLng.lng - oldPoint.lng) / maxSteps;
+
+    while (maxSteps !== step) {
+      setTimeout(function() {
+        oldPoint.setPosition(oldPoint.lat + deltaLat * step, oldPoint.lng + deltaLng * step);
+        step++;
+      }, time / maxSteps);
+    }
+  };
+
   $scope.renderAllPlayers = function(players) {
     //$scope.removeAllPoints();
     for (var player in players) {
@@ -162,14 +177,14 @@ angular.module('main')
         $scope.players[point.deviceId] = marker;
         $scope.players[point.deviceId].setMap($scope.map);
       } else {
-        //$scope.players[point.deviceId].setPosition(latLng);
-        interpolatePoint($scope.players[point.deviceId], latLng);
+        $scope.players[point.deviceId].setPosition(latLng);
+        // interpolatePoint($scope.players[point.deviceId]);
       }
     } else {
       //user render code
       if ($scope.marker) {
-        //$scope.marker.setPosition(latLng);
-        interpolatePoint($scope.marker, latLng);
+        $scope.marker.setPosition(latLng);
+        // interpolatePoint($scope.marker);
       } else {
         marker = new google.maps.Marker({
           animation: google.maps.Animation.DROP,

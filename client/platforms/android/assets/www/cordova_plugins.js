@@ -1,3 +1,4 @@
+<<<<<<< 2b758f4fa08087294dc54f408555c155eb2a714c
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
@@ -114,4 +115,3 @@ module.exports.metadata =
     "phonegap-plugin-push": "1.10.1"
 };
 // BOTTOM OF METADATA
-});
