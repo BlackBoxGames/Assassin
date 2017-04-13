@@ -6,6 +6,12 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
+  var title = 'Nathan';
+  var content = 'dynamic content, yo';
+  var infowindow = new google.maps.InfoWindow({
+    content: '<ion-header-bar> <h1 class="title">See, ' + title +'?</h1> </ion-header-bar> <h3>' + content + '</h3>'
+  });
+
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -113,7 +119,6 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        console.log(event); //for linter
         $scope.renderAllPlayers(data);
       });
     })
@@ -174,6 +179,10 @@ angular.module('main')
           //icon: 'ggm/pink_MarkerA.png'
         });
 
+        marker.addListener('click', function(marker) {
+          infowindow.open(map, marker);
+        });
+
         $scope.players[point.deviceId] = marker;
         $scope.players[point.deviceId].setMap($scope.map);
       } else {
@@ -212,22 +221,5 @@ angular.module('main')
       $scope.removeAllPoints();
     }
   });
-
-  function interpolatePoint(oldMarker, latLng) {
-    var oldLatLng = oldMarker.getPosition();
-    var maxSteps = 100;
-    var time = 1000;
-    var intLat = (latLng.lat() - oldLatLng.lat()) / maxSteps;
-    var intLng = (latLng.lng() - oldLatLng.lng()) / maxSteps;
-
-    $rootScope.$emit('latlngtest', {lat: intLat, lng: intLng});
-
-    for (var i = 0; i < maxSteps; i++) {
-      var newPoint = new google.maps.LatLng(oldLatLng.lat() + intLat * i, oldLatLng.lng() + intLng * i);
-      setTimeout(function() {
-        oldMarker.setPosition(newPoint);
-      }, time / maxSteps);
-    }
-  }
 
 });
