@@ -5,6 +5,8 @@ var expect = require('chai').expect;
 var app = require('../server/server');
 var helper = require('../server/helpers/helperFunctions');
 var lobby = require('../server/helpers/lobby');
+var db = require('../server/dbConfig');
+
 
 var User = require('../server/models/user');
 var Game = require('../server/models/game');
@@ -23,6 +25,23 @@ var tyler = {
     lng: 2,
     lat: 2
   };
+
+after((done) => {
+  db.connectToDb();
+  Game.deletePlayer(ezcheezy.deviceId)
+  .then(() => {
+    return Game.deletePlayer(tyler.deviceId)
+    .then(() => {
+      var location = helper.getAllPlayers();
+      location[tyler.deviceId] = undefined;
+      location[ezcheezy.deviceId] = undefined;
+      location.length = 3;
+      db.disconnectFromDb();
+      done();
+    })
+  })
+
+});
 
 describe('Game managing logic tests', () => {
   var clock;
@@ -131,15 +150,41 @@ describe('Game managing logic tests', () => {
     request(app)
     .put('/logs/in')
     .send(ezcheezy)
-    .expect(() => {
+    .end(() => {
       expect(lobby.getQueue().length).to.equal(1);
-    })
-    .end(done)
+      done();
+    });
+    
   }); 
 
+  it('Game should not end when a target is eliminated', done => {
+    for (var i = 0; i < 4; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    lobby.setGameStatus(true);
+    var players = lobby.getPlayers();
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
+    expect(lobby.getGameStatus()).to.equal(true);
+    done();
+  });
+
   it('Game should end when last target is eliminated', done => {
-    helper.getAllPlayers().length = 2;
-    lobby.elimatePlayer(tyler);
+    for (var i = 0; i < 2; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    lobby.setGameStatus(true);
+    var players = lobby.getPlayers();
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
     expect(lobby.getGameStatus()).to.equal(false);
     done();
   });
@@ -158,6 +203,7 @@ describe('Assigning target logic tests', () => {
       lobby.setGameStatus(false);
       lobby.assignTargets.restore();
       lobby.clearQueue();
+      lobby.clearPlayers();
   });
   
   it('Assign targets to players at start of game', done => {
@@ -166,6 +212,32 @@ describe('Assigning target logic tests', () => {
     //push notification to users
     lobby.setGameStatus(true);
     expect(lobby.assignTargets.calledOnce).to.equal(true);
+    done();
+  });
+
+  it('Assign targets such that nobody gets the same target OR themself as a target', done => {
+    for (var j = 0; j < 1000; j++) {
+      for (var i = 0; i < 30; i++) {
+        lobby.addToQueue({
+          player: i,
+          target: null,
+          active: 1,
+          deviceId: i
+        });
+      }
+
+      lobby.assignTargets();
+      var targets = [];
+      var players = lobby.getPlayers();
+      for (var player in players) {
+        expect(players[player].player !== players[player].target).to.equal(true);
+        expect(players[player].target === undefined).to.equal(false); //shouldn't ever equal undefined
+        expect(targets.includes(players[player].target)).to.equal(false);
+        targets.push(players[player].target);
+      }
+      lobby.clearPlayers();
+    }
+    
     done();
   });
 
@@ -179,24 +251,87 @@ describe('Assigning target logic tests', () => {
         deviceId: i
       });
     }
-    var expectedTarget = lobby.getPlayers[0].target;
-    lobby.elimatePlayer(tyler);
-    var callback = sinon.spy();
-    var proxy = lobby.assignNewTarget(callback);
-    expect(callback.calledOnce).to.equal(true);
+    clock.tick(minute);
+
+    var players = lobby.getPlayers();
+    var eliminatedTarget = players[0].target
+    var newTarget = players[eliminatedTarget].target
+    lobby.eliminatePlayer(players[0], players[eliminatedTarget]);
+    expect(players[0].target).to.equal(players[newTarget].player);
     done();
   });
 
   it('After a confirmed elimination, add queued players', done => {
-    lobby.elimatePlayer(tyler);
-    expect(lobby.getQueue()).to.equal(0);
+    for (var i = 0; i < 5; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+
+    clock.tick(2 * minute);
+    
+    for (var i = 9; i < 10; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+
+    expect(lobby.getQueue().length).to.equal(1);
+    
+    clock.tick(5 * minute);
+    var players = lobby.getPlayers();
+    var targets = [];
+
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
+    expect(lobby.getQueue().length).to.equal(0);
+    for (var player in players) {
+      if (players[player] === 'eliminated') {
+        continue;
+      }
+      expect(players[player].player !== players[player].target).to.equal(true);
+      expect(players[player].target === undefined).to.equal(false); //shouldn't ever equal undefined
+      expect(targets.includes(players[player].target)).to.equal(false);
+      targets.push(players[player].target);
+    }
+
     done();
   });
 
-  it('After a confirmed elimination, remove elimated player', done => {
-    lobby.elimatePlayer(tyler)
-    expect(helper.getAllPlayers()[tyler.deviceId]).to.equal(false);
+  it('After a confirmed elimination, remove elimated player and not let him rejoin', done => {
+    for (var i = 0; i < 5; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    clock.tick(minute);
+    var players = lobby.getPlayers();
+    var target = players[0].target;
+    clock.tick(minute);
+    lobby.eliminatePlayer(players[0], players[target]);
+    expect(players[target]).to.equal('eliminated');
+
+    lobby.addToQueue({
+      player: target,
+      target: null,
+      active: 1,
+      deviceId: target
+    });
+
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
+    
+    expect(players[target]).to.equal('eliminated');
     done();
   });
+
+
 
 });

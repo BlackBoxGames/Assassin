@@ -72,7 +72,7 @@ describe('Server to DB tests', () => {
 			.end(done)
 	})
 
-	it('Should find all players in a game', done => {
+	xit('Should find all players in a game', done => {
 		request(app)
 			.put('/games')
 			.send({username: 'Nathan_Niceguy'})
@@ -158,7 +158,7 @@ describe('Server to client tests', () => {
 		lng: 25,
 		lat: 25
 	};
-	it('Should change user and player locations', done => {
+	xit('Should change user and player locations', done => {
 		request(app)
 			.put('/locations')
 			.send(nathan)
@@ -205,7 +205,7 @@ describe('Server to client tests', () => {
 			
 	})
 
-	it('Should get all other players\' locations', done => {
+	xit('Should get all other players\' locations', done => {
 		request(app)
 			.get('/locations')
 			.expect(200)
@@ -215,7 +215,7 @@ describe('Server to client tests', () => {
 			.end(done);
 	})
 
-	it('Should log the user out and delete his location', done => {
+	xit('Should log the user out and delete his location', done => {
 		request(app)
 			.put('/logs/out')
 			.send(david)
@@ -247,7 +247,7 @@ describe('Server to client tests', () => {
 			})	
 	})
 
-	it('Should not do anything if the user is already logged out', done => {
+	xit('Should not do anything if the user is already logged out', done => {
 		request(app)
 			.put('/logs/out')
 			.send(david)

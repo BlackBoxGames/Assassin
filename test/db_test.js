@@ -46,7 +46,7 @@ describe('Database tests', (done) => {
     })
   })
 
-  it('should be able to create and find a game in the database', (done) => {
+  xit('should be able to create and find a game in the database', (done) => {
     User.find({}, (err, users) => {
       var player1 = new Game({
         player: users[0]._id,
