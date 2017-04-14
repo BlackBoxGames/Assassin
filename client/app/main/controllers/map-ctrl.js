@@ -9,7 +9,7 @@ angular.module('main')
   var title = 'Nathan';
   var content = 'dynamic content, yo';
   var infowindow = new google.maps.InfoWindow({
-    content: '<ion-header-bar> <h1 class="title">See, ' + title +'?</h1> </ion-header-bar> <h3>' + content + '</h3>'
+    content: '<h1 class="title">See, ' + title + '?</h1><h3>' + content + '</h3>'
   });
 
   // object of other player's locations.  Expecing an object with deviceIds as a key and
@@ -221,5 +221,4 @@ angular.module('main')
       $scope.removeAllPoints();
     }
   });
-
 });

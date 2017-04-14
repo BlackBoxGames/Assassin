@@ -9,7 +9,7 @@ angular.module('main', [
 .config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
   $ionicCloudProvider.init({
     core: {
-      app_id: 'c7bd9589'
+      app_id: 'ca0564b2'
     },
 
     'push': {
