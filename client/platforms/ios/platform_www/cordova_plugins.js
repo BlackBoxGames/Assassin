@@ -121,7 +121,7 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.2.2",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-geolocation": "2.4.2",
-    "phonegap-plugin-push": "1.10.1"
+    "phonegap-plugin-push": "1.10.2"
 };
 // BOTTOM OF METADATA
 });

@@ -6,6 +6,12 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
+  var title = 'Nathan';
+  var content = 'dynamic content, yo';
+  var infowindow = new google.maps.InfoWindow({
+    content: '<h1 class="title">See, ' + title + '?</h1><h3>' + content + '</h3>'
+  });
+
   // object of other player's locations.  Expecing an object with deviceIds as a key and
   // {lat, lng, deviceId} as a value
 
@@ -113,7 +119,6 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        console.log(event); //for linter
         $scope.renderAllPlayers(data);
       });
     })
@@ -128,6 +133,21 @@ angular.module('main')
       $scope.players[player].setMap(null);
     }
     $scope.players = {};
+  };
+
+  var interpolatePoint = function (oldPoint) {
+    var step = 1;
+    var maxSteps = 10;
+    var time = 500;
+    deltaLat = (latLng.lat - oldPoint.lat) / maxSteps;
+    deltaLng = (latLng.lng - oldPoint.lng) / maxSteps;
+
+    while (maxSteps !== step) {
+      setTimeout(function() {
+        oldPoint.setPosition(oldPoint.lat + deltaLat * step, oldPoint.lng + deltaLng * step);
+        step++;
+      }, time / maxSteps);
+    }
   };
 
   $scope.renderAllPlayers = function(players) {
@@ -159,17 +179,21 @@ angular.module('main')
           //icon: 'ggm/pink_MarkerA.png'
         });
 
+        marker.addListener('click', function(marker) {
+          infowindow.open(map, marker);
+        });
+
         $scope.players[point.deviceId] = marker;
         $scope.players[point.deviceId].setMap($scope.map);
       } else {
-        //$scope.players[point.deviceId].setPosition(latLng);
-        interpolatePoint($scope.players[point.deviceId], latLng);
+        $scope.players[point.deviceId].setPosition(latLng);
+        // interpolatePoint($scope.players[point.deviceId]);
       }
     } else {
       //user render code
       if ($scope.marker) {
-        //$scope.marker.setPosition(latLng);
-        interpolatePoint($scope.marker, latLng);
+        $scope.marker.setPosition(latLng);
+        // interpolatePoint($scope.marker);
       } else {
         marker = new google.maps.Marker({
           animation: google.maps.Animation.DROP,
@@ -197,22 +221,4 @@ angular.module('main')
       $scope.removeAllPoints();
     }
   });
-
-  function interpolatePoint(oldMarker, latLng) {
-    var oldLatLng = oldMarker.getPosition();
-    var maxSteps = 100;
-    var time = 1000;
-    var intLat = (latLng.lat() - oldLatLng.lat()) / maxSteps;
-    var intLng = (latLng.lng() - oldLatLng.lng()) / maxSteps;
-
-    $rootScope.$emit('latlngtest', {lat: intLat, lng: intLng});
-
-    for (var i = 0; i < maxSteps; i++) {
-      var newPoint = new google.maps.LatLng(oldLatLng.lat() + intLat * i, oldLatLng.lng() + intLng * i);
-      setTimeout(function() {
-        oldMarker.setPosition(newPoint);
-      }, time / maxSteps);
-    }
-  }
-
 });
