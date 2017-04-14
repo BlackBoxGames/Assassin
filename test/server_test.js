@@ -172,7 +172,6 @@ describe('Server to client tests', () => {
 					.send(burk)
 					.expect(201)
 					.expect(() => {
-						console.log('The second request')
 						expect(helper.getAllPlayers().length).to.equal(2);
 					})
 					.end(() => {

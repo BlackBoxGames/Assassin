@@ -7,6 +7,11 @@ mongoose.Promise = Promise;
 
 const UserSchema = new Schema({
   username: String,
+  stats : {kills: Number, 
+            deaths: Number, 
+            avgKillDistance: Number,
+            honesty: Number
+          }
 })
 
 const User = mongoose.model('user', UserSchema);
