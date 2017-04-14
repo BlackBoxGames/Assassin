@@ -58,14 +58,7 @@ angular.module('main', [
         }
       }
     });
-  $ionicCloudProvider.init({
-    core: {
-      app_id: 'c7bd9589'
-    }
-  });
 })
 .run(function(Location, $ionicPlatform) {
   Location.initLocation();
 });
-
-

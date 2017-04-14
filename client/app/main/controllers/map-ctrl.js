@@ -123,7 +123,7 @@ angular.module('main')
       });
     })
     .catch(function(error) {
-      console.error(error);
+      console.log(error);
     });
     //TODO update the mapOptions with params, saved for reference for now
   };
@@ -135,20 +135,6 @@ angular.module('main')
     $scope.players = {};
   };
 
-  var interpolatePoint = function (oldPoint) {
-    var step = 1;
-    var maxSteps = 10;
-    var time = 500;
-    deltaLat = (latLng.lat - oldPoint.lat) / maxSteps;
-    deltaLng = (latLng.lng - oldPoint.lng) / maxSteps;
-
-    while (maxSteps !== step) {
-      setTimeout(function() {
-        oldPoint.setPosition(oldPoint.lat + deltaLat * step, oldPoint.lng + deltaLng * step);
-        step++;
-      }, time / maxSteps);
-    }
-  };
 
   $scope.renderAllPlayers = function(players) {
     //$scope.removeAllPoints();
@@ -180,7 +166,7 @@ angular.module('main')
         });
 
         marker.addListener('click', function(marker) {
-          infowindow.open(map, marker);
+          infowindow.open($scope.map, marker);
         });
 
         $scope.players[point.deviceId] = marker;
@@ -210,6 +196,22 @@ angular.module('main')
   var init = function() {
     $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
   };
+
+  function interpolatePoint (oldPoint) {
+    var step = 1;
+    var maxSteps = 10;
+    var time = 500;
+    deltaLat = (latLng.lat - oldPoint.lat) / maxSteps;
+    deltaLng = (latLng.lng - oldPoint.lng) / maxSteps;
+
+    while (maxSteps > step) {
+      setTimeout(function() {
+        oldPoint.setPosition(oldPoint.lat + deltaLat * step, oldPoint.lng + deltaLng * step);
+        step++;
+      }, time / maxSteps);
+    }
+    oldPoint.setPosition(latLng);
+  }
 
   $rootScope.$on('rootScope: toggle', function () {
     if ($rootScope.locationOn === true) {
