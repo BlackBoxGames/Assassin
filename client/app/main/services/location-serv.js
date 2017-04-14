@@ -2,8 +2,6 @@
 angular.module('main')
 .factory('Location', function ($rootScope, $http, $cordovaGeolocation, $cordovaDevice) {
 
-  //var allPlayers = {};
-
   var sendLocation = function (userLocation) {
     $http({
       method: 'PUT',

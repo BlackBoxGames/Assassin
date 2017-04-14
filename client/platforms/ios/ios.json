@@ -50,7 +50,7 @@
                         },
                         {
                             "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -66,19 +66,23 @@
                     "UIBackgroundModes": [
                         {
                             "xml": "<array><string>remote-notification</string></array>",
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "GCM_SENDER_ID": [
                         {
                             "xml": "<string>862559983879</string>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<string>85075801930</string>",
+                            "count": 1
                         }
                     ],
                     "IS_GCM_ENABLED": [
                         {
                             "xml": "<true />",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -88,7 +92,7 @@
                     "aps-environment": [
                         {
                             "xml": "<string>development</string>",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -98,7 +102,7 @@
                     "aps-environment": [
                         {
                             "xml": "<string>production</string>",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -138,7 +142,7 @@
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
         "phonegap-plugin-push": {
-            "SENDER_ID": "862559983879",
+            "SENDER_ID": "85075801930",
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         }
     },
@@ -263,6 +267,6 @@
         "cordova-plugin-statusbar": "2.2.2",
         "cordova-plugin-compat": "1.1.0",
         "cordova-plugin-geolocation": "2.4.2",
-        "phonegap-plugin-push": "1.10.1"
+        "phonegap-plugin-push": "1.10.2"
     }
 }

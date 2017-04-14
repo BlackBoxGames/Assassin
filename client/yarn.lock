@@ -9,6 +9,10 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
+"@ionic-native/push@^3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@ionic-native/push/-/push-3.4.4.tgz#40af9d00c594552f8e2af290141cf81213161352"
+
 "@ionic/cloud-angular@^0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@ionic/cloud-angular/-/cloud-angular-0.12.0.tgz#fee76c9c1eceafe674ed7adcff434a54fe4b2b2d"
@@ -8071,14 +8075,14 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@1.1.1, ws@^1.0.1:
+ws@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.1.tgz#082ddb6c641e85d4bb451f03d52f06eabdb1f018"
   dependencies:
     options ">=0.0.5"
     ultron "1.0.x"
 
-ws@1.1.2, ws@^1.1.0:
+ws@1.1.2, ws@^1.0.1, ws@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-1.1.2.tgz#8a244fa052401e08c9886cf44a85189e1fd4067f"
   dependencies:
