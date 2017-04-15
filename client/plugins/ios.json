@@ -34,11 +34,15 @@
         "cordova-plugin-geolocation": {
             "GEOLOCATION_USAGE_DESCRIPTION": " ",
             "PACKAGE_NAME": "com.blackboxgames.assassin"
-        }
-    },
-    "dependent_plugins": {
+        },
+        "cordova-plugin-camera": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         }
-    }
+    },
+    "dependent_plugins": {}
 }
