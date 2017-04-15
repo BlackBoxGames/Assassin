@@ -7,19 +7,16 @@ mongoose.Promise = Promise;
  
 const GameSchema = new Schema({
    player : {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    // type: Schema.Types.ObjectId,
+    // ref: 'User'
+    type: String
    },
    target: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    // type: Schema.Types.ObjectId,
+    // ref: 'User'
+    type: String
    },
    active : Number,
-   stats : {kills: Number, 
-            deaths: Number, 
-            avgKillDistance: Number,
-            honesty: Number
-          },
    deviceId : String
 })
 
@@ -57,7 +54,7 @@ Game.updatePlayer = (user) => {
   return Game.updateOne(user)
   .then(response => {})
   .catch(err => {
-    console.error(err);
+    return err;
   })
 };
 
@@ -67,6 +64,33 @@ Game.deletePlayer = (deviceId) => {
   .catch(err => {
     console.error(err);
   })
+};
+
+/*
+***
+Function to take a locationObj receieved from the client device 
+i.e {lat, lng, deviceId}
+to a Player object
+Input: locationObj received from client
+Outpat: gameModel parsed from locationObj
+***
+ */
+Game.mapLocationToPlayer = (locationObj) => {
+  var gameModel = {
+    player: null,
+    target: null,
+    active: null,
+    deviceId: null
+  };
+
+  //player and deviceId will be identical for now
+  //until we get users working
+
+  gameModel.player = locationObj.deviceId;
+  gameModel.deviceId = locationObj.deviceId;
+  gameModel.active = true;
+
+  return gameModel;
 };
 
 module.exports = Game;

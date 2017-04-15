@@ -37,6 +37,10 @@
 		88147B5FD2E3469EBAD03301 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F91A72BCDB41B2AC916EE4 /* CDVJpegHeaderWriter.m */; };
 		C6DC41F83BF34AD5A7E5276C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1FC6255A459690B2EBA3 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		435B172645AC430E8C78F648 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9AB6DE2D31845969613DFE0 /* AVFoundation.framework */; };
+		C9E15FBFFE5D4FDC91C72AEB /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D130EE659F140588186F4DB /* AppDelegate+notification.m */; };
+		299A164BB73A412B8CB38F85 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E63CB60EE5E4E31BE84E6E8 /* PushPlugin.m */; };
+		3A00A794FF8B4BD098285BDD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830D758B3A0145C383CD6CB9 /* AddressBook.framework */; };
+		B68D2DA9710345DC8378A711 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC45017897241ACB9E432E0 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +116,12 @@
 		4BB3CBE1B41D49FA8F4DDDFD /* CDVExif.h */ = {isa = PBXFileReference; name = "CDVExif.h"; path = "cordova-plugin-camera/CDVExif.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		079F1FC6255A459690B2EBA3 /* ImageIO.framework */ = {isa = PBXFileReference; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		D9AB6DE2D31845969613DFE0 /* AVFoundation.framework */ = {isa = PBXFileReference; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		4D130EE659F140588186F4DB /* AppDelegate+notification.m */ = {isa = PBXFileReference; name = "AppDelegate+notification.m"; path = "phonegap-plugin-push/AppDelegate+notification.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		7E63CB60EE5E4E31BE84E6E8 /* PushPlugin.m */ = {isa = PBXFileReference; name = "PushPlugin.m"; path = "phonegap-plugin-push/PushPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		2E90FB68FBA34B0C89DA5A62 /* AppDelegate+notification.h */ = {isa = PBXFileReference; name = "AppDelegate+notification.h"; path = "phonegap-plugin-push/AppDelegate+notification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		995D5FB84BCC409AAD8E2FDC /* PushPlugin.h */ = {isa = PBXFileReference; name = "PushPlugin.h"; path = "phonegap-plugin-push/PushPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		830D758B3A0145C383CD6CB9 /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		DAC45017897241ACB9E432E0 /* libsqlite3.tbd */ = {isa = PBXFileReference; name = "libsqlite3.tbd"; path = "usr/lib/libsqlite3.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +137,8 @@
 				CABF73EA46A643F690FF2D74 /* CoreLocation.framework in Frameworks */,
 				C6DC41F83BF34AD5A7E5276C /* ImageIO.framework in Frameworks */,
 				435B172645AC430E8C78F648 /* AVFoundation.framework in Frameworks */,
+				3A00A794FF8B4BD098285BDD /* AddressBook.framework in Frameworks */,
+				B68D2DA9710345DC8378A711 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +217,8 @@
 				13C82DCDD57242229E1BEAF5 /* CoreLocation.framework */,
 				079F1FC6255A459690B2EBA3 /* ImageIO.framework */,
 				D9AB6DE2D31845969613DFE0 /* AVFoundation.framework */,
+				830D758B3A0145C383CD6CB9 /* AddressBook.framework */,
+				DAC45017897241ACB9E432E0 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -257,6 +271,10 @@
 				A84AAE6C8CFA407B83BFD2E9 /* CDVCamera.h */,
 				C786902DB7A44BC0958E6123 /* CDVJpegHeaderWriter.h */,
 				4BB3CBE1B41D49FA8F4DDDFD /* CDVExif.h */,
+				4D130EE659F140588186F4DB /* AppDelegate+notification.m */,
+				7E63CB60EE5E4E31BE84E6E8 /* PushPlugin.m */,
+				2E90FB68FBA34B0C89DA5A62 /* AppDelegate+notification.h */,
+				995D5FB84BCC409AAD8E2FDC /* PushPlugin.h */,
 			);
 			name = Plugins;
 			path = "Assassin/Plugins";
@@ -383,6 +401,8 @@
 				294BA06BD7E34EF5A9391AA5 /* UIImage+CropScaleOrientation.m in Sources */,
 				8AFDEF9DF60749998AFE1AA2 /* CDVCamera.m in Sources */,
 				88147B5FD2E3469EBAD03301 /* CDVJpegHeaderWriter.m in Sources */,
+				C9E15FBFFE5D4FDC91C72AEB /* AppDelegate+notification.m in Sources */,
+				299A164BB73A412B8CB38F85 /* PushPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -58,5 +58,13 @@
     <string></string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string></string>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>GCM_SENDER_ID</key>
+    <string>862559983879</string>
+    <key>IS_GCM_ENABLED</key>
+    <true/>
   </dict>
 </plist>

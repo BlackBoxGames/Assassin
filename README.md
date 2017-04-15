@@ -55,6 +55,17 @@ yarn remove [package]
 
 ```
 
+To build the apk:
+
+From within the client directory:
+http://ionicframework.com/docs/v1/guide/publishing.html
+
+```sh
+cordova build --release android
+*** Creates the unsigned apk ***
+
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+*** Generates key for signing apk ***
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)

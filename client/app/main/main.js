@@ -1,11 +1,26 @@
 'use strict';
 angular.module('main', [
   'ionic',
+  'ionic.cloud',
   'ngCordova',
   'ui.router',
   // TODO: load other modules selected during generation
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
+  $ionicCloudProvider.init({
+    core: {
+      app_id: '824b4476'
+    },
+
+    'push': {
+      'sender_id': '862559983879',
+      'pluginConfig': {
+        'android': {
+          'iconColor': '#343434'
+        }
+      }
+    }
+  });
 
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main/user');
@@ -53,7 +68,7 @@ angular.module('main', [
       }
     });
 })
-.run(function(Location) {
+.run(function(Location, $ionicPlatform) {
   Location.initLocation();
 })
 .run(function($ionicPlatform) {

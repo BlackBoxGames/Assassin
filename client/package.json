@@ -80,6 +80,7 @@
     ]
   },
   "dependencies": {
+    "@ionic-native/push": "^3.4.4",
     "@ionic/cloud-angular": "^0.12.0"
   }
 }

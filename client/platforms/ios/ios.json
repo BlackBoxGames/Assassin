@@ -54,6 +54,10 @@
                         },
                         {
                             "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
+                           "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -80,6 +84,44 @@
                     "NSPhotoLibraryUsageDescription": [
                         {
                             "xml": "<string> </string>",
+                            "count": 1
+                        }
+                    ],
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>remote-notification</string></array>",
+                            "count": 1
+                        }
+                    ],
+                    "GCM_SENDER_ID": [
+                        {
+                            "xml": "<string>862559983879</string>",
+                            "count": 1
+                        }
+                    ],
+                    "IS_GCM_ENABLED": [
+                        {
+                            "xml": "<true />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Debug.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>development</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Release.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>production</string>",
                             "count": 1
                         }
                     ]
@@ -123,7 +165,11 @@
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
-        }
+        },
+      "phonegap-plugin-push": {
+            "SENDER_ID": "862559983879",
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+      }
     },
     "dependent_plugins": {},
     "modules": [
@@ -256,6 +302,11 @@
             "pluginId": "cordova-plugin-camera",
             "clobbers": [
                 "CameraPopoverHandle"
+            "id": "phonegap-plugin-push.PushNotification",
+            "file": "plugins/phonegap-plugin-push/www/push.js",
+            "pluginId": "phonegap-plugin-push",
+            "clobbers": [
+                "PushNotification"
             ]
         }
     ],
@@ -271,5 +322,6 @@
         "cordova-plugin-geolocation": "2.4.2",
         "cordova-plugin-camera": "2.4.0",
         "cordova-plugin-compat": "1.1.0"
+        "phonegap-plugin-push": "1.10.1"
     }
 }

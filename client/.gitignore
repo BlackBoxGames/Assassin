@@ -38,3 +38,11 @@ yarn.lock
 
 # npm
 npm-debug.log
+
+Assassin.apk
+my-release-key.keystore
+
+#unless you wanna copy it every time
+!client/app/bower_components/ionic.cloud.min.js
+
+

@@ -129,6 +129,14 @@ module.exports = [
         "pluginId": "cordova-plugin-camera",
         "clobbers": [
             "CameraPopoverHandle"
+          ]
+    },
+    {
+        "id": "phonegap-plugin-push.PushNotification",
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
         ]
     }
 ];
@@ -146,6 +154,8 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.4.2",
     "cordova-plugin-camera": "2.4.0",
     "cordova-plugin-compat": "1.1.0"
+    "phonegap-plugin-push": "1.10.1"
+
 };
 // BOTTOM OF METADATA
 });
