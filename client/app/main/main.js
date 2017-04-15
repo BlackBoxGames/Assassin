@@ -70,8 +70,6 @@ angular.module('main', [
 })
 .run(function(Location, $ionicPlatform) {
   Location.initLocation();
-})
-.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Initialize plugin here
   });
