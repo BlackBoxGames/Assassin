@@ -165,9 +165,9 @@ angular.module('main')
           //icon: 'ggm/pink_MarkerA.png'
         });
 
-        // marker.addListener('click', function(marker) {
-        //   infowindow.open($scope.map, marker);
-        // });
+        marker.addListener('click', function() {
+          infowindow.open($scope.map, marker);
+        });
 
         $scope.players[point.deviceId] = marker;
         $scope.players[point.deviceId].setMap($scope.map);
