@@ -38,13 +38,12 @@
     <!-- the nav bar will be updated as we navigate between views -->
     <!-- <ion-nav-bar> can be removed when using sidemenu (contained in menu.html) -->
     <ion-pane>
-      
+
       <!-- the current view will be rendered in the <ion-nav-view> directive -->
       <ion-nav-view></ion-nav-view>
     </ion-pane>
 
     <!-- will be a 404 during development -->
-    <script src="cordova.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDih7wAzLLGmxTNErnarQShVDG-8FJhefk"></script>
 
     <!-- build:js scripts/vendor.js -->
@@ -60,6 +59,7 @@
     <!-- endbower -->
     <script src="bower_components/ionic.cloud.min.js"></script>
     <!-- endbuild -->
+    <script src="cordova.js"></script>
 
     <!-- build:js scripts/app.js -->
     <!-- inject:js -->
@@ -70,6 +70,7 @@
     <script src="main/controllers/toggle-ctrl.js"></script>
     <script src="main/controllers/map-ctrl.js"></script>
     <script src="main/controllers/debug-ctrl.js"></script>
+    <script src="main/controllers/camera-ctrl.js"></script>
     <script src="main/constants/config-const.js"></script>
     <script src="app.js"></script>
     <!-- endinject -->

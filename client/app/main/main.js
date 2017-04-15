@@ -49,6 +49,15 @@ angular.module('main', [
         }
       }
     })
+    .state('main.camera', {
+      url: '/camera',
+      views: {
+        'tab-camera': {
+          templateUrl: 'main/templates/camera.html',
+          controller: 'CameraCtrl as ctrl'
+        }
+      }
+    })
     .state('main.debug', {
       url: '/debug',
       views: {
@@ -61,6 +70,11 @@ angular.module('main', [
 })
 .run(function(Location, $ionicPlatform) {
   Location.initLocation();
+})
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Initialize plugin here
+  });
 });
 
 
