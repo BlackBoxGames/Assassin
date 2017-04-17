@@ -69,8 +69,13 @@ keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg R
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+If you have AAPT errors, try:
+
+cordova platform remove android
+cordova platform add android
+
 
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUT

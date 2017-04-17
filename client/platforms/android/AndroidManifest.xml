@@ -12,6 +12,35 @@
         <provider android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths" />
         </provider>
+        <activity android:exported="true" android:name="com.adobe.phonegap.push.PushHandlerActivity" android:permission="${applicationId}.permission.PushHandlerActivity" />
+        <receiver android:name="com.adobe.phonegap.push.BackgroundActionButtonHandler" />
+        <receiver android:exported="true" android:name="com.google.android.gms.gcm.GcmReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+        <service android:exported="false" android:name="com.adobe.phonegap.push.GCMIntentService">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service android:exported="false" android:name="com.adobe.phonegap.push.PushInstanceIDListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <service android:exported="false" android:name="com.adobe.phonegap.push.RegistrationIntentService" />
+        <receiver android:name="cordova.plugins.Diagnostic$LocationProviderChangedReceiver">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="cordova.plugins.Diagnostic$NFCStateChangedReceiver">
+            <intent-filter>
+                <action android:name="android.nfc.action.ADAPTER_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="25" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
