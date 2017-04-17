@@ -168,7 +168,6 @@ module.exports.metadata =
     "ionic-plugin-keyboard": "2.2.1",
     "phonegap-plugin-push": "1.10.2",
     "cordova.plugins.diagnostic": "3.5.0"
-
 };
 // BOTTOM OF METADATA
 });

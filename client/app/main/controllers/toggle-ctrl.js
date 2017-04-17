@@ -1,14 +1,27 @@
 'use strict';
 angular.module('main')
-.controller('ToggleCtrl', function ($http, $rootScope, $cordovaDevice) {
+.controller('ToggleCtrl', function ($http, $rootScope, $cordovaDevice, $ionicPush, $scope) {
 
   $rootScope.locationOn = false;
-
+  $scope.token = '';
   this.toggleLocation = function () {
-    console.log('click', !$rootScope.locationOn);
+
+    $ionicPush.register().then(function(t) {
+      return $ionicPush.saveToken(t);
+    }).then(function(t) {
+      alert('Token saved:', t.token);
+      $scope.token = t.token;
+    });
+
+    $scope.$on('cloud:push:notification', function(event, data) {
+      var msg = data.message;
+      alert(msg.title + ': ' + msg.text);
+    });
+
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
       $rootScope.$on('rootScope:location', function (event, data) {
+        data.token = $scope.token;
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
@@ -37,4 +50,5 @@ angular.module('main')
     }
     $rootScope.$emit('rootScope: toggle', $rootScope.locationOn);
   };
+
 });
