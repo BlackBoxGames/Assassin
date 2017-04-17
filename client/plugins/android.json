@@ -19,6 +19,9 @@
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.blackboxgames.assassin"
+        },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
@@ -35,13 +38,6 @@
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.blackboxgames.assassin"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.blackboxgames.assassin"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "862559983879",
             "PACKAGE_NAME": "com.blackboxgames.assassin"
         }
     },

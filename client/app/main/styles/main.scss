@@ -28,7 +28,7 @@
 }
 
 .has-tabs-top {
-   top: 49px;
+  top: 49px;
 }
 
 @media screen and (orientation:landscape) {
@@ -56,4 +56,46 @@
 
 .popover-positive {
 	top: 50%;
+}
+
+#iw-container {
+  margin-bottom: 0px;
+  height: 250px;
+}
+
+#iw-container  .iw-title {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #48b5e9;
+  color: white;
+  margin: 0;
+}
+
+#iw-container .iw-content {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  margin-right: 1px;
+  padding: 5px auto 20px auto;
+  max-height: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.iw-content img {
+  position: absolute;
+  margin: 0 auto 0 auto; 
+  height: 200px;
+  width: 157px
+}
+
+#selfie {
+	position: absolute;
+  margin: 0 auto 0 auto; 
+  height: 150px;
+  width: 150px;
+  top: 50px;
+  padding: 0 0 0 5px;
 }
