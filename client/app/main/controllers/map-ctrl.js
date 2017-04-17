@@ -207,13 +207,13 @@ angular.module('main')
   };
 
   var init = function() {
+
     cordova.plugins.diagnostic.isLocationAvailable(function(available) {
       if (available) {
         $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
       } else {
         setTimeout(init, 1000);
       }
-
     }, function(error) {
       //if there's no location available, try again in a second
       console.error('The following error occured:', error);
