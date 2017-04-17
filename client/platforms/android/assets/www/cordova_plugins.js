@@ -113,20 +113,26 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova.plugins.diagnostic.Diagnostic",
-        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
-        "pluginId": "cordova.plugins.diagnostic",
-        "clobbers": [
-            "cordova.plugins.diagnostic"
-        ]
-    },
-    {
         "id": "ionic-plugin-keyboard.keyboard",
         "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
         "pluginId": "ionic-plugin-keyboard",
         "clobbers": [
             "cordova.plugins.Keyboard"
         ],
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-geolocation.geolocation",
+        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+        "pluginId": "cordova-plugin-geolocation",
+        "clobbers": [
+            "navigator.geolocation"
+        ]
+    },
+    {
+        "id": "cordova-plugin-geolocation.PositionError",
+        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+        "pluginId": "cordova-plugin-geolocation",
         "runs": true
     },
     {
@@ -159,8 +165,8 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "4.0.2",
     "cordova-plugin-statusbar": "2.2.2",
     "cordova-plugin-whitelist": "1.3.2",
-    "cordova.plugins.diagnostic": "3.5.0",
     "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-geolocation": "2.4.2",
     "phonegap-plugin-push": "1.10.2",
     "cordova.plugins.diagnostic": "3.5.0"
 };

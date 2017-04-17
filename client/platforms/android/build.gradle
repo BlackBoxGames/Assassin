@@ -251,8 +251,6 @@ dependencies {
     debugCompile(project(path: "CordovaLib", configuration: "debug"))
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
     compile "com.android.support:support-v4:24.1.1+"
-    compile "com.android.support:support-v4:+"
-    compile "com.android.support:appcompat-v7:+"
     compile "com.android.support:support-v13:23+"
     compile "com.google.android.gms:play-services-gcm:10.2+"
     compile "me.leolin:ShortcutBadger:1.1.14@aar"
