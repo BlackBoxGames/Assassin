@@ -6,10 +6,19 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
-  var title = 'Nathan';
-  var content = 'dynamic content, yo';
+  var pic = 'main/assets/images/sleepyNate.jpg';
+  var target = 'Sleepy Nate';
+
   var infowindow = new google.maps.InfoWindow({
-    content: '<h1 class="title">See, ' + title + '?</h1><h3>' + content + '</h3>'
+    content:
+      '<div id="iw-container">' +
+        '<div class="iw-title">' + target + '</div>' +
+          '<div class="iw-content">' +
+            '<img src=' + pic + ' id="selfie">' +
+            '<img src="main/assets/images/poloroid.png">' +
+          '</div>' +
+        '</div>' +
+      '</div>'
   });
 
   // object of other player's locations.  Expecing an object with deviceIds as a key and
@@ -167,6 +176,10 @@ angular.module('main')
 
         marker.addListener('click', function() {
           infowindow.open($scope.map, marker);
+        });
+
+        google.maps.event.addListener(map, 'click', function() {
+          infowindow.close();
         });
 
         $scope.players[point.deviceId] = marker;
