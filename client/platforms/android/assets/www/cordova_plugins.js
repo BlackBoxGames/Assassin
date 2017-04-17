@@ -128,6 +128,14 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "id": "cordova.plugins.diagnostic.Diagnostic",
+        "file": "plugins/cordova.plugins.diagnostic/www/android/diagnostic.js",
+        "pluginId": "cordova.plugins.diagnostic",
+        "clobbers": [
+            "cordova.plugins.diagnostic"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -144,7 +152,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.2",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-geolocation": "2.4.2",
-    "phonegap-plugin-push": "1.10.2"
+    "phonegap-plugin-push": "1.10.2",
+    "cordova.plugins.diagnostic": "3.5.0"
 };
 // BOTTOM OF METADATA
 });

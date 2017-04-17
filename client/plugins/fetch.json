@@ -99,5 +99,13 @@
         "variables": {
             "SENDER_ID": "862559983879"
         }
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
