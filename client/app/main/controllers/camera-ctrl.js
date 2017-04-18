@@ -1,7 +1,11 @@
 'use strict';
 angular.module('main')
-.controller('CameraCtrl', function ($scope, $cordovaCamera) {
+.controller('CameraCtrl', function ($scope, $rootScope, $cordovaCamera) {
   $scope.takePhoto = function () {
+    if (!$rootScope.loggedIn) {
+      alert('You must be signed in to play');
+      return;
+    }
     var options = {
       quality: 75,
       destinationType: Camera.DestinationType.DATA_URL,

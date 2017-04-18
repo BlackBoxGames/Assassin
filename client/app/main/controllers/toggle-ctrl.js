@@ -6,6 +6,11 @@ angular.module('main')
   $scope.token = '';
   this.toggleLocation = function () {
 
+    if (!$rootScope.loggedIn) {
+      alert('You must be signed in to play');
+      return;
+    }
+
     $ionicPush.register().then(function(t) {
       return $ionicPush.saveToken(t);
     }).then(function(t) {
@@ -17,6 +22,7 @@ angular.module('main')
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);
     });
+    console.log('click', !$rootScope.locationOn);
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
