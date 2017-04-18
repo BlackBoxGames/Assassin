@@ -39,6 +39,7 @@ angular.module('main')
           url: 'http://35.162.247.27:4000/logs/in',
           data: data
         }).then(function (response) {
+          $rootScope.$emit('rootScope:queue');
           console.log(response);
           listenOnce();
         }, function (err) {
@@ -61,7 +62,7 @@ angular.module('main')
         console.error(err);
       });
     }
-    $rootScope.$emit('rootScope: toggle', $rootScope.locationOn);
+    $rootScope.$emit('rootScope:toggle', $rootScope.locationOn);
   };
 
 });

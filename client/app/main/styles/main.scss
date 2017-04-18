@@ -54,8 +54,13 @@
 	top: 90%;
 }
 
-.popover-positive {
-	top: 50%;
+.takePhoto {
+  top: 0%;
+  left: 5%;
+}
+
+.button-block {
+  left: 0%;
 }
 
 #iw-container {
@@ -68,7 +73,7 @@
   font-size: 22px;
   font-weight: 400;
   padding: 10px;
-  background-color: #48b5e9;
+  background-color: #4a87ee;
   color: white;
   margin: 0;
 }
@@ -98,4 +103,16 @@
   width: 150px;
   top: 50px;
   padding: 0 0 0 5px;
+}
+
+img.camera {
+  margin: 10px 0 0 5%;
+}
+
+.ng-binding {
+  padding: 0 0 0 10px;
+}
+
+.tab-title {
+  padding: 0;
 }

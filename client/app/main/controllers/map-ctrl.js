@@ -206,8 +206,7 @@ angular.module('main')
     }
   };
 
-  var init = function() {
-
+  var init = function () {
     cordova.plugins.diagnostic.isLocationAvailable(function(available) {
       if (available) {
         $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);

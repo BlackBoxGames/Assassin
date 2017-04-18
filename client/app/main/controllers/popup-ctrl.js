@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('PopupCtrl',function($scope, $ionicPopup, $timeout) {
+.controller('PopupCtrl',function($scope, $rootScope, $ionicPopup, $timeout) {
 
 // Triggered on a button click, or some other target
   $scope.showPopup = function() {
@@ -55,14 +55,19 @@ angular.module('main')
   };
 
   // An alert dialog
-  $scope.showAlert = function() {
+  $scope.showAlert = function(title, template) {
     var alertPopup = $ionicPopup.alert({
-      title: 'Don\'t eat that!',
-      template: 'It might taste good'
+      title: title,
+      template: template
     });
 
     alertPopup.then(function(res) {
       console.log('Thank you for not eating my delicious ice cream cone');
     });
   };
+
+  $rootScope.$on('rootScope:queue', function (event) {
+    $scope.showAlert('Added to Queue', 'You will be added to the game when a space becomes available');
+  });
+
 });

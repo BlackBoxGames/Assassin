@@ -1,6 +1,5 @@
 'use strict';
 angular.module('main')
-
 .controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera) {
 
   $rootScope.loggedIn = false;
