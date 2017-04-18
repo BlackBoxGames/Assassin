@@ -9,6 +9,27 @@ angular.module('main')
     username: ''
   };
 
+  $scope.takeSelfie = function() {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+      $scope.image = 'data:image/jpeg;base64,' + imageData;
+      this.user.image = $scope.image;
+    }, function (err) {
+      console.error(err);
+    });
+  };
+
   $scope.signin = function() {
     if (!$scope.image) {
       alert('You must take a selfie before the game assigns you a target.');
