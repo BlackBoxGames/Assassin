@@ -27,7 +27,6 @@ lobby.assignTargets = () => {
     var head = lobby.queue.shift();
     var player = head;
     
-    
     while (lobby.queue.length) {
       var target = lobby.queue.splice(Math.floor(Math.random() * lobby.queue.length - 1), 1)[0];
       // choose a random target

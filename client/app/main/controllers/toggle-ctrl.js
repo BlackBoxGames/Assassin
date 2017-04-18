@@ -3,16 +3,14 @@ angular.module('main')
 .controller('ToggleCtrl', function ($http, $rootScope, $cordovaDevice, $ionicPush, $scope) {
 
   $rootScope.locationOn = false;
-  $scope.token = '';
+  $scope.token = false;
   this.toggleLocation = function () {
-
-    $ionicPush.register().then(function(t) {
-      return $ionicPush.saveToken(t);
-    }).then(function(t) {
-      alert('Token saved:', t.token);
-      $scope.token = t.token;
-    });
-
+    if (!$scope.token) {
+      $ionicPush.register().then(function(t) {
+        return $ionicPush.saveToken(t);
+      })
+    }
+    
     $scope.$on('cloud:push:notification', function(event, data) {
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);
