@@ -2,6 +2,8 @@ var db = require('../dbConfig')
 var User = require('../models/user')
 var Game = require('../models/game')
 var helper = require('./helperFunctions')
+var Request = require('request');
+var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhNmU4NjZiNC1lNDNlLTRmZGUtYjUyOS04N2Y2NGFkNmIxZjgifQ.nvHdqtZwy0YaSSC9AVtIp9CRLRxJ-VN7hFAjYh6NeZU';
 
 var lobby = {};
 lobby.gameActive = false;
@@ -27,7 +29,6 @@ lobby.assignTargets = () => {
     var head = lobby.queue.shift();
     var player = head;
     
-    
     while (lobby.queue.length) {
       var target = lobby.queue.splice(Math.floor(Math.random() * lobby.queue.length - 1), 1)[0];
       // choose a random target
@@ -49,6 +50,28 @@ who their target is
 lobby.assignNewTarget = (player, target) => {
   player.target = target.player;
   lobby.game[player.player] = player;
+
+  var options = {
+    method: 'POST',
+    url: 'https://api.ionic.io/push/notifications',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    json: {
+      tokens: [player.token],
+      profile: 'nathan',
+      notification: {
+        message: 'Your target is ' + player.target
+      }
+    }
+  };
+  if (player.token) {
+    Request(options, (error, response, body) => {
+      console.log(body);
+      // for push notifications
+    });
+  }
 };
 
 /*
@@ -137,7 +160,7 @@ lobby.addToQueue = (player) => {
       clearTimeout(lobby.timer);
       lobby.timer = setTimeout(() => {
         lobby.setGameStatus(true);
-      }, 5 * minute);
+      }, 5 * second);
 
     } else {
       clearTimeout(lobby.timer);

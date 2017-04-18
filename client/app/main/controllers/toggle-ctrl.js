@@ -3,18 +3,18 @@ angular.module('main')
 .controller('ToggleCtrl', function ($http, $rootScope, $cordovaDevice, $ionicPush, $scope) {
 
   $rootScope.locationOn = false;
-  $scope.token = '';
+  $scope.token = false;
   this.toggleLocation = function () {
-
     if (!$rootScope.loggedIn) {
       alert('You must be signed in to play');
       return;
     }
-
-    $ionicPush.register().then(function(t) {
-      return $ionicPush.saveToken(t);
-    }).then(function(t) {
-      alert('Token saved:', t.token);
+    
+    if (!$scope.token) {
+      $ionicPush.register().then(function(t) {
+        return $ionicPush.saveToken(t);
+      })
+    }.then(function(t) {
       $scope.token = t.token;
     });
 
