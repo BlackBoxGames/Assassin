@@ -14,9 +14,10 @@ angular.module('main')
       $ionicPush.register().then(function(t) {
         return $ionicPush.saveToken(t);
       })
-    }.then(function(t) {
-      $scope.token = t.token;
-    });
+      .then(function(t) {
+        $scope.token = t.token;
+      });
+    }
 
     $scope.$on('cloud:push:notification', function(event, data) {
       var msg = data.message;
