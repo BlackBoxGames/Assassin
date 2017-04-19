@@ -1,10 +1,11 @@
 'use strict';
 angular.module('main')
-.controller('PopupCtrl',function($scope, $rootScope, $ionicPopup, $timeout) {
+.controller('PopupCtrl',function($scope, $rootScope, $ionicPopup, $ionicPush, $timeout) {
 
 // Triggered on a button click, or some other target
   $scope.showPopup = function() {
     $scope.data = {};
+
 
     // An elaborate, custom popup
     var myPopup = $ionicPopup.show({
@@ -68,6 +69,11 @@ angular.module('main')
 
   $rootScope.$on('rootScope:queue', function (event) {
     $scope.showAlert('Added to Queue', 'You will be added to the game when a space becomes available');
+  });
+
+  $scope.$on('cloud:push:notification', function(event, data) {
+    var msg = data.message;
+    $scope.showAlert(msg.title, msg.text);
   });
 
 });
