@@ -335,6 +335,62 @@ describe('Assigning target logic tests', () => {
     done();
   });
 
+  it('Only returns player\'s target location', done => {
+    for (var i = 0; i < 5; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+      // add players to queue
+      helper.addOrUpdatePlayer({
+        deviceId: i,
+        lat: i,
+        lng: i
+      });
+      // add fake loc data of players
+    }
+    lobby.setGameStatus(true);
+    clock.tick(minute);
+    
+    request(app)
+      .get('/locations' + '?deviceId=0')
+      .expect(200)
+      .expect(res => {
+        expect(res.body.deviceId).to.equal(lobby.getPlayers()[0].target)
+      })
+      .end(done)
+  });
+
+  it('Retrieves target location on GET/target', done => {
+    for (var i = 0; i < 5; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+      // add players to queue
+      helper.addOrUpdatePlayer({
+        deviceId: i,
+        lat: i,
+        lng: i
+      });
+      // add fake loc data of players
+    }
+    lobby.setGameStatus(true);
+    clock.tick(minute);
+    
+    request(app)
+      .get('/target' + '?deviceId=0')
+      .expect(200)
+      .expect(res => {
+        expect(res.body.deviceId).to.equal(lobby.getPlayers()[0].target)
+      })
+      .end(done)
+  });
+
 
 
 });

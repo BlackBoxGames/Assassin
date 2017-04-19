@@ -3,6 +3,8 @@ var User = require('../models/user')
 var Game = require('../models/game')
 var helper = require('./helperFunctions')
 var Request = require('request');
+
+//this is bad practice, but for the sake of testing
 var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhNmU4NjZiNC1lNDNlLTRmZGUtYjUyOS04N2Y2NGFkNmIxZjgifQ.nvHdqtZwy0YaSSC9AVtIp9CRLRxJ-VN7hFAjYh6NeZU';
 
 var lobby = {};
@@ -62,7 +64,8 @@ lobby.assignNewTarget = (player, target) => {
       tokens: [player.token],
       profile: 'nathan',
       notification: {
-        message: 'Your target is ' + player.target
+        message: 'Your target is ' + target.username,
+        target: target
       }
     }
   };
@@ -75,6 +78,21 @@ lobby.assignNewTarget = (player, target) => {
     
   }
   
+};
+
+/*
+***
+Input: deviceId of player
+Grabs location of player's target
+Output: Target ID
+***
+*/
+lobby.getPlayerTarget = (player) => {
+  var target = lobby.game[player].target;
+  if (target) {
+    return target;
+  }
+  return 'Target not found!';
 };
 
 /*

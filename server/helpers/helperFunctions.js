@@ -25,6 +25,10 @@ helper.getAllPlayers = () => {
 	return players;
 }
 
+helper.getOnePlayerLocation = (player) => {
+	return players[player];
+}
+
 helper.removePlayerFromGame = (deviceId) => {
 	db.connectToDb();
 	return Game.deletePlayer(deviceId)

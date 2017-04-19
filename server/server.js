@@ -14,6 +14,7 @@ var userServer = require('./routes/userRoutes.js');
 var gameServer = require('./routes/gameRoutes.js');
 var locationServer = require('./routes/locationRoutes.js');
 var logServer = require('./routes/logRoutes.js');
+var targetServer = require('./routes/targetRoutes.js');
 
 //Middleware
 
@@ -25,6 +26,7 @@ app.use('/users', userServer);
 app.use('/games', gameServer);
 app.use('/locations', locationServer);
 app.use('/logs', logServer);
+app.use('/target', targetServer);
 
 var port = 4000;
 app.listen(port, function(){
