@@ -24,8 +24,8 @@ angular.module('main')
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
       $scope.image = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.selfie = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.$emit('rootScope: selfie', $rootScope.selfie);
+      $rootScope.photo = 'data:image/jpeg;base64,' + imageData;
+      $rootScope.$emit('rootScope: photo', $rootScope.photo);
       $scope.signIn();
     }, function (err) {
       console.error(err);
@@ -34,16 +34,16 @@ angular.module('main')
 
   $scope.signOut = function () {
     $scope.image = undefined;
-    $rootScope.selfie = undefined;
+    $rootScope.photo = undefined;
     $rootScope.loggedIn = false;
     this.user.username = '';
-    $rootScope.$emit('rootScope: selfie', $rootScope.selfie);
+    $rootScope.$emit('rootScope: photo', $rootScope.photo);
     $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
   };
 
   $scope.signIn = function() {
     if (!$scope.image) {
-      alert('You must take a selfie before the game assigns you a target.');
+      alert('You must send your photo before the game assigns you a target.');
       return $scope.takeSelfie();
     } else {
       $http({
@@ -55,7 +55,7 @@ angular.module('main')
         $rootScope.user = response.data;
         $rootScope.loggedIn = true;
         $rootScope.$emit('rootScope: user', $rootScope.user);
-        $rootScope.$emit('rootScope: selfie', $rootScope.selfie);
+        $rootScope.$emit('rootScope: photo', $rootScope.photo);
         $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
       }, function (err) {
         console.error(err);
