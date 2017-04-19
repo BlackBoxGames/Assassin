@@ -5,7 +5,7 @@ angular.module('main')
 
   $rootScope.loggedIn = false;
   $scope.announcer = '';
-  this.user = {
+  $scope.user = {
     username: ''
   };
 
@@ -37,8 +37,8 @@ angular.module('main')
     $rootScope.photo = undefined;
     $rootScope.loggedIn = false;
     this.user.username = '';
-    // $rootScope.$emit('rootScope: photo', $rootScope.photo);
-    // $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
+    $rootScope.$emit('rootScope: photo', $rootScope.photo);
+    $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
   };
 
   $scope.signIn = function() {
@@ -51,12 +51,12 @@ angular.module('main')
         url: 'http://35.162.247.27:4000/users',
         data: this.user
       }).then(function (response) {
-        $scope.announcer = 'Logged in as ' + this.user.username;
-        $rootScope.user = this.user.username;
+        $scope.announcer = 'Logged in as ' + $scope.user.username;
+        $rootScope.user = $scope.user.username;
         $rootScope.loggedIn = true;
         // $rootScope.$emit('rootScope: user', $rootScope.user);
         // $rootScope.$emit('rootScope: photo', $rootScope.photo);
-        // $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
+        $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
       }, function (err) {
         console.error(err);
       });
