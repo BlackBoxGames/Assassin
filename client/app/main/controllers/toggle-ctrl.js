@@ -31,9 +31,6 @@ angular.module('main')
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);
     });
-    console.log('click', !$rootScope.locationOn);
-
-    alert('In the toggle function');
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
@@ -50,7 +47,6 @@ angular.module('main')
           listenOnce();
           $rootScope.$emit('rootScope:queue');
           console.log(response);
-          listenOnce();
         }, function (err) {
           console.error(err);
         });
