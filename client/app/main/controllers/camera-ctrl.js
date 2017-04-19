@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('CameraCtrl', function ($scope, $rootScope, $cordovaCamera) {
+.controller('CameraCtrl', function ($scope, $rootScope, $http, $cordovaDevice, $cordovaCamera) {
   $scope.takePhoto = function () {
     if (!$rootScope.loggedIn) {
       alert('You must be signed in to play');
@@ -20,6 +20,23 @@ angular.module('main')
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
       $scope.imgURI = 'data:image/jpeg;base64,' + imageData;
+      $scope.sendKill();
+    }, function (err) {
+      console.error(err);
+    });
+  };
+
+  $scope.sendKill = function() {
+    var killData = {
+      image: $scope.imgURI,
+      deviceId: $cordovaDevice.getDevice()
+    };
+    $http({
+      method: 'POST',
+      url: 'http://35.162.247.27:4000/target',
+      data: killData
+    }).then(function (response) {
+      console.log(response);
     }, function (err) {
       console.error(err);
     });

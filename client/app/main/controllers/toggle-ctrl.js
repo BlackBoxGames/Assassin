@@ -10,7 +10,6 @@ angular.module('main')
       alert('You must be signed in to play');
       return;
     }
-    
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
         $scope.token = t.token;
@@ -29,6 +28,8 @@ angular.module('main')
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
       $rootScope.$on('rootScope:location', function (event, data) {
+        data.username = $rootScope.username;
+        data.photo = $rootScope.photo;
         data.token = $scope.token;
         $http({
           method: 'PUT',
