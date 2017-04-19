@@ -4,13 +4,14 @@ angular.module('main')
 
   $rootScope.locationOn = false;
   $scope.token = false;
+
   this.toggleLocation = function () {
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
+        $scope.token = t.token;
         return $ionicPush.saveToken(t);
-      })
+      });
     }
-    
     $scope.$on('cloud:push:notification', function(event, data) {
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);

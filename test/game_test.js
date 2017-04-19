@@ -80,7 +80,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
 
@@ -95,7 +96,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
     clock.tick(5 * minute);
@@ -116,7 +118,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
 
@@ -135,7 +138,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
 
@@ -163,7 +167,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
     lobby.setGameStatus(true);
@@ -179,7 +184,8 @@ describe('Game managing logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
     lobby.setGameStatus(true);
@@ -188,6 +194,21 @@ describe('Game managing logic tests', () => {
     expect(lobby.getGameStatus()).to.equal(false);
     done();
   });
+
+  it('Should be able to clear queue if player logs out', done => {
+    var player = {
+      player: 0,
+      target: null,
+      active: 1,
+      deviceId: 0,
+      token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
+    };
+    lobby.addToQueue(player);
+    expect(lobby.getQueue().length).to.equal(1);
+    lobby.removeFromQueue(player);
+    expect(lobby.getQueue().length).to.equal(0);
+    done();
+  })
 
 });
 
@@ -222,7 +243,8 @@ describe('Assigning target logic tests', () => {
           player: i,
           target: null,
           active: 1,
-          deviceId: i
+          deviceId: i,
+          token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
         });
       }
 
@@ -248,7 +270,8 @@ describe('Assigning target logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
     clock.tick(minute);
@@ -267,7 +290,8 @@ describe('Assigning target logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
 
@@ -278,7 +302,8 @@ describe('Assigning target logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
 
@@ -309,7 +334,8 @@ describe('Assigning target logic tests', () => {
         player: i,
         target: null,
         active: 1,
-        deviceId: i
+        deviceId: i,
+        token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
       });
     }
     clock.tick(minute);
@@ -323,7 +349,8 @@ describe('Assigning target logic tests', () => {
       player: target,
       target: null,
       active: 1,
-      deviceId: target
+      deviceId: target,
+      token: 'asdfasdfsadfasdfasdfasdfasdfasdfasd'
     });
 
     lobby.eliminatePlayer(players[0], players[players[0].target]);

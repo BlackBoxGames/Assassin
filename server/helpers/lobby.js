@@ -66,12 +66,15 @@ lobby.assignNewTarget = (player, target) => {
       }
     }
   };
+  
   if (player.token) {
     Request(options, (error, response, body) => {
       console.log(body);
       // for push notifications
     });
+    
   }
+  
 };
 
 /*
@@ -94,7 +97,6 @@ Should be called by a timer after queue is full
 lobby.setGameStatus = (active) => {
   lobby.gameActive = active;
   if (lobby.gameActive) {
-    console.log('Game was set to active');
     lobby.assignTargets();
   }
 };
@@ -176,6 +178,16 @@ lobby.addToQueue = (player) => {
 Output: Player object of queued players
 ***
  */
+
+lobby.removeFromQueue = (player) => {
+  for (var i = 0; i < lobby.queue.length; i++) {
+    if (lobby.queue[i].player === player.player) {
+      lobby.queue.splice(i, 1);
+      return;
+    } 
+  }
+ };
+
 lobby.getQueue = () => {
   return lobby.queue;
 
