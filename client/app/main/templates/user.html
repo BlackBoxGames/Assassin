@@ -1,11 +1,13 @@
 <ion-view>
   <!-- do you want padding? -->
-  <ion-content class="padding">
+  <ion-content ng-controller="UserCtrl" class="padding">
 
     <!-- content goes here -->
     <div class="list">
-      <label class="item item-input">
-        <input name="username" type="username" placeholder="username" ng-model="ctrl.user.username">
+      <h2 ng-show="$root.loggedIn">{{announcer}}<h2>
+      <img ng-show="$root.loggedIn" ng-src="{{$root.selfie}}" style="text-align: center">
+      <label class="item item-input" ng-show="!$root.loggedIn">
+        <input name="username" type="username" placeholder="username" ng-model="user.username" >
       </label>
     </div>
     <div class="padding">
@@ -14,17 +16,21 @@
         Take Selfie
       </button>
       <button class="button button-block button-outline button-positive"
-        ng-click="ctrl.signin()">
+        ng-show="!$root.loggedIn"
+        ng-click="signIn()">
         Sign in
       </button>
+      <button class="button button-block button-outline button-positive"
+        ng-show='$root.loggedIn'
+        ng-click="signOut()">
+        Sign Out
+      </button>
     </div>
-    <div>{{announcer}}<div>
 
     <div ng-controller="PopupCtrl">
       <button class="button" ng-click="showPopup($event)">
         Show Popup
       </button>
     </div>
-
   </ion-content>
 </ion-view>

@@ -31,7 +31,7 @@ router.put('/', (request, response) => {
   var username = request.body.username
   User.insertUser(username)
   .then(data => {
-    response.status(201).send()
+    response.status(201).send(username)
     return
   }).then(() => {
     db.disconnectFromDb();
