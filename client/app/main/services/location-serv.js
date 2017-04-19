@@ -44,6 +44,8 @@ angular.module('main')
           userLocation.deviceId = device.uuid;
           userLocation.lat = position.coords.latitude;
           userLocation.lng = position.coords.longitude;
+          userLocation.name = $rootScope.user;
+          userLocation.selfie = $rootScope.selfie;
           $rootScope.$emit('rootScope:location', userLocation);
           sendLocation(userLocation);
           setTimeout(getUserLocation, 2500);
