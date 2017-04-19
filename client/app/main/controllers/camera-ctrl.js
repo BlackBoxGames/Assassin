@@ -29,7 +29,7 @@ angular.module('main')
   $scope.sendKill = function() {
     var killData = {
       image: $scope.imgURI,
-      uuid: $cordovaDevice.getDevice()
+      deviceId: $cordovaDevice.getDevice()
     };
     $http({
       method: 'POST',
