@@ -81,7 +81,7 @@ Game.mapLocationToPlayer = (locationObj) => {
     target: null,
     active: null,
     deviceId: null,
-    pushToken: null,
+    token: null,
     username: null,
     image: null
   };
@@ -92,7 +92,7 @@ Game.mapLocationToPlayer = (locationObj) => {
   gameModel.player = locationObj.deviceId;
   gameModel.deviceId = locationObj.deviceId;
   gameModel.active = true;
-  gameModel.pushToken = locationObj.token;
+  gameModel.token = locationObj.token;
 
   return gameModel;
 };

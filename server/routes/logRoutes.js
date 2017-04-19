@@ -13,14 +13,15 @@ router.put('/in', (request, response) => {
 	var players = helper.getAllPlayers();
 	var client = request.body;
 	helper.addOrUpdatePlayer(client);
-	var data = db.connectToDb();
+	// var data = db.connectToDb();
 	var player = Game.mapLocationToPlayer(client);
 	lobby.addToQueue(player);
-	Game.insertPlayer(player)
+	response.status(200).send();
+	/*Game.insertPlayer(player)
 	.then(() => {
 		response.status(200).send();
 		db.disconnectFromDb();
-	});
+	});*/
 	//converts a locationObj from client to playerObj and inserts it into database
 });
 
@@ -33,7 +34,8 @@ router.put('/out', (request, response) => {
 				player = {
 					deviceId: player.deviceId,
 					lng: null,
-					lat: null
+					lat: null,
+					token: player.token
 				}	
 			var status = helper.addOrUpdatePlayer(player);
 			lobby.removeFromQueue(player);
