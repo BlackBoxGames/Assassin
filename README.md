@@ -74,7 +74,9 @@ If you have AAPT errors, try:
 cordova platform remove android
 cordova platform add android
 
-
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+gulp --cordova "run android"
 
 ## Contributing
 
