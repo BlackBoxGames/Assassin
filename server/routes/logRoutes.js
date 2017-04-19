@@ -36,6 +36,7 @@ router.put('/out', (request, response) => {
 					lat: null
 				}	
 			var status = helper.addOrUpdatePlayer(player);
+			lobby.removeFromQueue(player);
 			response.status(status).send();
 		} else {
 			//user is already logged out, just send 200

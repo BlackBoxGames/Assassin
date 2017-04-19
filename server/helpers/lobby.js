@@ -66,12 +66,15 @@ lobby.assignNewTarget = (player, target) => {
       }
     }
   };
+  
   if (player.token) {
     Request(options, (error, response, body) => {
       console.log(body);
       // for push notifications
     });
+    
   }
+  
 };
 
 /*
@@ -94,7 +97,6 @@ Should be called by a timer after queue is full
 lobby.setGameStatus = (active) => {
   lobby.gameActive = active;
   if (lobby.gameActive) {
-    console.log('Game was set to active');
     lobby.assignTargets();
   }
 };
@@ -137,11 +139,6 @@ Reset timer every time addToQueue is called
  */
 lobby.addToQueue = (player) => {
   //check to see if the player isn't already queued
-  if (lobby.game[player.player] === 'eliminated') {
-    console.log('Player', player.player, 'has already been eliminated');
-    return null;
-  }
-
   for (var enqueue of lobby.queue) {
     if (enqueue.player === player.player) {
       console.log('Player', player.player, 'has already been added to the queue');
@@ -176,6 +173,16 @@ lobby.addToQueue = (player) => {
 Output: Player object of queued players
 ***
  */
+
+lobby.removeFromQueue = (player) => {
+  for (var i = 0; i < lobby.queue.length; i++) {
+    if (lobby.queue[i].player === player.player) {
+      lobby.queue.splice(i, 1);
+      return;
+    } 
+  }
+ };
+
 lobby.getQueue = () => {
   return lobby.queue;
 

@@ -189,6 +189,20 @@ describe('Game managing logic tests', () => {
     done();
   });
 
+  it('Should be able to clear queue if player logs out', done => {
+    var player = {
+      player: 0,
+      target: null,
+      active: 1,
+      deviceId: 0
+    };
+    lobby.addToQueue(player);
+    expect(lobby.getQueue().length).to.equal(1);
+    lobby.removeFromQueue(player);
+    expect(lobby.getQueue().length).to.equal(0);
+    done();
+  })
+
 });
 
 describe('Assigning target logic tests', () => {
@@ -303,7 +317,7 @@ describe('Assigning target logic tests', () => {
     done();
   });
 
-  it('After a confirmed elimination, remove elimated player and not let him rejoin', done => {
+  it('After a confirmed elimination, remove eliminated player', done => {
     for (var i = 0; i < 5; i++) {
       lobby.addToQueue({
         player: i,
@@ -317,17 +331,6 @@ describe('Assigning target logic tests', () => {
     var target = players[0].target;
     clock.tick(minute);
     lobby.eliminatePlayer(players[0], players[target]);
-    expect(players[target]).to.equal('eliminated');
-
-    lobby.addToQueue({
-      player: target,
-      target: null,
-      active: 1,
-      deviceId: target
-    });
-
-    lobby.eliminatePlayer(players[0], players[players[0].target]);
-    
     expect(players[target]).to.equal('eliminated');
     done();
   });
