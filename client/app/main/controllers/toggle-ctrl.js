@@ -21,22 +21,26 @@ angular.module('main')
     }
     $scope.$on('cloud:push:notification', function(event, data) {
       var msg = data.message;
-      alert(msg.title + ': ' + msg.text)
-;    });
+      alert(msg.title + ': ' + msg.text);
+    });
     console.log('click', !$rootScope.locationOn);
+
+    alert('In the toggle function');
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
-      $rootScope.$on('rootScope:location', function (event, data) {
+
+      var listenOnce = $rootScope.$on('rootScope:location', function (event, data) {
+        data.token = $scope.token;
         data.username = $rootScope.username;
         data.photo = $rootScope.photo;
-        data.token = $scope.token;
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
           data: data
         }).then(function (response) {
           console.log(response);
+          listenOnce();
         }, function (err) {
           console.error(err);
         });

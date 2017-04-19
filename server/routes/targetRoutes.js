@@ -13,6 +13,9 @@ var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhNmU4NjZiNC1lNDNlLT
 router.post('/', (request, response) => {
   var assassinId = request.body.deviceId;
   var image = request.body.image;
+
+  console.log(request.body);
+
   // should have some verification that the photograph is legit
   // potential checks:
   // self check, distance check
@@ -62,3 +65,7 @@ router.get('/', (request, response) => {
 });
 
 module.exports = router;
+
+router.get('/all', (request, response) => {
+  response.status(200).send(lobby.getPlayers());
+})
