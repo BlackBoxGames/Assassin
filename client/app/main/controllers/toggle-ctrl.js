@@ -5,11 +5,13 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
-  if (!$rootScope.loggedIn) {
-    document.getElementById('toggle').disabled = 'true';
-  } else {
-    document.getElementById('toggle').disabled = 'false';
-  }
+  $rootScope.$on('rootScope: login', function() {
+    if (!$rootScope.loggedIn) {
+      document.getElementById('toggle').disabled = 'true';
+    } else {
+      document.getElementById('toggle').disabled = 'false';
+    }
+  });
 
   $scope.toggleLocation = function () {
     if (!$scope.token) {

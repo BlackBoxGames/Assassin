@@ -6,8 +6,8 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
-  var pic = 'main/assets/images/sleepyNate.jpg';
-  var target = 'Sleepy Nate';
+  var $rootScope.pic = 'main/assets/images/sleepyNate.jpg';
+  var $rootScope.target = 'Sleepy Nate';
 
   var infowindow = new google.maps.InfoWindow({
     content:
