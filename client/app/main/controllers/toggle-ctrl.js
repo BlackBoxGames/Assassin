@@ -5,12 +5,13 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
-  this.toggleLocation = function () {
-    if (!$rootScope.loggedIn) {
-      alert('You must be signed in to play');
-      return;
-    }
+  if (!$rootScope.loggedIn) {
+    document.getElementById('toggle').disabled = 'true';
+  } else {
+    document.getElementById('toggle').disabled = 'false';
+  }
 
+  $scope.toggleLocation = function () {
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
         $scope.token = t.token;
