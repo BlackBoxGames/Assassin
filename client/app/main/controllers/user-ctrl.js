@@ -1,51 +1,51 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function ($log, $http, $scope) {
 
+.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera) {
+
+  $rootScope.loggedIn = false;
   $scope.announcer = '';
-
   this.user = {
     username: ''
   };
-  // tries to sign the user up and displays the result in the UI
-  this.signup = function () {
-    $scope.announcer = 'That username is already taken.';
-    $http({
-      method: 'GET',
-      url: 'http://localhost:4000/users?username=' + this.user.username
-    }).then(function (response) {
-      if (response.status === 404) {
-        $http({
-          method: 'PUT',
-          url: 'http://localhost:4000/users',
-          data: this.user
-        }).then(function (response) {
-          console.log(response); //for linter
-        }, function (err) {
-          console.error(err);
-        });
-      } else {
-        $scope.announcer = 'That username is already taken.';
-      }
-    });
-  };
 
-  this.signin = function() {
-    $scope.announcer = 'User  does not exist, click the sign up button to create a new account';
-    $http({
-      method: 'GET',
-      url: 'http://localhost:4000/users?username=' + this.user.username
-    }).then(function (response) {
-      if (response.status === 200) {
-        //authenticate the user TODO: add google Auth stuff
-        $scope.announcer = 'Logged in as ' + this.user.username;
-      } else {
-        //Prompt user to create a new account
-        $scope.announcer = 'User  does not exist, click the sign up button to create a new account';
-        console.log($scope.announcer);
-      }
+  $scope.takeSelfie = function() {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+      $scope.image = 'data:image/jpeg;base64,' + imageData;
+      this.user.image = $scope.image;
     }, function (err) {
       console.error(err);
     });
+  };
+
+  $scope.signin = function() {
+    if (!$scope.image) {
+      alert('You must take a selfie before the game assigns you a target.');
+      return $scope.takeSelfie();
+    } else {
+      $http({
+        method: 'PUT',
+        url: 'http://35.162.247.27:4000/users',
+        data: this.user
+      }).then(function (response) {
+        $scope.announcer = 'Logged in as ' + response.data;
+        $rootScope.loggedIn = true;
+        $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
+      }, function (err) {
+        console.error(err);
+      });
+    }
   };
 });
