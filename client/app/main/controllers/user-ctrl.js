@@ -57,7 +57,6 @@ angular.module('main')
         $rootScope.$emit('rootScope: user', $rootScope.user);
         $rootScope.$emit('rootScope: selfie', $rootScope.selfie);
         $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
-        alert($rootScope.selfie);
       }, function (err) {
         console.error(err);
       });
