@@ -57,16 +57,16 @@ angular.module('main', [
           controller: 'CameraCtrl as ctrl'
         }
       }
-    })
-    .state('main.debug', {
-      url: '/debug',
-      views: {
-        'tab-debug': {
-          templateUrl: 'main/templates/debug.html',
-          controller: 'DebugCtrl as ctrl'
-        }
-      }
     });
+    // .state('main.debug', {
+    //   url: '/debug',
+    //   views: {
+    //     'tab-debug': {
+    //       templateUrl: 'main/templates/debug.html',
+    //       controller: 'DebugCtrl as ctrl'
+    //     }
+    //   }
+    // });
 })
 .run(function(Location, $ionicPlatform) {
   Location.initLocation();

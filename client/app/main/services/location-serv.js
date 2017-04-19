@@ -34,7 +34,7 @@ angular.module('main')
 
   var getTargetLocation = function () {
     if ($rootScope.locationOn === true) {
-      $http.get('http://35.162.247.27:4000/locations?deviceId=' + $cordovaDevice.getDevice());
+      $http.get('http://35.162.247.27:4000/locations?deviceId=' + $cordovaDevice.getDevice().uuid)
       .success(function(data) {
         console.log('Data from get', data);
         $rootScope.$emit('rootScope:players', data);
@@ -43,7 +43,6 @@ angular.module('main')
         console.log(err);
         $rootScope.$emit('rootScope:players', err);
       });
-
       setTimeout(getAllLocations, 5000);
     }
   };
@@ -71,12 +70,13 @@ angular.module('main')
 
   var initLocation = function() {
     getUserLocation();
-    getAllLocations();
+    // getAllLocations();
   };
 
   return {
     getUserLocation: getUserLocation,
     sendLocation: sendLocation,
+    getTargetLocation: getTargetLocation,
     getAllLocations: getAllLocations,
     initLocation: initLocation
   };

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('PopupCtrl',function($scope, $rootScope, $ionicPopup, $ionicPush, $timeout) {
+.controller('PopupCtrl',function($scope, $rootScope, $ionicPopup, $ionicPush, $timeout, Location) {
 
 // Triggered on a button click, or some other target
   $scope.showPopup = function() {
@@ -55,6 +55,22 @@ angular.module('main')
     });
   };
 
+  $scope.getTargetPhoto = function () {
+    if ($rootScope.locationOn === true) {
+      $http.get('http://35.162.247.27:4000/target?deviceId=' + $cordovaDevice.getDevice().uuid)
+      .success(function(data) {
+        console.log('Data from get', data);
+        $scope.showAlert(data.username, data.photo);
+      })
+      .error(function (err) {
+        console.log(err);
+        $scope.showAlert(data.username, data.photo);
+      });
+
+      setTimeout(getAllLocations, 5000);
+    }
+  };
+
   // An alert dialog
   $scope.showAlert = function(title, template) {
     var alertPopup = $ionicPopup.alert({
@@ -72,8 +88,13 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    var msg = data.message;
-    $scope.showAlert(msg.title, msg.text);
+    if (data.message === 'You have a new target') {
+      $scope.getTargetPhoto();
+      Location.getTargetLocation();
+    } else {
+      var msg = data.message;
+      $scope.showAlert(msg.title, msg.text);
+    }
   });
 
 });
