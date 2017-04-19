@@ -4,6 +4,7 @@ var path = require('path');
 var db = require('../dbConfig');
 var request = require('request');
 var helper = require('../helpers/helperFunctions.js');
+var lobby = require('../helpers/lobby.js');
 
 var User = require('../models/user')
 var Game = require('../models/game')
@@ -13,8 +14,17 @@ router.put('/', (request, response) => {
 });
 
 router.get('/', (request, response) => {
-	var players = helper.getAllPlayers();
-	response.status(200).send(players);
+  var location;
+  if (request.url.length === 1) {
+	 location = helper.getAllPlayers(); 
+  } else {
+    var deviceId = request.url.slice(request.url.indexOf('=') + 1);
+    var target = lobby.getPlayerTarget(deviceId);
+    location = helper.getOnePlayerLocation(target);
+    console.log(location);
+  }
+  
+	response.status(200).send(location);
 })
 
 module.exports = router;
