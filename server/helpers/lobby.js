@@ -139,11 +139,6 @@ Reset timer every time addToQueue is called
  */
 lobby.addToQueue = (player) => {
   //check to see if the player isn't already queued
-  if (lobby.game[player.player] === 'eliminated') {
-    console.log('Player', player.player, 'has already been eliminated');
-    return null;
-  }
-
   for (var enqueue of lobby.queue) {
     if (enqueue.player === player.player) {
       console.log('Player', player.player, 'has already been added to the queue');
