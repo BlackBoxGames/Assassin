@@ -26,7 +26,7 @@ app.use('/games', gameServer);
 app.use('/locations', locationServer);
 app.use('/logs', logServer);
 
-var port = 0904;
+var port = 4000;
 app.listen(port, function(){
   console.log('Server listening on port', port);
 });
