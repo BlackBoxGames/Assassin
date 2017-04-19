@@ -391,6 +391,37 @@ describe('Assigning target logic tests', () => {
       .end(done)
   });
 
+  it('Eliminates target and reassigns POST/target', done => {
+    for (var i = 0; i < 5; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+      // add players to queue
+      helper.addOrUpdatePlayer({
+        deviceId: i,
+        lat: i,
+        lng: i
+      });
+      // add fake loc data of players
+    }
+    lobby.setGameStatus(true);
+    clock.tick(minute);
+    
+    request(app)
+      .post('/target')
+      .send({
+        image: 'something.jpg',
+        deviceId: '0'
+      })
+      .expect(200)
+      .expect(res => {
+      })
+      .end(done)
+  });
+
 
 
 });

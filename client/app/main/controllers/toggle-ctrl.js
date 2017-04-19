@@ -25,6 +25,8 @@ angular.module('main')
     });
     console.log('click', !$rootScope.locationOn);
 
+    alert('In the toggle function');
+
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
 
