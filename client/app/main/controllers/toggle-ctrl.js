@@ -10,6 +10,7 @@ angular.module('main')
       alert('You must be signed in to play');
       return;
     }
+
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
         $scope.token = t.token;
@@ -39,6 +40,7 @@ angular.module('main')
           url: 'http://35.162.247.27:4000/logs/in',
           data: data
         }).then(function (response) {
+          listenOnce();
           $rootScope.$emit('rootScope:queue');
           console.log(response);
           listenOnce();
