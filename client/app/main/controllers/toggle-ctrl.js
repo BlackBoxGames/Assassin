@@ -27,7 +27,7 @@ angular.module('main')
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
-      
+
       var listenOnce = $rootScope.$on('rootScope:location', function (event, data) {
         data.token = $scope.token;
         data.username = $rootScope.username;
