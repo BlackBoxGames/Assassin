@@ -3,11 +3,10 @@
   <ion-content ng-controller="CameraCtrl" class="padding">
 
     <!-- content goes here -->
-    <h1>Photo</h1>
-     <button class="button button-default " ng-click="takePhoto()">
-      Take Photo
+    <button class="button button-positive takePhoto" ng-click="takePhoto()">
+      Take the Shot
     </button>
-    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
-    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300" style="text-align: center">
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" class="camera">
+    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300" class="camera">
   </ion-content>
 </ion-view>

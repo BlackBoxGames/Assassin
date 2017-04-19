@@ -1,6 +1,5 @@
 'use strict';
 angular.module('main')
-
 .controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera) {
 
   $rootScope.loggedIn = false;
@@ -37,8 +36,7 @@ angular.module('main')
     $rootScope.photo = undefined;
     $rootScope.loggedIn = false;
     this.user.username = '';
-    $rootScope.$emit('rootScope: photo', $rootScope.photo);
-    $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
+    $rootScope.$emit('rootScope: login');
   };
 
   $scope.signIn = function() {
@@ -56,7 +54,7 @@ angular.module('main')
         $rootScope.loggedIn = true;
         // $rootScope.$emit('rootScope: user', $rootScope.user);
         // $rootScope.$emit('rootScope: photo', $rootScope.photo);
-        $rootScope.$emit('rootScope: login', $rootScope.loggedIn);
+        $rootScope.$emit('rootScope: login');
       }, function (err) {
         console.error(err);
       });

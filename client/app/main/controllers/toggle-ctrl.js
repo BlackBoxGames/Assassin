@@ -5,6 +5,14 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
+  $rootScope.$on('rootScope: login', function() {
+    if (!$rootScope.loggedIn) {
+      document.getElementById('toggle').disabled = 'true';
+    } else {
+      document.getElementById('toggle').disabled = 'false';
+    }
+  });
+
   this.toggleLocation = function () {
     if (!$rootScope.loggedIn) {
       alert('You must be signed in to play');
@@ -23,9 +31,6 @@ angular.module('main')
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);
     });
-    console.log('click', !$rootScope.locationOn);
-
-    alert('In the toggle function');
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
@@ -39,8 +44,9 @@ angular.module('main')
           url: 'http://35.162.247.27:4000/logs/in',
           data: data
         }).then(function (response) {
-          console.log(response);
           listenOnce();
+          $rootScope.$emit('rootScope:queue');
+          console.log(response);
         }, function (err) {
           console.error(err);
         });
@@ -61,7 +67,7 @@ angular.module('main')
         console.error(err);
       });
     }
-    $rootScope.$emit('rootScope: toggle', $rootScope.locationOn);
+    $rootScope.$emit('rootScope:toggle', $rootScope.locationOn);
   };
 
 });

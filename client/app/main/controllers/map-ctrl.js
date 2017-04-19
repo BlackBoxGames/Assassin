@@ -6,8 +6,8 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
-  var pic = 'main/assets/images/sleepyNate.jpg';
-  var target = 'Sleepy Nate';
+  var $rootScope.pic = 'main/assets/images/sleepyNate.jpg';
+  var $rootScope.target = 'Sleepy Nate';
 
   var infowindow = new google.maps.InfoWindow({
     content:
@@ -206,8 +206,7 @@ angular.module('main')
     }
   };
 
-  var init = function() {
-
+  var init = function () {
     cordova.plugins.diagnostic.isLocationAvailable(function(available) {
       if (available) {
         $scope.renderMap(18, google.maps.MapTypeId.ROADMAP);
