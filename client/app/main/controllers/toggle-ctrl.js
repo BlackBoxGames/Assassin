@@ -13,7 +13,11 @@ angular.module('main')
     }
   });
 
-  $scope.toggleLocation = function () {
+  this.toggleLocation = function () {
+    if (!$rootScope.loggedIn) {
+      alert('You must be signed in to play');
+      return;
+    }
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
         $scope.token = t.token;
