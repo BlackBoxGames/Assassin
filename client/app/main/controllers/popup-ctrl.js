@@ -37,11 +37,10 @@ angular.module('main')
   // };
 
   // A confirm dialog
-  $scope.showConfirm = function(data) {
+  $scope.showConfirm = function(message, image) {
     var confirmPopup = $ionicPopup.confirm({
-      title: data.title,
-      subTitle: data.message,
-      template: data.image
+      title: message,
+      template: image
     });
 
     confirmPopup.then(function(res) {
@@ -66,7 +65,12 @@ angular.module('main')
 
   $scope.getTargetPhoto = function () {
     if ($rootScope.locationOn === true) {
-      $http.get('http://35.162.247.27:4000/target?deviceId=' + $cordovaDevice.getDevice().uuid)
+      var id = $cordovaDevice.getDevice().uuid;
+      $http({
+        url: 'http://35.162.247.27:4000/target',
+        method: 'GET',
+        params: {deviceId: id}
+      })
       .success(function(data) {
         console.log('Data from get', data);
         $scope.showAlert(data.username, data.image);
@@ -87,12 +91,14 @@ angular.module('main')
   });
 
   $rootScope.$on('rootScope: toggle', function (event, data) {
-    $scope.showAlert('Logging Out of the Game', 'You will be logged out in 1 minute. If you log back on in that time you may continue playing.');
+    if (!data) {
+      $scope.showAlert('Logging Out of the Game', 'You will be logged out in 1 minute. If you log back on in that time you may continue playing.');
+    }
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.route === 'newTarget') {
-      $scope.showAlert(data.target.username, data.target.image);
+      $scope.showAlert(data.target.username, /*data.target.image*/ 'image');
       $rootScope.target = data.target.username;
       $rootScope.image = data.target.image;
       Location.getTargetLocation();
@@ -101,7 +107,8 @@ angular.module('main')
     } else {
       var msg = data.message;
       $scope.showAlert(msg.title, msg.text);
-      $scope.getTargetPhoto();
+      // $scope.getTargetPhoto();
+      Location.getTargetLocation();
     }
   });
 

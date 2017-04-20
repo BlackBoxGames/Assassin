@@ -2,8 +2,6 @@
 angular.module('main')
 .factory('Location', function ($rootScope, $http, $cordovaGeolocation, $cordovaDevice) {
 
-  //var allPlayers = {};
-
   var sendLocation = function (userLocation) {
     $http({
       method: 'PUT',
@@ -34,16 +32,20 @@ angular.module('main')
 
   var getTargetLocation = function () {
     if ($rootScope.locationOn === true) {
-      $http.get('http://35.162.247.27:4000/locations?deviceId=' + $cordovaDevice.getDevice().uuid)
+      var id = $cordovaDevice.getDevice().uuid;
+      $http({
+        url: 'http://35.162.247.27:4000/locations',
+        method: 'GET',
+        params: {deviceId: id}
+      })
       .success(function(data) {
-        console.log('Data from get', data);
         $rootScope.$emit('rootScope:players', data);
       })
       .error(function (err) {
         console.log(err);
         $rootScope.$emit('rootScope:players', err);
       });
-      setTimeout(getAllLocations, 5000);
+      setTimeout(getTargetLocation, 5000);
     }
   };
 
