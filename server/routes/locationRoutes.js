@@ -24,7 +24,7 @@ router.get('/', (request, response) => {
   }
   var locObj = {};
   locObj[deviceId] = location;
-	response.status(200).send(lobObj);
+	response.status(200).send(locObj);
 })
 
 module.exports = router;
