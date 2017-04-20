@@ -4,21 +4,12 @@ angular.module('main')
 
   $rootScope.locationOn = false;
   $scope.token = false;
-  document.getElementById('toggle').disabled = 'true';
-
-  $rootScope.$on('rootScope: login', function() {
-    if (!$rootScope.loggedIn) {
-      document.getElementById('toggle').disabled = 'true';
-    } else {
-      document.getElementById('toggle').disabled = 'false';
-    }
-  });
 
   this.toggleLocation = function () {
-    // if (!$rootScope.loggedIn) {
-    //   alert('You must be signed in to play');
-    //   return;
-    // }
+    if (!$rootScope.loggedIn) {
+      alert('You must be signed in to play');
+      return;
+    }
     if (!$scope.token) {
       $ionicPush.register().then(function(t) {
         $scope.token = t.token;
@@ -28,10 +19,6 @@ angular.module('main')
         $scope.token = t.token;
       });
     }
-    // $scope.$on('cloud:push:notification', function(event, data) {
-    //   var msg = data.message;
-    //   alert(msg.title + ': ' + msg.text);
-    // });
 
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
