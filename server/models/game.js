@@ -93,7 +93,7 @@ Game.mapLocationToPlayer = (locationObj) => {
   gameModel.deviceId = locationObj.deviceId;
   gameModel.active = true;
   gameModel.token = locationObj.token;
-  gameModel.username = locationObj.username;
+  gameModel.username = locationObj.username || 'Guest';
   gameModel.image = locationObj.image;
 
   return gameModel;
