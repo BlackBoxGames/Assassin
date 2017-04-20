@@ -5,17 +5,10 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
-  $rootScope.$on('rootScope: login', function() {
-    if (!$rootScope.loggedIn) {
-      document.getElementById('toggle').disabled = 'true';
-    } else {
-      document.getElementById('toggle').disabled = 'false';
-    }
-  });
-
   this.toggleLocation = function () {
     if (!$rootScope.loggedIn) {
       alert('You must be signed in to play');
+      document.getElementById('toggle').checked = false;
       return;
     }
     if (!$scope.token) {
@@ -27,9 +20,9 @@ angular.module('main')
         $scope.token = t.token;
       });
     }
+
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
-
       var listenOnce = $rootScope.$on('rootScope:location', function (event, data) {
         listenOnce();
         data.token = $scope.token;

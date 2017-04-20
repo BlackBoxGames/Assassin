@@ -3,9 +3,8 @@
   <ion-content ng-controller="CameraCtrl" class="padding">
 
     <!-- content goes here -->
-    <h1>Photo</h1>
-     <button class="button button-default " ng-click="takePhoto()">
-      Shoot Target
+    <button class="button button-positive takePhoto" ng-click="takePhoto()">
+      Take Aim
     </button>
     <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
 

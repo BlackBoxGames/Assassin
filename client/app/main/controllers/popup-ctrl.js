@@ -36,21 +36,21 @@ angular.module('main')
   //   }, 3000);
   // };
 
-  // // A confirm dialog
-  // $scope.showConfirm = function() {
-  //   var confirmPopup = $ionicPopup.confirm({
-  //     title: 'Consume Ice Cream',
-  //     template: 'Are you sure you want to eat this ice cream?'
-  //   });
+  // A confirm dialog
+  $scope.showConfirm = function(message, image) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: message,
+      template: image
+    });
 
-  //   confirmPopup.then(function(res) {
-  //     if (res) {
-  //       console.log('You are sure');
-  //     } else {
-  //       console.log('You are not sure');
-  //     }
-  //   });
-  // };
+    confirmPopup.then(function(res) {
+      if (res) {
+        console.log('You are sure');
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };
 
   // An alert dialog
   $scope.showAlert = function(title, template) {
@@ -65,17 +65,24 @@ angular.module('main')
 
   $scope.getTargetPhoto = function () {
     if ($rootScope.locationOn === true) {
-      $http.get('http://35.162.247.27:4000/target?deviceId=' + $cordovaDevice.getDevice().uuid)
+      var id = $cordovaDevice.getDevice().uuid;
+      $http({
+        url: 'http://35.162.247.27:4000/target',
+        method: 'GET',
+        params: {deviceId: id}
+      })
       .success(function(data) {
         console.log('Data from get', data);
-        $scope.showAlert(data.username, data.photo);
+        $scope.showAlert(data.username, data.image);
+        $rootScope.target = data.username;
+        $rootScope.image = data.image;
       })
       .error(function (err) {
         console.log(err);
-        $scope.showAlert(data.username, data.photo);
+        $scope.showAlert(data.username, data.image);
+        $rootScope.target = data.username;
+        $rootScope.image = data.image;
       });
-
-      setTimeout(getAllLocations, 5000);
     }
   };
 
@@ -83,19 +90,27 @@ angular.module('main')
     $scope.showAlert('Added to Queue', 'You will be added to the game when a space becomes available');
   });
 
-  if (!$scope.token) {
-    $ionicPush.register().then(function(t) {
-      $scope.token = t.token;
-      return $ionicPush.saveToken(t);
-    })
-    .then(function(t) {
-      $scope.token = t.token;
-      alert(t.token);
-    });
-  }
+  $rootScope.$on('rootScope: toggle', function (event, data) {
+    if (!data) {
+      $scope.showAlert('Logging Out of the Game', 'You will be logged out in 1 minute. If you log back on in that time you may continue playing.');
+    }
+  });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    alert(data.message);
+    if (data.route === 'newTarget') {
+      $scope.showAlert(data.target.username, /*data.target.image*/ 'image');
+      $rootScope.target = data.target.username;
+      $rootScope.image = data.target.image;
+      Location.getTargetLocation();
+    } else if (data.route === 'killed') {
+      $scope.showConfirm(data.message, data.image);
+    } else {
+      var msg = data.message;
+      Location.getTargetLocation();
+      $scope.showAlert(msg.title, msg.text);
+      // $scope.getTargetPhoto();
+      Location.getTargetLocation();
+    }
   });
 
 });
