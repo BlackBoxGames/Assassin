@@ -36,6 +36,7 @@ angular.module('main')
       $rootScope.locationOn = true;
 
       var listenOnce = $rootScope.$on('rootScope:location', function (event, data) {
+        listenOnce();
         data.token = $scope.token;
         data.username = $rootScope.username;
         data.photo = $rootScope.photo;
@@ -44,8 +45,7 @@ angular.module('main')
           url: 'http://35.162.247.27:4000/logs/in',
           data: data
         }).then(function (response) {
-          listenOnce();
-          $rootScope.$emit('rootScope:queue');
+          $rootScope.$emit('rootScope:queue', null);
           console.log(response);
         }, function (err) {
           console.error(err);
@@ -67,7 +67,7 @@ angular.module('main')
         console.error(err);
       });
     }
-    $rootScope.$emit('rootScope:toggle', $rootScope.locationOn);
+    $rootScope.$emit('rootScope: toggle', $rootScope.locationOn);
   };
 
 });

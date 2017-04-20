@@ -50,11 +50,11 @@ angular.module('main')
         data: this.user
       }).then(function (response) {
         $scope.announcer = 'Logged in as ' + $scope.user.username;
-        $rootScope.user = $scope.user.username;
+        $rootScope.username = $scope.user.username;
         $rootScope.loggedIn = true;
         // $rootScope.$emit('rootScope: user', $rootScope.user);
         // $rootScope.$emit('rootScope: photo', $rootScope.photo);
-        $rootScope.$emit('rootScope: login');
+        $rootScope.$emit('rootScope: login', null);
       }, function (err) {
         console.error(err);
       });
