@@ -44,8 +44,10 @@ router.post('/', (request, response) => {
     }
   };
   
+
   if (targetObj.token) {
     Request(options, (error, res, body) => {
+      console.log(targetObj.token);
       console.log('To the killed', body);
       lobby.eliminatePlayer(assassinObj, targetObj);
       // for push notifications
