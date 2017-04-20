@@ -41,13 +41,14 @@ router.post('/', (request, response) => {
         message: 'You were assassinated by ' + assassinObj.username,
         title: 'You\'ve been killed!',
         //sound: gunshot.wmv?
-        image: image
+        image: image,
+        route: 'killed'
       }
     }
   };
   
   if (targetObj.token) {
-    Request(options, (error, response, body) => {
+    request(options, (error, response, body) => {
       console.log(body);
       // for push notifications
     });
