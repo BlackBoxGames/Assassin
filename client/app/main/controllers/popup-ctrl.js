@@ -40,6 +40,7 @@ angular.module('main')
   $scope.showConfirm = function(message, image) {
     var confirmPopup = $ionicPopup.confirm({
       title: message,
+      template: image
     });
 
     confirmPopup.then(function(res) {
@@ -109,7 +110,10 @@ angular.module('main')
       $scope.showAlert(msg.title, msg.text);
       // $scope.getTargetPhoto();
       Location.getTargetLocation();
+<<<<<<< ef6d36426f89acb4cd77d34a8138e85d6bb5483d
 
+=======
+>>>>>>> game is almost done
     }
   });
 
