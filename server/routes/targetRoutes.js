@@ -48,7 +48,7 @@ router.post('/', (request, response) => {
   
   console.log(targetObj.username);
   if (targetObj.token) {
-    Request(options, (error, response, body) => {
+    Request(options, (error, res, body) => {
       console.log('To the killed', body);
       // for push notifications
       response.status(200).send();
