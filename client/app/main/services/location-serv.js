@@ -37,8 +37,6 @@ angular.module('main')
       $http.get('http://35.162.247.27:4000/locations?deviceId=' + $cordovaDevice.getDevice().uuid)
       .success(function(data) {
         console.log('Data from get', data);
-        $rootScope.pic = data.photo;
-        $rootScope.target = data.target;
         $rootScope.$emit('rootScope:players', data);
       })
       .error(function (err) {

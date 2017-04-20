@@ -36,21 +36,22 @@ angular.module('main')
   //   }, 3000);
   // };
 
-  // // A confirm dialog
-  // $scope.showConfirm = function() {
-  //   var confirmPopup = $ionicPopup.confirm({
-  //     title: 'Consume Ice Cream',
-  //     template: 'Are you sure you want to eat this ice cream?'
-  //   });
+  // A confirm dialog
+  $scope.showConfirm = function(data) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: data.title,
+      subTitle: data.message,
+      template: data.image
+    });
 
-  //   confirmPopup.then(function(res) {
-  //     if (res) {
-  //       console.log('You are sure');
-  //     } else {
-  //       console.log('You are not sure');
-  //     }
-  //   });
-  // };
+    confirmPopup.then(function(res) {
+      if (res) {
+        console.log('You are sure');
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };
 
   // An alert dialog
   $scope.showAlert = function(title, template) {
@@ -68,14 +69,16 @@ angular.module('main')
       $http.get('http://35.162.247.27:4000/target?deviceId=' + $cordovaDevice.getDevice().uuid)
       .success(function(data) {
         console.log('Data from get', data);
-        $scope.showAlert(data.target, data.photo);
+        $scope.showAlert(data.username, data.image);
+        $rootScope.target = data.username;
+        $rootScope.image = data.image;
       })
       .error(function (err) {
         console.log(err);
-        $scope.showAlert(data.target, data.photo);
+        $scope.showAlert(data.username, data.image);
+        $rootScope.target = data.username;
+        $rootScope.image = data.image;
       });
-
-      setTimeout(getAllLocations, 5000);
     }
   };
 
@@ -83,13 +86,22 @@ angular.module('main')
     $scope.showAlert('Added to Queue', 'You will be added to the game when a space becomes available');
   });
 
+  $rootScope.$on('rootScope: toggle', function (event, data) {
+    $scope.showAlert('Logging Out of the Game', 'You will be logged out in 1 minute. If you log back on in that time you may continue playing.');
+  });
+
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.message === 'You have a new target') {
-      $scope.getTargetPhoto();
+    if (data.route === 'newTarget') {
+      $scope.showAlert(data.target.username, data.target.image);
+      $rootScope.target = data.target.username;
+      $rootScope.image = data.target.image;
       Location.getTargetLocation();
+    } else if (data.route === 'killed') {
+      $scope.showConfirm(data.message, data.image);
     } else {
       var msg = data.message;
       $scope.showAlert(msg.title, msg.text);
+      $scope.getTargetPhoto();
     }
   });
 
