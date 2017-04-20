@@ -51,7 +51,6 @@ router.post('/', (request, response) => {
     Request(options, (error, res, body) => {
       console.log('To the killed', body);
       // for push notifications
-      response.status(200).send();
     });
     
   }
