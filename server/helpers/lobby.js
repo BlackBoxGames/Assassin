@@ -65,7 +65,8 @@ lobby.assignNewTarget = (player, target) => {
       profile: 'nathan',
       notification: {
         message: 'Your target is ' + target.username,
-        target: target
+        target: target,
+        route: 'newTarget'
       }
     }
   };
