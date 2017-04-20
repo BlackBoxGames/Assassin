@@ -23,8 +23,6 @@ router.post('/', (request, response) => {
   var targetObj = players[targetId];
   var assassinObj = players[assassinId];
 
-  lobby.eliminatePlayer(assassinObj, targetObj);
-
   var options = {
     method: 'POST',
     url: 'https://api.ionic.io/push/notifications',
@@ -46,10 +44,10 @@ router.post('/', (request, response) => {
     }
   };
   
-  console.log(targetObj.username);
   if (targetObj.token) {
     Request(options, (error, res, body) => {
       console.log('To the killed', body);
+      lobby.eliminatePlayer(assassinObj, targetObj);
       // for push notifications
     });
     
