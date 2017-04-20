@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-var request = require('request');
+var Request = require('request');
 
 var helper = require('../helpers/helperFunctions');
 var lobby = require('../helpers/lobby');

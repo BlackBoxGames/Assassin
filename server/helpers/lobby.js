@@ -76,7 +76,6 @@ lobby.assignNewTarget = (player, target) => {
       console.log(body);
       // for push notifications
     });
-    
   }
   
 };
