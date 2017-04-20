@@ -39,7 +39,7 @@ angular.module('main')
   };
 
   $scope.signIn = function() {
-    if ($scope.image) {
+    if (!$scope.image) {
       alert('You must send your photo before the game assigns you a target.');
       return $scope.takePhoto();
     } else {
