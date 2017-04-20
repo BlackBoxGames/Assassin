@@ -42,14 +42,14 @@ router.post('/', (request, response) => {
           //sound: gunshot.wmv?
           image: image
         }
-        
       }
     }
   };
   
+  console.log(targetObj.username);
   if (targetObj.token) {
     Request(options, (error, response, body) => {
-      console.log(body);
+      console.log('To the killed', body);
       // for push notifications
     });
     

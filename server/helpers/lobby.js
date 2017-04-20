@@ -75,7 +75,7 @@ lobby.assignNewTarget = (player, target) => {
   
   if (player.token) {
     Request(options, (error, response, body) => {
-      console.log(body);
+      console.log('To the assassin', body);
       // for push notifications
     });
   }
