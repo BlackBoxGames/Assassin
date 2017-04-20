@@ -48,7 +48,7 @@ router.post('/', (request, response) => {
   };
   
   if (targetObj.token) {
-    request(options, (error, response, body) => {
+    Request(options, (error, response, body) => {
       console.log(body);
       // for push notifications
     });
