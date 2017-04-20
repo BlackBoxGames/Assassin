@@ -44,6 +44,9 @@ angular.module('main')
       alert('You must send your photo before the game assigns you a target.');
       return $scope.takePhoto();
     } else {
+      if ($scope.user.username === '') {
+        return alert('you must enter a valid username.');
+      }
       $http({
         method: 'PUT',
         url: 'http://35.162.247.27:4000/users',
