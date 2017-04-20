@@ -25,7 +25,6 @@ angular.module('main')
       $scope.image = 'data:image/jpeg;base64,' + imageData;
       $rootScope.photo = 'data:image/jpeg;base64,' + imageData;
       $rootScope.$emit('rootScope: photo', $rootScope.photo);
-      $scope.signIn();
     }, function (err) {
       console.error(err);
     });
@@ -36,7 +35,7 @@ angular.module('main')
     $rootScope.photo = undefined;
     $rootScope.loggedIn = false;
     this.user.username = '';
-    $rootScope.$emit('rootScope: login');
+    $rootScope.$emit('rootScope: login', null);
   };
 
   $scope.signIn = function() {
@@ -59,6 +58,7 @@ angular.module('main')
         // $rootScope.$emit('rootScope: photo', $rootScope.photo);
         $rootScope.$emit('rootScope: login', null);
       }, function (err) {
+        $rootScope.$emit('rootScope: logFail')
         console.error(err);
       });
     }

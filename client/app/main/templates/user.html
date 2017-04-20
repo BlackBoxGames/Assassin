@@ -5,7 +5,7 @@
     <!-- content goes here -->
     <div class="list">
       <h2 ng-show="$root.loggedIn">{{announcer}}<h2>
-      <img ng-show="$root.loggedIn" ng-src="{{$root.photo}}" style="text-align: center">
+      <img ng-show="image" ng-src="{{$root.photo}}" style="text-align: center">
       <label class="item item-input" ng-show="!$root.loggedIn">
         <input name="username" type="username" placeholder="username" ng-model="user.username" >
       </label>
