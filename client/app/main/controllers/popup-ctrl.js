@@ -83,16 +83,19 @@ angular.module('main')
     $scope.showAlert('Added to Queue', 'You will be added to the game when a space becomes available');
   });
 
+  if (!$scope.token) {
+    $ionicPush.register().then(function(t) {
+      $scope.token = t.token;
+      return $ionicPush.saveToken(t);
+    })
+    .then(function(t) {
+      $scope.token = t.token;
+      alert(t.token);
+    });
+  }
+
   $scope.$on('cloud:push:notification', function(event, data) {
-    alert(data.route);
-    if (data.route === 'newTarget') {
-      $scope.getTargetPhoto();
-      Location.getTargetLocation();
-    } else {
-      var msg = data.message;
-      Location.getTargetLocation();
-      $scope.showAlert(msg.title, msg.text);
-    }
+    alert(data.message);
   });
 
 });

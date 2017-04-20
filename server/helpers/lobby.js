@@ -236,7 +236,7 @@ lobby.testPushNotification = () => {
                   deviceId: '123',
                   image: 'something.jpg'
                 },
-        route: 'newTarget'
+        route: 'localtest'
       }
     }
   };

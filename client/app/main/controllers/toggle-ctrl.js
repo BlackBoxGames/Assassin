@@ -27,11 +27,6 @@ angular.module('main')
         $scope.token = t.token;
       });
     }
-    $scope.$on('cloud:push:notification', function(event, data) {
-      var msg = data.message;
-      alert(msg.title + ': ' + msg.text);
-    });
-
     if ($rootScope.locationOn === false) {
       $rootScope.locationOn = true;
 

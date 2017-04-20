@@ -358,7 +358,7 @@ describe('Assigning target logic tests', () => {
       .get('/locations' + '?deviceId=0')
       .expect(200)
       .expect(res => {
-        expect(res.body.deviceId).to.equal(lobby.getPlayers()[0].target)
+        expect(res.body[0].deviceId).to.equal(lobby.getPlayers()[0].target)
       })
       .end(done)
   });
