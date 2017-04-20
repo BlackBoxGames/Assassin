@@ -7,7 +7,7 @@ angular.module('main')
 
   this.toggleLocation = function () {
     if (!$rootScope.loggedIn) {
-      alert('You must be signed in to play');
+      $rootScope.$emit('rootScope: toggleFail');
       document.getElementById('toggle').checked = false;
       return;
     }
