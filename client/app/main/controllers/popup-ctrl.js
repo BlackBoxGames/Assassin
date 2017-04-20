@@ -84,11 +84,13 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.message === 'You have a new target') {
+    alert(data.route);
+    if (data.route === 'newTarget') {
       $scope.getTargetPhoto();
       Location.getTargetLocation();
     } else {
       var msg = data.message;
+      Location.getTargetLocation();
       $scope.showAlert(msg.title, msg.text);
     }
   });

@@ -34,11 +34,17 @@ angular.module('main')
 
   var getTargetLocation = function () {
     if ($rootScope.locationOn === true) {
-      $http.get('http://35.162.247.27:4000/locations?deviceId=' + $cordovaDevice.getDevice().uuid)
+      var deviceId = $cordovaDevice.getDevice().uuid;
+      alert('Getting target location');
+      $http(
+        {
+          url: 'http://35.162.247.27:4000/locations',
+          method: 'GET',
+          params: {deviceId: deviceId}
+        })
       .success(function(data) {
         console.log('Data from get', data);
-        $rootScope.pic = data.photo;
-        $rootScope.target = data.target;
+        alert('Got data');
         $rootScope.$emit('rootScope:players', data);
       })
       .error(function (err) {
