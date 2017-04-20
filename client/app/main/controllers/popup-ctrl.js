@@ -40,7 +40,6 @@ angular.module('main')
   $scope.showConfirm = function(message, image) {
     var confirmPopup = $ionicPopup.confirm({
       title: message,
-      template: image
     });
 
     confirmPopup.then(function(res) {
@@ -110,6 +109,7 @@ angular.module('main')
       $scope.showAlert(msg.title, msg.text);
       // $scope.getTargetPhoto();
       Location.getTargetLocation();
+
     }
   });
 
