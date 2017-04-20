@@ -106,6 +106,7 @@ angular.module('main')
       $scope.showConfirm(data.message, data.image);
     } else {
       var msg = data.message;
+      Location.getTargetLocation();
       $scope.showAlert(msg.title, msg.text);
       // $scope.getTargetPhoto();
       Location.getTargetLocation();
