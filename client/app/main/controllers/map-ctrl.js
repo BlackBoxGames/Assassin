@@ -6,15 +6,15 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
-  var $rootScope.pic = 'main/assets/images/sleepyNate.jpg';
-  var $rootScope.target = 'Sleepy Nate';
+  $rootScope.image = 'main/assets/images/sleepyNate.jpg';
+  $rootScope.target = 'Sleepy Nate';
 
   var infowindow = new google.maps.InfoWindow({
     content:
       '<div id="iw-container">' +
-        '<div class="iw-title">' + target + '</div>' +
+        '<div class="iw-title">' + $rootScope.target + '</div>' +
           '<div class="iw-content">' +
-            '<img src=' + pic + ' id="selfie">' +
+            '<img src=' + $rootScope.image + ' id="selfie">' +
             '<img src="main/assets/images/poloroid.png">' +
           '</div>' +
         '</div>' +
