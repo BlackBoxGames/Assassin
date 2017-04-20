@@ -4,7 +4,6 @@ angular.module('main')
 
   $rootScope.locationOn = false;
   $scope.token = false;
-  document.getElementById('toggle').disabled = 'true';
 
   this.toggleLocation = function () {
     if (!$rootScope.loggedIn) {
