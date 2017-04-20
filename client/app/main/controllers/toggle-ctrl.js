@@ -30,8 +30,6 @@ angular.module('main')
     $scope.$on('cloud:push:notification', function(event, data) {
       var msg = data.message;
       alert(msg.title + ': ' + msg.text);
-      alert(data.image);
-      alert(data.target.toString());
     });
 
     if ($rootScope.locationOn === false) {
