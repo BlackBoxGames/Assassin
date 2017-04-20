@@ -58,7 +58,7 @@ angular.module('main')
         // $rootScope.$emit('rootScope: photo', $rootScope.photo);
         $rootScope.$emit('rootScope: login', null);
       }, function (err) {
-        $rootScope.$emit('rootScope: logFail')
+        $rootScope.$emit('rootScope: logFail');
         console.error(err);
       });
     }

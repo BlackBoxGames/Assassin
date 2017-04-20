@@ -422,7 +422,7 @@ describe('Assigning target logic tests', () => {
       .end(done)
   });
 
-  it('Is being used for a server push', done => {
+  xit('Is being used for a server push', done => {
     lobby.testPushNotification(done);
   });
 
