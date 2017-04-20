@@ -112,5 +112,4 @@ angular.module('main')
       Location.getTargetLocation();
     }
   });
-
 });

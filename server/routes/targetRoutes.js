@@ -14,8 +14,6 @@ router.post('/', (request, response) => {
   var assassinId = request.body.deviceId;
   var image = request.body.image;
 
-  console.log(request.body);
-
   // should have some verification that the photograph is legit
   // potential checks:
   // self check, distance check
@@ -38,11 +36,13 @@ router.post('/', (request, response) => {
       tokens: [targetObj.token],
       profile: 'nathan',
       notification: {
-        message: 'You were assassinated by ' + assassinObj.username,
-        title: 'You\'ve been killed!',
-        //sound: gunshot.wmv?
-        image: image,
-        route: 'killed'
+        android: {
+          message: 'You were assassinated by ' + assassinObj.username,
+          title: 'You\'ve Been Killed!',
+          //sound: gunshot.wmv?
+          image: image
+        }
+        
       }
     }
   };
