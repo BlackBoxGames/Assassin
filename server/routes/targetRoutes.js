@@ -51,11 +51,12 @@ router.post('/', (request, response) => {
     Request(options, (error, response, body) => {
       console.log('To the killed', body);
       // for push notifications
+      response.status(200).send();
     });
     
   }
 
-  response.status(200).send();
+  
 });
 
 // route for giving client the target information (location, username, photo)
