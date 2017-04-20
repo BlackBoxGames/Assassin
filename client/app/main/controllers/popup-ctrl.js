@@ -96,20 +96,25 @@ angular.module('main')
     }
   });
 
+  $rootScope.$on('rootScope: logFail', function (event) {
+    $scope.showAlert('Login Failed', 'We\'re sorry for the inconvenience. Please try again later.');
+  });
+
+  $rootScope.$on('rootScope: toggleFail', function (event) {
+    $scope.showAlert('Please Log In', 'You must be signed in to play');
+  });
+
+
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.route === 'newTarget') {
-      $scope.showAlert(data.target.username, /*data.target.image*/ 'image');
-      $rootScope.target = data.target.username;
-      $rootScope.image = data.target.image;
+    if (data.message.title === 'Your New Target') {
+      $scope.showAlert(data.message.text, data.message.raw.image);
+      $rootScope.target = data.message.text;
+      $rootScope.image = data.message.raw.image;
       Location.getTargetLocation();
-    } else if (data.route === 'killed') {
-      $scope.showConfirm(data.message, data.image);
+    } else if (data.title === 'You\'ve Been Killed!') {
+      $scope.showConfirm(data.message.title, data.message.raw.image);
     } else {
-      var msg = data.message;
-      Location.getTargetLocation();
-      $scope.showAlert(msg.title, msg.text);
-      // $scope.getTargetPhoto();
-      Location.getTargetLocation();
+      $scope.showAlert('Ooops', 'There was an error');
     }
   });
 });
