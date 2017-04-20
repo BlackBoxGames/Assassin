@@ -21,10 +21,10 @@ router.get('/', (request, response) => {
     var deviceId = request.url.slice(request.url.indexOf('=') + 1);
     var target = lobby.getPlayerTarget(deviceId);
     location = helper.getOnePlayerLocation(target);
-    console.log(location);
   }
-  
-	response.status(200).send(location);
+  var locObj = {};
+  locObj[deviceId] = location;
+	response.status(200).send(lobObj);
 })
 
 module.exports = router;

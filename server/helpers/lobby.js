@@ -219,4 +219,31 @@ lobby.clearPlayers = () => {
   lobby.game = {};
 }
 
+lobby.testPushNotification = () => {
+  var options = {
+    method: 'POST',
+    url: 'https://api.ionic.io/push/notifications',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    json: {
+      tokens: ['fR7iF3WzeJc:APA91bEXztlHCeJKz0dk62354mFdfHsPbR5-0UxTyykvZ3QzqJE-rcY2e0yBDFEE3Pf_9Ct7alM-LhSXDRHbqFFMPCfzlV9qpOOIUchMZIAMTzDu2qM9aer7Z83oyk8j7NSUUkB0KECu'],
+      profile: 'nathan',
+      notification: {
+        message: 'This is a test from our localserver',
+        target: {
+                  deviceId: '123',
+                  image: 'something.jpg'
+                },
+        route: 'newTarget'
+      }
+    }
+  };
+  
+  Request(options, (error, response, body) => {
+    console.log(body);
+    // for push notifications
+  });
+}
 module.exports = lobby;
