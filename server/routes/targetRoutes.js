@@ -41,7 +41,8 @@ router.post('/', (request, response) => {
         message: 'You were assassinated by ' + assassinObj.username,
         title: 'You\'ve been killed!',
         //sound: gunshot.wmv?
-        image: image
+        image: image,
+        route: 'killed'
       }
     }
   };
