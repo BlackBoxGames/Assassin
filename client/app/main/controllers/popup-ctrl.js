@@ -68,11 +68,11 @@ angular.module('main')
       $http.get('http://35.162.247.27:4000/target?deviceId=' + $cordovaDevice.getDevice().uuid)
       .success(function(data) {
         console.log('Data from get', data);
-        $scope.showAlert(data.username, data.photo);
+        $scope.showAlert(data.target, data.photo);
       })
       .error(function (err) {
         console.log(err);
-        $scope.showAlert(data.username, data.photo);
+        $scope.showAlert(data.target, data.photo);
       });
 
       setTimeout(getAllLocations, 5000);
