@@ -64,9 +64,11 @@ lobby.assignNewTarget = (player, target) => {
       tokens: [player.token],
       profile: 'nathan',
       notification: {
-        message: 'Your target is ' + target.username,
-        target: target,
-        route: 'newTarget'
+        android: {
+          message: target.username,
+          title: 'Your New Target',
+          image: target.image 
+        }
       }
     }
   };
@@ -219,7 +221,7 @@ lobby.clearPlayers = () => {
   lobby.game = {};
 }
 
-lobby.testPushNotification = () => {
+lobby.testPushNotification = (cb) => {
   var options = {
     method: 'POST',
     url: 'https://api.ionic.io/push/notifications',
@@ -231,19 +233,28 @@ lobby.testPushNotification = () => {
       tokens: ['fR7iF3WzeJc:APA91bEXztlHCeJKz0dk62354mFdfHsPbR5-0UxTyykvZ3QzqJE-rcY2e0yBDFEE3Pf_9Ct7alM-LhSXDRHbqFFMPCfzlV9qpOOIUchMZIAMTzDu2qM9aer7Z83oyk8j7NSUUkB0KECu'],
       profile: 'nathan',
       notification: {
-        message: 'This is a test from our localserver',
-        target: {
-                  deviceId: '123',
-                  image: 'something.jpg'
-                },
-        route: 'localtest'
+        message: 'YOU HAVE BEEN KILLED',
+        title: 'Assassin',
+        android: {
+          message: 'Crazy json string',
+          title: 'route',
+          count: '3',
+          image: 'http://vignette2.wikia.nocookie.net/aion/images/6/69/Assassin.png/revision/latest?cb=20100712233128',
+          sound: 'gunshot.wmv',
+          target: {did: '123'},
+          route: 'ded'
+        }
       }
     }
   };
   
   Request(options, (error, response, body) => {
-    console.log(body);
+    console.log('This is from the test');
+    console.log(response);
+    console.log('Body config data',body.data.config);
+    cb();
     // for push notifications
   });
 }
+
 module.exports = lobby;
