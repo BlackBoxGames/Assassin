@@ -53,26 +53,27 @@ router.put('/out', (request, response) => {
 			// they need to be eliminated in one minute, reassigning their target
 			// to their assassin
 			response.status(200).send();
-
-			logoutTimers[user.deviceId] = setTimeout(() => {
-				var players = lobby.getPlayers();
-				var target = players[user.deviceId]; //playerObj	
-				var assassin;
-				for (var player in players) {
-					// player will be player keys
-					if (players[player].target === target.player) {
-						assassin = players[player]
-						continue;
+			if (lobby.getPlayers()[user.deviceId]) {
+				logoutTimers[user.deviceId] = setTimeout(() => {
+					var players = lobby.getPlayers();
+					var target = players[user.deviceId]; //playerObj	
+					var assassin;
+					for (var player in players) {
+						// player will be player keys
+						if (players[player].target === target.player) {
+							assassin = players[player]
+							continue;
+						}
 					}
-				}
 
-				lobby.eliminatePlayer(assassin, target);
-				// deletes him from the game
-				helper.removePlayerFromGame(user.deviceId);
-				// deletes his location
-				delete logoutTimers[user.deviceId];
-				// delete the timer
-			}, minute);
+					lobby.eliminatePlayer(assassin, target);
+					// deletes him from the game
+					helper.removePlayerFromGame(user.deviceId);
+					// deletes his location
+					delete logoutTimers[user.deviceId];
+					// delete the timer
+				}, minute);
+			}
 		} else {
 			//user is not in the game and was removed from queue, just send 200
 			helper.removePlayerFromGame(user.deviceId);
