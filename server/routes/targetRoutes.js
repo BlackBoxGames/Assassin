@@ -24,7 +24,7 @@ router.post('/', (request, response) => {
   var targetObj = players[targetId];
   var assassinObj = players[assassinId];
 
-  lobby.eliminatePlayer(assassinObj, targetObj, image);
+  lobby.eliminatePlayer(assassinObj, targetObj);
   response.status(200).send();
 
 });
@@ -51,4 +51,12 @@ router.get('/all', (request, response) => {
 
 router.get('/queue', (request, response) => {
   response.status(200).send(lobby.getQueue());
+})
+
+router.get('/selfies', (request, response) => {
+  response.status(200).send(lobby.selfies);
+})
+
+router.get('/killshots', (request, response) => {
+  response.status(200).send(lobby.killshots);
 })
