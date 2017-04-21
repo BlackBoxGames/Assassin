@@ -110,11 +110,11 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data) {
-      $scope.getTargetPhoto(data.message.title, data.message.text);
-    } else if (data.message.title === 'Victory!') {
+    if (data.message.title === 'Victory!') {
       $scope.showAlert(data.message.title, data.message.text);
       $scope.$emit('rootScope:queue');
+    } else if (data) {
+      $scope.getTargetPhoto(data.message.title, data.message.text);
     } else {
       $scope.showAlert('Ooops', 'There was an error');
     }
