@@ -5,7 +5,7 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
-  $rootScope.$on('rootScope: image', function(data) {
+  $rootScope.$on('rootScope: image', function(event, data) {
     $scope.image = data;
   });
 
@@ -32,6 +32,7 @@ angular.module('main')
         data.token = $scope.token;
         data.username = $rootScope.username;
         data.image = $scope.image;
+        alert($scope.image);
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',

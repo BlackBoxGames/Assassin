@@ -255,6 +255,10 @@ lobby.clearPlayers = () => {
   lobby.game = {};
 }
 
+lobby.addSelfie = (deviceId, image) => {
+  lobby.selfies[deviceId] = image;
+}
+
 lobby.testPushNotification = (cb) => {
   var options = {
     method: 'POST',

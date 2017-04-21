@@ -63,7 +63,7 @@ angular.module('main')
     });
   };
 
-  $scope.getTargetPhoto = function () {
+  $scope.getTargetPhoto = function (text) {
     if ($rootScope.locationOn === true) {
       var id = $cordovaDevice.getDevice().uuid;
       $http({
@@ -73,15 +73,10 @@ angular.module('main')
       })
       .success(function(data) {
         console.log('Data from get', data);
-        $scope.showAlert(data.username, data.image);
-        $rootScope.target = data.username;
-        $rootScope.image = data.image;
+        $scope.showAlert(text, data);
       })
       .error(function (err) {
         console.log(err);
-        $scope.showAlert(data.username, data.image);
-        $rootScope.target = data.username;
-        $rootScope.image = data.image;
       });
     }
   };
@@ -107,13 +102,10 @@ angular.module('main')
 
   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title === 'Your New Target') {
-      $scope.showAlert(data.message.text, data.message.raw.image);
-      $rootScope.target = data.message.text;
-      $rootScope.image = data.message.raw.image;
+      $scope.getTargetPhoto(data.message.text);
       Location.getTargetLocation();
     } else if (data.message.title === 'You\'ve Been Killed!') {
-      alert('Hey, you were killed!');
-      $scope.showConfirm(data.message.title, data.message.raw.image);
+      $scope.getTargetPhoto(data.message.text);
     } else {
       $scope.showAlert('Ooops', 'There was an error');
     }
