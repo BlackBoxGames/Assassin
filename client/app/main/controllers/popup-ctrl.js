@@ -79,9 +79,9 @@ angular.module('main')
           $rootScope.target = text;
           $rootScope.mugshot = data;
           Location.getTargetLocation();
-          $rootScope.hasTarget=true;
+          $rootScope.hasTarge = true;
         } else {
-          $rootScope.hasTarget=false;
+          $rootScope.hasTarget = false;
         }
         $scope.showConfirm(title, text, data);
       })
@@ -118,7 +118,6 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title === 'Victory!') {
       $scope.showAlert(data.message.title, data.message.text);
       $scope.$emit('rootScope:queue');
