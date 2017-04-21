@@ -136,7 +136,7 @@ lobby.eliminatePlayer = (player, target, image) => {
     
   }
 
-  lobby.assignNewTarget(player, lobby.game[newTarget]);
+  
   var message = 'You were assassinated by ' + player.username;
   var title = 'You\'ve Been Killed!';
 
@@ -165,11 +165,11 @@ lobby.eliminatePlayer = (player, target, image) => {
   if (target.token) {
     Request(options, (error, res, body) => {
       console.log('To the killed', body);
+      lobby.assignNewTarget(player, lobby.game[newTarget]);
       //lobby.eliminatePlayer(assassinObj, targetObj);
       lobby.game[target.player] = 'eliminated';
       // for push notifications
     });
-    
   }
 
   if (lobby.queue.length) {

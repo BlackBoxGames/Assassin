@@ -41,6 +41,6 @@ router.get('/all', (request, response) => {
   response.status(200).send(lobby.getPlayers());
 })
 
-router.get('queue', (request, response) => {
+router.get('/queue', (request, response) => {
   response.status(200).send(lobby.getQueue());
 })
