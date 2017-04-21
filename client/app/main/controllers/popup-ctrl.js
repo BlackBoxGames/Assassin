@@ -55,6 +55,7 @@ angular.module('main')
 
   // An alert dialog
   $scope.showAlert = function(title, message) {
+    var imageTemplate = '';
     var alertPopup = $ionicPopup.alert({
       title: title,
       subTitle: message,

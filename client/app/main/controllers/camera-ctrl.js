@@ -3,7 +3,11 @@ angular.module('main')
 .controller('CameraCtrl', function ($scope, $rootScope, $http, $cordovaDevice, $cordovaCamera) {
   $scope.takePhoto = function () {
     if (!$rootScope.loggedIn) {
+<<<<<<< 6df9574d0d99f0f8a0cf01cfa39a375704cfd878
       $rootScope.$emit('rootScope: toggleFail');
+=======
+      $rootScope.$emit('rootScope: cameraFail');
+>>>>>>> Add rootscope listener and alert for cameraFail if not logged in
       return;
     }
     var options = {
