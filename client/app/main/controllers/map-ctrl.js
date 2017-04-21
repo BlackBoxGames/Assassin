@@ -6,7 +6,7 @@ angular.module('main')
   $scope.players = {};
   $scope.currentLocation = {};
 
-  $scope.mugshot = 'main/assets/images/sleepyNate.jpg';
+  $rootScope.mugshot = 'main/assets/images/sleepyNate.jpg';
   $rootScope.target = 'Sleepy Nate';
 
   var infowindow = new google.maps.InfoWindow({
@@ -14,7 +14,7 @@ angular.module('main')
       '<div id="iw-container">' +
         '<div class="iw-title">' + $rootScope.target + '</div>' +
           '<div class="iw-content">' +
-            '<img src=' + $scope.mugshot + ' id="selfie">' +
+            '<img ng-src=' + $rootScope.mugshot + ' id="selfie">' +
             '<img src="main/assets/images/poloroid.png">' +
           '</div>' +
         '</div>' +
@@ -242,6 +242,12 @@ angular.module('main')
       }
       Location.initLocation();
     } else {
+      $scope.removeAllPoints();
+    }
+  });
+
+  $scope.$on('cloud:push:notification', function(event, data) {
+    if (data.message.title !== 'Your New Target') {
       $scope.removeAllPoints();
     }
   });

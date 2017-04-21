@@ -4,6 +4,9 @@ angular.module('main')
 
   $rootScope.locationOn = false;
   $scope.token = false;
+  $rootScope.$on('rootScope: image', function(event, data) {
+    $scope.image = data;
+  });
 
   $rootScope.$on('rootScope: image', function(event, data) {
     $scope.image = data;
@@ -45,11 +48,12 @@ angular.module('main')
       });
     } else {
       $rootScope.locationOn = false;
+      var id = $cordovaDevice.getDevice().uuid;
       $http({
         method: 'PUT',
         url: 'http://35.162.247.27:4000/logs/out',
         data: {
-          deviceId: $cordovaDevice.getDevice().uuid,
+          deviceId: id,
           lng: null,
           lat: null
         }

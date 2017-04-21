@@ -37,10 +37,11 @@ angular.module('main')
   // };
 
   // A confirm dialog
-  $scope.showConfirm = function(message, image) {
+  $scope.showConfirm = function(title, message, image) {
     var confirmPopup = $ionicPopup.confirm({
-      title: message,
-      template: image
+      title: title,
+      subTitle: message,
+      template: '<img src=' + image + '>'
     });
 
     confirmPopup.then(function(res) {
@@ -64,7 +65,7 @@ angular.module('main')
     var template = '<h4>' + text + '</h4>' + imageTemplate;
     var alertPopup = $ionicPopup.alert({
       title: title,
-      template: template
+      subTitle: message,
     });
     alertPopup.then(function(res) {
       console.log(res);
@@ -108,6 +109,9 @@ angular.module('main')
     $scope.showAlert('Please Log In', 'You must be signed in to play');
   });
 
+  $rootScope.$on('rootScope: alert', function (event, data) {
+    $scope.showAlert(data.title, data.message);
+  });
 
   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title === 'Your New Target') {
