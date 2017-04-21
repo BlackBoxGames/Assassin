@@ -8,6 +8,10 @@ angular.module('main')
     username: ''
   };
 
+  $rootScope.$on('rootscope: signinPicture', function (event) {
+    $scope.takePhoto();
+  });
+
   $scope.takePhoto = function() {
     var options = {
       quality: 75,
@@ -41,7 +45,7 @@ angular.module('main')
   $scope.signIn = function() {
     if (!$scope.image) {
       $rootScope.$emit('rootScope: alert', {title: 'Almost There', message: 'We need you to take a selfie.'});
-      return $scope.takePhoto();
+      return;
     } else
     if ($scope.user.username === '') {
       $rootScope.$emit('rootScope: alert', {title: 'Oops', message: 'You must enter a valid username.'});

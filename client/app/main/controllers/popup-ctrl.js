@@ -65,8 +65,13 @@ angular.module('main')
       {
         $scope.$emit('rootScope:queue');
       }
+      if (title === 'Almost There') {
+        $rootScope.$emit('rootscope: signinPicture');
+      }
+      console.log(res);
     });
   };
+
 
   $scope.getTargetPhoto = function (title, text) {
     if ($rootScope.locationOn === true) {
