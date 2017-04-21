@@ -111,7 +111,8 @@ angular.module('main')
       $rootScope.target = data.message.text;
       $rootScope.image = data.message.raw.image;
       Location.getTargetLocation();
-    } else if (data.title === 'You\'ve Been Killed!') {
+    } else if (data.message.title === 'You\'ve Been Killed!') {
+      alert('Hey, you were killed!');
       $scope.showConfirm(data.message.title, data.message.raw.image);
     } else {
       $scope.showAlert('Ooops', 'There was an error');

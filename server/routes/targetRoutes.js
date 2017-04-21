@@ -14,6 +14,8 @@ router.post('/', (request, response) => {
   var assassinId = request.body.deviceId;
   var image = request.body.image;
 
+
+  console.log('Target post:', assassinId);;
   // should have some verification that the photograph is legit
   // potential checks:
   // self check, distance check
