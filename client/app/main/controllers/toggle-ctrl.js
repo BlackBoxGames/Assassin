@@ -32,7 +32,6 @@ angular.module('main')
         data.token = $scope.token;
         data.username = $rootScope.username;
         data.image = $scope.image;
-        alert($scope.image);
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
