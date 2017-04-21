@@ -17,7 +17,6 @@ router.put('/in', (request, response) => {
 	var player = Game.mapLocationToPlayer(client);
 	console.log('The player', player);
 	lobby.addToQueue(player);
-	lobby.selfies[player.deviceId] = client.image;
 	response.status(200).send();
 	/*Game.insertPlayer(player)
 	.then(() => {
