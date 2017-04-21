@@ -57,7 +57,7 @@ angular.module('main')
     var imageTemplate = '';
 
     if (image) {
-      imageTemplate = '<center><img ng-src="' + image + '" style="width: 100%; padding: 5px"/></center>';  
+      imageTemplate = '<center><img ng-src="' + image + '" style="width: 100%; padding: 5px"/></center>';
     }
 
     // only adds an image if one was passed in, otherwise just render the title and text
