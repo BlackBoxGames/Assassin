@@ -1,21 +1,23 @@
 <ion-view>
   <!-- do you want padding? -->
-  <ion-content ng-controller="UserCtrl" class="padding">
+  <ion-content ng-controller="UserCtrl" class= "padding">
 
     <!-- content goes here -->
     <div class="list">
-      <div class="header" ng-show="$root.loggedIn">{{announcer}}</div>
-      <img ng-show="image" ng-src="{{image}}" style="text-align: center">
+      <h3 ng-show="$root.loggedIn">{{announcer}}</h3>
+      <img ng-show="image" class="profile" ng-src="{{image}}">
       <label class="item item-input" ng-show="!$root.loggedIn">
+        <input name="username" type="username" placeholder="username" ng-model="user.username" >
+      </label>
+    </div>
+    <div>
       <button class="button button-block button-outline button-positive"
         ng-show='$root.loggedIn'
         ng-click="signOut()">
         Sign Out
       </button>
-        <input name="username" type="username" placeholder="username" ng-model="user.username" >
-      </label>
     </div>
-    <div class="padding">
+    <div>
       <button class="button button-block button-outline button-positive"
         ng-show="!$root.loggedIn"
         ng-click="signIn()">

@@ -12,7 +12,7 @@
 }
 
 .item-input {
-  padding: 0 0 0 0;
+  padding: 25px 20px 25px 20px;
 }
 
 .padding {
@@ -31,10 +31,9 @@
   top: 49px;
 }
 
-.heading {
-  font-size: 24px;
-  font-weight: bold;
-  font-color: #4a87ee;
+.profile {
+  padding: 0 15% 0 0;
+  text-align: center;
 }
 
 @media screen and (orientation:landscape) {
@@ -74,7 +73,7 @@
   height: 250px;
 }
 
-#iw-container  .iw-title {
+#iw-container .iw-title {
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 22px;
   font-weight: 400;

@@ -3,6 +3,9 @@
   <ion-content ng-controller="CameraCtrl" class="padding">
 
     <!-- content goes here -->
+    <img ng-show="root.target" class="profile" ng-src="{{$root.target}}">
+    <img ng-show="imageData" class="profile" ng-src="main/assets/images/poloroid.png">
+
     <button class="button button-positive takePhoto" ng-click="takePhoto()">
       Take Aim
     </button>
