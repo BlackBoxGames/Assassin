@@ -111,6 +111,7 @@ describe('Server to DB tests', () => {
 
 	it('Should delete a player from the game', done => {
 		helper.removePlayerFromGame('abc123')
+		/* old tests that incorporate db
 		.then(result => {
 			request(app)
 			.get('/games' + '?username=Nathan_Dick')
@@ -119,7 +120,9 @@ describe('Server to DB tests', () => {
 				expect(res.body.player).to.not.exist;
 			})
 			.end(done)
-		})
+		})*/
+		expect(helper.getAllPlayers()['abc123']).to.equal(undefined);
+		done();
 	})
 
 	it('Should remove a user from the database', done => {
@@ -130,14 +133,15 @@ describe('Server to DB tests', () => {
 	})
 
 	after(done => {
-		helper.removePlayerFromGame('abc123')
+		done();
+		/*helper.removePlayerFromGame('abc123')
 		.then(removed => {
 			request(app)
 			.delete('/users' + '?username=Nathan_Niceguy')
 			.then((removed) => {
 				return done()
 			})
-		});
+		});*/
 	})
 })
 

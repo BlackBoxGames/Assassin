@@ -30,12 +30,14 @@ helper.getOnePlayerLocation = (player) => {
 }
 
 helper.removePlayerFromGame = (deviceId) => {
-	db.connectToDb();
+	delete players[deviceId];
+	players.length--;
+	/*db.connectToDb();
 	return Game.deletePlayer(deviceId)
 	.then(() => {
 		db.disconnectFromDb();
 		console.log(deviceId + ' was removed from the game');
-	});
+	});*/
 }
 
 module.exports = helper;

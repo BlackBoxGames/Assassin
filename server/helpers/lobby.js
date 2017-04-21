@@ -262,13 +262,20 @@ Output: Player object of queued players
 ***
  */
 
+/*
+***
+Input: Player object of player to remove
+Output: Returns whether or not player was removed as a boolean
+***
+ */
 lobby.removeFromQueue = (player) => {
   for (var i = 0; i < lobby.queue.length; i++) {
     if (lobby.queue[i].player === player.player) {
       lobby.queue.splice(i, 1);
-      return;
+      return true;
     } 
   }
+  return false;
  };
 
 lobby.getQueue = () => {

@@ -154,8 +154,84 @@ describe('Game managing logic tests', () => {
       expect(lobby.getQueue().length).to.equal(1);
       done();
     });
-    
-  }); 
+  });
+
+  it('If player logs out while in queue, take off queue', done => {
+    lobby.setGameStatus(true);
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getQueue().length).to.equal(0);
+          done();
+        })
+    });
+  });
+
+  it('If player logs out while in game, take out of game in one minute', done => {
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      for (var i = 0; i < 4; i++) {
+        lobby.addToQueue({
+          player: i,
+          target: null,
+          active: 1,
+          deviceId: i
+        });
+      }
+      lobby.setGameStatus(true);      
+      
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+          clock.tick(2 * minute);
+          expect(lobby.getPlayers()[ezcheezy.deviceId]).to.equal(undefined);
+          done();
+        })
+
+    });
+  });
+
+  it('It should cancel the timer if the player logs back in within a minute', done => {
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      for (var i = 0; i < 4; i++) {
+        lobby.addToQueue({
+          player: i,
+          target: null,
+          active: 1,
+          deviceId: i
+        });
+      }
+      lobby.setGameStatus(true);      
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+          clock.tick(30* second);
+          request(app)
+            .put('/logs/in')
+            .send(ezcheezy)
+            .end(() => {
+              clock.tick(5 * minute);
+              expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+              done();
+            })
+        })
+
+    });
+  });
 
   it('Game should not end when a target is eliminated', done => {
     for (var i = 0; i < 4; i++) {
