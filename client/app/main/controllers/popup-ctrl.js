@@ -74,7 +74,6 @@ angular.module('main')
   $scope.getTargetPhoto = function (title, text) {
     if ($rootScope.locationOn === true) {
       var id = $cordovaDevice.getDevice().uuid;
-      alert('Get Target Photo');
       $http({
         url: 'http://35.162.247.27:4000/target',
         method: 'GET',

@@ -186,6 +186,7 @@ describe('Game managing logic tests', () => {
     var players = lobby.getPlayers();
     lobby.eliminatePlayer(players[0], players[players[0].target]);
     expect(lobby.getGameStatus()).to.equal(false);
+    expect(lobby.getQueue().length).to.equal(1);
     done();
   });
 
@@ -331,7 +332,7 @@ describe('Assigning target logic tests', () => {
     var target = players[0].target;
     clock.tick(minute);
     lobby.eliminatePlayer(players[0], players[target]);
-    expect(players[target]).to.equal('eliminated');
+    expect(players[target]).to.equal(undefined);
     done();
   });
 

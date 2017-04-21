@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera, $cordovaDevice, $ionicPopup) {
+.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera, $cordovaDevice) {
 
   $rootScope.loggedIn = false;
   $scope.announcer = '';
