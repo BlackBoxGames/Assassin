@@ -140,7 +140,8 @@ lobby.eliminatePlayer = (player, target, image) => {
   var message = 'You were assassinated by ' + player.username;
   var title = 'You\'ve Been Killed!';
 
-  console.log(message, title);
+
+  console.log(image);
   console.log('Token', target.token);
   var options = {
     method: 'POST',
@@ -155,8 +156,7 @@ lobby.eliminatePlayer = (player, target, image) => {
       notification: {
         android: {
           message: message,
-          title: title,
-          image: image
+          title: title
         }
       }
     }
