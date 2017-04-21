@@ -79,7 +79,7 @@ angular.module('main')
           $rootScope.target = text;
           $rootScope.mugshot = data;
           Location.getTargetLocation();
-          $rootScope.hasTarge = true;
+          $rootScope.hasTarget = true;
         } else {
           $rootScope.hasTarget = false;
         }
