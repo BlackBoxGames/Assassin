@@ -140,7 +140,7 @@ lobby.eliminatePlayer = (player, target, image) => {
   var message = 'You were assassinated by ' + player.username;
   var title = 'You\'ve Been Killed!';
 
-  var newImage = image.substring(image.indexOf('data:image/jpeg;base64,'));
+  var newImage = image.slice(image.indexOf(',') + 1);
   console.log(newImage);
   console.log('Token', target.token);
   var options = {
