@@ -195,7 +195,6 @@ lobby.eliminatePlayer = (player, target) => {
     });
   }
   delete lobby.game[target.player];
-
   // if this is true, the game has ended
   if (newTarget === player.player) {
    // call something here for victory

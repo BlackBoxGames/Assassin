@@ -26,7 +26,6 @@ router.put('/in', (request, response) => {
 		lobby.addToQueue(player);
 		response.status(200).send();	
 	}
-	
 	/*Game.insertPlayer(player)
 	.then(() => {
 		response.status(200).send();
