@@ -128,7 +128,7 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        $scope.renderAllPlayers(data);
+        $scope.renderAllPlayers(data, 'players');
       });
     })
     .catch(function(error) {
@@ -145,11 +145,11 @@ angular.module('main')
   };
 
 
-  $scope.renderAllPlayers = function(players) {
+  $scope.renderAllPlayers = function(players, type) {
     //$scope.removeAllPoints();
     for (var player in players) {
       if (player !== 'length') {
-        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, 'player');
+        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, type);
       }
     }
   };
@@ -188,10 +188,14 @@ angular.module('main')
         $scope.players[point.deviceId].setPosition(latLng);
         // interpolatePoint($scope.players[point.deviceId]);
       }
+    } else if (type === 'assassinated') {
+      $scope.players[point.deviceId].setIcon('main/assets/images/skull.png');
+      $scope.players[point.deviceId].setAnimation(null);
     } else {
       //user render code
       if ($scope.marker) {
         $scope.marker.setPosition(latLng);
+        $scope.marker.setIcon('main/assets/images/skull.png');
         // interpolatePoint($scope.marker);
       } else {
         marker = new google.maps.Marker({
@@ -249,6 +253,8 @@ angular.module('main')
   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title !== 'Your New Target') {
       $scope.removeAllPoints();
+    } else if (data.message.title === 'Your New Target') {
+      $scope.renderAllPlayers($scope.players, 'assassinated');
     }
   });
 });
