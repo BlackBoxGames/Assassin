@@ -131,14 +131,17 @@ Should change live player's target to eliminated player's target
 lobby.eliminatePlayer = (player, target, image) => {
   var newTarget = target.target;
   if (newTarget === player.player) {
-    var message = 'You have killed the last person!';
-    var title = 'Victory!';
+   // call something here for victory
   } else {
-    lobby.assignNewTarget(player, lobby.game[newTarget]);
-    var message = 'You were assassinated by ' + player.username;
-    var title = 'You\'ve Been Killed!';
+    
   }
 
+  lobby.assignNewTarget(player, lobby.game[newTarget]);
+  var message = 'You were assassinated by ' + player.username;
+  var title = 'You\'ve Been Killed!';
+
+  console.log(message, title);
+  console.log('Token', target.token);
   var options = {
     method: 'POST',
     url: 'https://api.ionic.io/push/notifications',

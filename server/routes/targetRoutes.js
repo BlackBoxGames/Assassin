@@ -26,9 +26,6 @@ router.post('/', (request, response) => {
   lobby.eliminatePlayer(assassinObj, targetObj, image);
   response.status(200).send();
 
-  
-
-  
 });
 
 // route for giving client the target information (location, username, photo)
@@ -42,4 +39,8 @@ module.exports = router;
 
 router.get('/all', (request, response) => {
   response.status(200).send(lobby.getPlayers());
+})
+
+router.get('queue', (request, response) => {
+  response.status(200).send(lobby.getQueue());
 })
