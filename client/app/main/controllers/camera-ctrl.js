@@ -3,7 +3,7 @@ angular.module('main')
 .controller('CameraCtrl', function ($scope, $rootScope, $http, $cordovaDevice, $cordovaCamera) {
   $scope.takePhoto = function () {
     if (!$rootScope.loggedIn) {
-      alert('You must be signed in to play');
+      $rootScope.$emit('rootScope: toggleFail');
       return;
     }
     var options = {
@@ -19,17 +19,18 @@ angular.module('main')
     };
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
-      $scope.imgURI = 'data:image/jpeg;base64,' + imageData;
-      $scope.sendKill();
+      imageData = 'data:image/jpeg;base64,' + imageData;
+      $scope.sendKill(imageData);
     }, function (err) {
       console.error(err);
     });
   };
 
-  $scope.sendKill = function() {
+  $scope.sendKill = function(image) {
+    var id = $cordovaDevice.getDevice().uuid;
     var killData = {
-      image: $scope.imgURI,
-      deviceId: $cordovaDevice.getDevice().uuid
+      image: image,
+      deviceId: id
     };
     $http({
       method: 'POST',

@@ -4,28 +4,23 @@
 
     <!-- content goes here -->
     <div class="list">
-      <h2 ng-show="$root.loggedIn">{{announcer}}<h2>
+      <div class="header" ng-show="$root.loggedIn">{{announcer}}</div>
       <img ng-show="image" ng-src="{{image}}" style="text-align: center">
       <label class="item item-input" ng-show="!$root.loggedIn">
-        <input name="username" type="username" placeholder="username" ng-model="user.username" >
-      </label>
-    </div>
-    <div class="padding">
-      <button ng-show="!$root.loggedIn" class="button button-block button-outline button-positive"
-        ng-click="takePhoto()">
-        Take your Photo
-      </button>
-      <button class="button button-block button-outline button-positive"
-        ng-show="!$root.loggedIn"
-        ng-click="signIn()">
-        Sign in
-      </button>
       <button class="button button-block button-outline button-positive"
         ng-show='$root.loggedIn'
         ng-click="signOut()">
         Sign Out
       </button>
-
+        <input name="username" type="username" placeholder="username" ng-model="user.username" >
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-outline button-positive"
+        ng-show="!$root.loggedIn"
+        ng-click="signIn()">
+        Sign in
+      </button>
     </div>
 
   </ion-content>
