@@ -3,7 +3,7 @@ angular.module('main')
 .controller('CameraCtrl', function ($scope, $rootScope, $http, $cordovaDevice, $cordovaCamera) {
   $scope.takePhoto = function () {
     if (!$rootScope.loggedIn) {
-      alert('You must be signed in to play');
+      $rootScope.$emit('rootScope: cameraFail');
       return;
     }
     var options = {
