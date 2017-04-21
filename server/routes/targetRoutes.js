@@ -14,18 +14,17 @@ router.post('/', (request, response) => {
   var assassinId = request.body.deviceId;
   var image = request.body.image;
 
-
-  console.log('Target post:', assassinId);;
   // should have some verification that the photograph is legit
   // potential checks:
   // self check, distance check
   var players = lobby.getPlayers();
   var targetId = lobby.getPlayerTarget(assassinId);
+  lobby.killshots[targetId] = image;
 
   var targetObj = players[targetId];
   var assassinObj = players[assassinId];
 
-  lobby.eliminatePlayer(assassinObj, targetObj, image);
+  lobby.eliminatePlayer(assassinObj, targetObj);
   response.status(200).send();
 
 });
@@ -34,7 +33,14 @@ router.post('/', (request, response) => {
 router.get('/', (request, response) => {
   var deviceId = request.url.slice(request.url.indexOf('=') + 1);
   var targetId = lobby.getPlayerTarget(deviceId);
-  response.status(200).send(lobby.getPlayers()[targetId]);
+  
+  if (lobby.killshots[deviceId]) {
+    var image = lobby.killshots.deviceId;
+    delete lobby.killshots[deviceId];
+  } else {
+    var image = lobby.selfies[targetId];
+  }
+  response.status(200).send(image);
 });
 
 module.exports = router;
@@ -45,4 +51,12 @@ router.get('/all', (request, response) => {
 
 router.get('/queue', (request, response) => {
   response.status(200).send(lobby.getQueue());
+})
+
+router.get('/selfies', (request, response) => {
+  response.status(200).send(lobby.selfies);
+})
+
+router.get('/killshots', (request, response) => {
+  response.status(200).send(lobby.killshots);
 })

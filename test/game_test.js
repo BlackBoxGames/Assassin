@@ -363,7 +363,7 @@ describe('Assigning target logic tests', () => {
       .end(done)
   });
 
-  it('Retrieves target location on GET/target', done => {
+  xit('Retrieves target location on GET/target', done => {
     for (var i = 0; i < 5; i++) {
       lobby.addToQueue({
         player: i,

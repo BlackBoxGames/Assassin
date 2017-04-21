@@ -27,7 +27,7 @@ angular.module('main')
         listenOnce();
         data.token = $scope.token;
         data.username = $rootScope.username;
-        data.photo = $rootScope.photo;
+        data.image = $rootScope.image;
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
