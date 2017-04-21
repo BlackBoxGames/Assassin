@@ -23,8 +23,7 @@ angular.module('main')
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
       $scope.image = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.image = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.$emit('rootScope: image', $rootScope.image);
+      $rootScope.$emit('rootScope: image', $scope.image);
     }, function (err) {
       console.error(err);
     });
@@ -32,7 +31,7 @@ angular.module('main')
 
   $scope.signOut = function () {
     $scope.image = undefined;
-    $rootScope.photo = undefined;
+    $rootScope.image = undefined;
     $rootScope.loggedIn = false;
     this.user.username = '';
     $rootScope.$emit('rootScope: login', null);
