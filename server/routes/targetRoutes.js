@@ -35,7 +35,7 @@ router.get('/', (request, response) => {
   var targetId = lobby.getPlayerTarget(deviceId);
   
   if (lobby.killshots[deviceId]) {
-    var image = lobby.killshots.deviceId;
+    var image = lobby.killshots[deviceId];
     delete lobby.killshots[deviceId];
   } else {
     var image = lobby.selfies[targetId];

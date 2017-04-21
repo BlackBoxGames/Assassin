@@ -5,6 +5,10 @@ angular.module('main')
   $rootScope.locationOn = false;
   $scope.token = false;
 
+  $rootScope.$on('rootScope: image', function(data) {
+    $scope.image = data;
+  });
+
   this.toggleLocation = function () {
     if (!$rootScope.loggedIn) {
       $rootScope.$emit('rootScope: toggleFail');
@@ -27,7 +31,7 @@ angular.module('main')
         listenOnce();
         data.token = $scope.token;
         data.username = $rootScope.username;
-        data.image = $rootScope.image;
+        data.image = $scope.image;
         $http({
           method: 'PUT',
           url: 'http://35.162.247.27:4000/logs/in',
