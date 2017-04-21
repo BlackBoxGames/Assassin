@@ -55,6 +55,7 @@ angular.module('main')
 
   // An alert dialog
   $scope.showAlert = function(title, message) {
+    var imageTemplate = '';
     var alertPopup = $ionicPopup.alert({
       title: title,
       subTitle: message,
@@ -78,6 +79,9 @@ angular.module('main')
           $rootScope.target = text;
           $rootScope.mugshot = data;
           Location.getTargetLocation();
+          $rootScope.hasTarget=true;
+        } else {
+          $rootScope.hasTarget=false;
         }
         $scope.showConfirm(title, text, data);
       })
@@ -109,7 +113,12 @@ angular.module('main')
     $scope.showAlert(data.title, data.message);
   });
 
+  $rootScope.$on('rootScope: cameraNoTarget', function (event) {
+    $scope.showAlert('No Target', 'You must be assigned a target first.');
+  });
+
   $scope.$on('cloud:push:notification', function(event, data) {
+   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title === 'Victory!') {
       $scope.showAlert(data.message.title, data.message.text);
       $scope.$emit('rootScope:queue');
