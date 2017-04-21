@@ -43,7 +43,7 @@ after((done) => {
 
 });
 
-describe('Game managing logic tests', () => {
+xdescribe('Game managing logic tests', () => {
   var clock;
   beforeEach(function () {
      clock = sinon.useFakeTimers();
@@ -154,8 +154,84 @@ describe('Game managing logic tests', () => {
       expect(lobby.getQueue().length).to.equal(1);
       done();
     });
-    
-  }); 
+  });
+
+  it('If player logs out while in queue, take off queue', done => {
+    lobby.setGameStatus(true);
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getQueue().length).to.equal(0);
+          done();
+        })
+    });
+  });
+
+  it('If player logs out while in game, take out of game in one minute', done => {
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      for (var i = 0; i < 4; i++) {
+        lobby.addToQueue({
+          player: i,
+          target: null,
+          active: 1,
+          deviceId: i
+        });
+      }
+      lobby.setGameStatus(true);      
+      
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+          clock.tick(2 * minute);
+          expect(lobby.getPlayers()[ezcheezy.deviceId]).to.equal(undefined);
+          done();
+        })
+
+    });
+  });
+
+  it('It should cancel the timer if the player logs back in within a minute', done => {
+    request(app)
+    .put('/logs/in')
+    .send(ezcheezy)
+    .end(() => {
+      for (var i = 0; i < 4; i++) {
+        lobby.addToQueue({
+          player: i,
+          target: null,
+          active: 1,
+          deviceId: i
+        });
+      }
+      lobby.setGameStatus(true);      
+      request(app)
+        .put('/logs/out')
+        .send(ezcheezy)
+        .end(() => {
+          expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+          clock.tick(30* second);
+          request(app)
+            .put('/logs/in')
+            .send(ezcheezy)
+            .end(() => {
+              clock.tick(5 * minute);
+              expect(lobby.getPlayers()[ezcheezy.deviceId].player).to.equal('starcraft2isthebest');
+              done();
+            })
+        })
+
+    });
+  });
 
   it('Game should not end when a target is eliminated', done => {
     for (var i = 0; i < 4; i++) {
@@ -186,6 +262,37 @@ describe('Game managing logic tests', () => {
     var players = lobby.getPlayers();
     lobby.eliminatePlayer(players[0], players[players[0].target]);
     expect(lobby.getGameStatus()).to.equal(false);
+    expect(lobby.getQueue().length).to.equal(1);
+    done();
+  });
+
+  it('Game should automatically restart after there are enough queued', done => {
+    for (var i = 0; i < 2; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    lobby.setGameStatus(true);
+    var players = lobby.getPlayers();
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
+    expect(lobby.getGameStatus()).to.equal(false);
+    expect(lobby.getQueue().length).to.equal(1);
+    for (var i = 1; i < 3; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    expect(lobby.getQueue().length).to.equal(3);
+    clock.tick(5 * minute);
+    expect(lobby.getGameStatus()).to.equal(true);
+    expect(lobby.getQueue().length).to.equal(0);
+    expect(lobby.getPlayers()[0].deviceId).to.equal(0)
     done();
   });
 
@@ -205,7 +312,7 @@ describe('Game managing logic tests', () => {
 
 });
 
-describe('Assigning target logic tests', () => {
+xdescribe('Assigning target logic tests', () => {
   var clock;
   beforeEach(function () {
      clock = sinon.useFakeTimers();
@@ -331,7 +438,7 @@ describe('Assigning target logic tests', () => {
     var target = players[0].target;
     clock.tick(minute);
     lobby.eliminatePlayer(players[0], players[target]);
-    expect(players[target]).to.equal('eliminated');
+    expect(players[target]).to.equal(undefined);
     done();
   });
 

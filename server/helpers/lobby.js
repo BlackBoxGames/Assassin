@@ -91,9 +91,8 @@ Output: Target ID
 ***
 */
 lobby.getPlayerTarget = (player) => {
-  var target = lobby.game[player].target;
-  if (target) {
-    return target;
+  if(lobby.game[player]) {
+    return lobby.game[player].target;
   }
   return 'Target not found!';
 };
@@ -119,23 +118,54 @@ lobby.setGameStatus = (active) => {
   lobby.gameActive = active;
   if (lobby.gameActive) {
     lobby.assignTargets();
+  } else {
+    var title = 'Victory!';
+    var message = 'You are the last one standing... for now.'
+    // game is over if this is called
+    // send victory push to user who wins and adds him to the queue
+    var winToken;
+    for (var key in lobby.game) {
+      winToken = lobby.game[key].token;
+      lobby.addToQueue(lobby.game[key]);
+      delete lobby.game[key];
+    }
+
+    var options = {
+      method: 'POST',
+      url: 'https://api.ionic.io/push/notifications',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      json: {
+        tokens: [winToken],
+        profile: 'nathan',
+        notification: {
+          android: {
+            message: message,
+            title: title
+          }
+        }
+      }
+    };
+
+    if (winToken) {
+    Request(options, (error, res, body) => {
+      console.log('To the victor', body);
+      // for push notifications
+    });
+  }
   }
 };
 
 /*
 ***
 Input: {player: playerObject, target: playerObject}
-Should remove player from active game
-Should change live player's target to eliminated player's target
+Should remove target from active game
 ***
  */
 lobby.eliminatePlayer = (player, target) => {
   var newTarget = target.target;
-  if (newTarget === player.player) {
-   // call something here for victory
-  } else {
-    
-  }
   var message = 'You were assassinated by ' + player.username;
   var title = 'You\'ve Been Killed!';
   var options = {
@@ -161,23 +191,26 @@ lobby.eliminatePlayer = (player, target) => {
     Request(options, (error, res, body) => {
       console.log('To the killed', body);
       // for push notifications
+      delete lobby.game[target.player];
+  // if this is true, the game has ended
+      if (newTarget === player.player) {
+       // call something here for victory
+        lobby.setGameStatus(false);
+      } else {
+        lobby.assignNewTarget(player, lobby.game[newTarget]);
+        // lobby.eliminatePlayer(assassinObj, targetObj);
+        // remove from active game
+
+        if (lobby.queue.length) {
+          var head = lobby.queue[0].player;
+          var tail = lobby.assignTargets();
+          lobby.assignNewTarget(tail, lobby.game[newTarget]);
+          lobby.assignNewTarget(player, lobby.game[head]);
+        }
+      }
     });
   }
-
-  lobby.assignNewTarget(player, lobby.game[newTarget]);
-  //lobby.eliminatePlayer(assassinObj, targetObj);
-  lobby.game[target.player] = 'eliminated';
-
-  if (lobby.queue.length) {
-    var head = lobby.queue[0].player;
-    var tail = lobby.assignTargets();
-    lobby.assignNewTarget(tail, lobby.game[newTarget]);
-    lobby.assignNewTarget(player, lobby.game[head]);
-  }
-
-  if (player.target === player.player) {
-    lobby.setGameStatus(false);
-  }
+  
  };
 
 /*
@@ -228,13 +261,20 @@ Output: Player object of queued players
 ***
  */
 
+/*
+***
+Input: Player object of player to remove
+Output: Returns whether or not player was removed as a boolean
+***
+ */
 lobby.removeFromQueue = (player) => {
   for (var i = 0; i < lobby.queue.length; i++) {
     if (lobby.queue[i].player === player.player) {
       lobby.queue.splice(i, 1);
-      return;
+      return true;
     } 
   }
+  return false;
  };
 
 lobby.getQueue = () => {

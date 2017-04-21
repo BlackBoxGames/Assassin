@@ -14,7 +14,7 @@ angular.module('main')
       '<div id="iw-container">' +
         '<div class="iw-title">' + $rootScope.target + '</div>' +
           '<div class="iw-content">' +
-            '<img ng-src=' + $rootScope.mugshot + ' id="selfie">' +
+            '<img ng-src="' + $rootScope.mugshot + '"" id="selfie">' +
             '<img src="main/assets/images/poloroid.png">' +
           '</div>' +
         '</div>' +
@@ -128,7 +128,7 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        $scope.renderAllPlayers(data);
+        $scope.renderAllPlayers(data, 'player');
       });
     })
     .catch(function(error) {
@@ -145,11 +145,11 @@ angular.module('main')
   };
 
 
-  $scope.renderAllPlayers = function(players) {
+  $scope.renderAllPlayers = function(players, type) {
     //$scope.removeAllPoints();
     for (var player in players) {
       if (player !== 'length') {
-        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, 'player');
+        $scope.renderPoint({lat: players[player].lat, lng: players[player].lng, deviceId: players[player].deviceId}, type);
       }
     }
   };
@@ -198,7 +198,7 @@ angular.module('main')
         $scope.players[point.deviceId].setPosition(latLng);
         // interpolatePoint($scope.players[point.deviceId]);
       }
-    } else {
+    } else if (type === 'user') {
       //user render code
       if ($scope.marker) {
         $scope.marker.setPosition(latLng);
@@ -213,6 +213,9 @@ angular.module('main')
         $scope.marker = marker;
         $scope.marker.setMap($scope.map);
       }
+    } else {
+      $scope.players[point.deviceId].setIcon('main/assets/images/skull.png');
+      $scope.players[point.deviceId].setAnimation(google.maps.Animation.DROP);
     }
   };
 
@@ -257,8 +260,11 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.message.title !== 'Your New Target') {
+    if (data.message.title === 'You\'ve Been Killed!') {
       $scope.removeAllPoints();
+      $scope.marker.setIcon('main/assets/images/skull.png');
+    } else if (data.message.title === 'Your New Target') {
+      $scope.renderAllPlayers($scope.players, 'assassinated');
     }
   });
 });

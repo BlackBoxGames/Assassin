@@ -55,15 +55,16 @@ angular.module('main')
 
   // An alert dialog
   $scope.showAlert = function(title, message) {
+    var imageTemplate = '';
     var alertPopup = $ionicPopup.alert({
       title: title,
       subTitle: message,
     });
     alertPopup.then(function(res) {
-      if (data.message.title === 'Victory!') {
+      if (title === 'Victory!')
+      {
         $scope.$emit('rootScope:queue');
       }
-      console.log(res);
     });
   };
 
@@ -81,6 +82,9 @@ angular.module('main')
           $rootScope.target = text;
           $rootScope.mugshot = data;
           Location.getTargetLocation();
+          $rootScope.hasTarget = true;
+        } else {
+          $rootScope.hasTarget = false;
         }
         $scope.showConfirm(title, text, data);
       })
@@ -110,6 +114,10 @@ angular.module('main')
 
   $rootScope.$on('rootScope: alert', function (event, data) {
     $scope.showAlert(data.title, data.message);
+  });
+
+  $rootScope.$on('rootScope: cameraNoTarget', function (event) {
+    $scope.showAlert('No Target', 'You must be assigned a target first.');
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
