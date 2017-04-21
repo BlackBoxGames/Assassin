@@ -175,6 +175,16 @@ angular.module('main')
         });
 
         marker.addListener('click', function() {
+          infowindow.setContent(
+            '<div id="iw-container">' +
+              '<div class="iw-title">' + $rootScope.target + '</div>' +
+              '<div class="iw-content">' +
+                '<img ng-src=' + $rootScope.mugshot + ' id="selfie">' +
+                '<img src="main/assets/images/poloroid.png">' +
+              '</div>' +
+              '</div>' +
+            '</div>'
+          );
           infowindow.open($scope.map, marker);
         });
 
