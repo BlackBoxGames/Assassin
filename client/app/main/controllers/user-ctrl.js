@@ -47,7 +47,6 @@ angular.module('main')
       }
       this.user.image = $scope.image;
       this.user.deviceId = $cordovaDevice.getDevice().uuid;
-      
       $http({
         method: 'PUT',
         url: 'http://35.162.247.27:4000/users',
