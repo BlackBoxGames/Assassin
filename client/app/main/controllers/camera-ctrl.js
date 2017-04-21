@@ -6,6 +6,10 @@ angular.module('main')
       $rootScope.$emit('rootScope: toggleFail');
       return;
     }
+    if (!$rootScope.hasTarget) {
+      $rootScope.$emit('rootScope: cameraNoTarget');
+      return;
+    }
     var options = {
       quality: 75,
       destinationType: Camera.DestinationType.DATA_URL,
