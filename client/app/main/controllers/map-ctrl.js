@@ -14,7 +14,7 @@ angular.module('main')
       '<div id="iw-container">' +
         '<div class="iw-title">' + $rootScope.target + '</div>' +
           '<div class="iw-content">' +
-            '<img ng-src=' + $rootScope.mugshot + ' id="selfie">' +
+            '<img ng-src="' + $rootScope.mugshot + '"" id="selfie">' +
             '<img src="main/assets/images/poloroid.png">' +
           '</div>' +
         '</div>' +
@@ -128,7 +128,7 @@ angular.module('main')
       });
 
       $rootScope.$on('rootScope:players', function (event, data) {
-        $scope.renderAllPlayers(data, 'players');
+        $scope.renderAllPlayers(data, 'player');
       });
     })
     .catch(function(error) {
@@ -189,13 +189,13 @@ angular.module('main')
         // interpolatePoint($scope.players[point.deviceId]);
       }
     } else if (type === 'assassinated') {
+      alert('assassinated')
       $scope.players[point.deviceId].setIcon('main/assets/images/skull.png');
-      $scope.players[point.deviceId].setAnimation(null);
+      $scope.players[point.deviceId].setAnimation(google.maps.Animation.BOUNCEy);
     } else {
       //user render code
       if ($scope.marker) {
         $scope.marker.setPosition(latLng);
-        $scope.marker.setIcon('main/assets/images/skull.png');
         // interpolatePoint($scope.marker);
       } else {
         marker = new google.maps.Marker({

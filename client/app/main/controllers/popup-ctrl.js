@@ -61,7 +61,10 @@ angular.module('main')
       subTitle: message,
     });
     alertPopup.then(function(res) {
-      console.log(res);
+      if (title === 'Victory!')
+      {
+        $scope.$emit('rootScope:queue');
+      }
     });
   };
 
@@ -120,7 +123,6 @@ angular.module('main')
   $scope.$on('cloud:push:notification', function(event, data) {
     if (data.message.title === 'Victory!') {
       $scope.showAlert(data.message.title, data.message.text);
-      $scope.$emit('rootScope:queue');
     } else if (data) {
       $scope.getTargetPhoto(data.message.title, data.message.text);
     } else {

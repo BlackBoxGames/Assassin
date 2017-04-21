@@ -43,7 +43,7 @@ after((done) => {
 
 });
 
-describe('Game managing logic tests', () => {
+xdescribe('Game managing logic tests', () => {
   var clock;
   beforeEach(function () {
      clock = sinon.useFakeTimers();
@@ -312,7 +312,7 @@ describe('Game managing logic tests', () => {
 
 });
 
-describe('Assigning target logic tests', () => {
+xdescribe('Assigning target logic tests', () => {
   var clock;
   beforeEach(function () {
      clock = sinon.useFakeTimers();

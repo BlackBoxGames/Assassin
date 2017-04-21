@@ -91,9 +91,8 @@ Output: Target ID
 ***
 */
 lobby.getPlayerTarget = (player) => {
-  var target = lobby.game[player].target;
-  if (target) {
-    return target;
+  if(lobby.game[player]) {
+    return lobby.game[player].target;
   }
   return 'Target not found!';
 };
@@ -192,25 +191,26 @@ lobby.eliminatePlayer = (player, target) => {
     Request(options, (error, res, body) => {
       console.log('To the killed', body);
       // for push notifications
+      delete lobby.game[target.player];
+  // if this is true, the game has ended
+      if (newTarget === player.player) {
+       // call something here for victory
+        lobby.setGameStatus(false);
+      } else {
+        lobby.assignNewTarget(player, lobby.game[newTarget]);
+        // lobby.eliminatePlayer(assassinObj, targetObj);
+        // remove from active game
+
+        if (lobby.queue.length) {
+          var head = lobby.queue[0].player;
+          var tail = lobby.assignTargets();
+          lobby.assignNewTarget(tail, lobby.game[newTarget]);
+          lobby.assignNewTarget(player, lobby.game[head]);
+        }
+      }
     });
   }
-  delete lobby.game[target.player];
-  // if this is true, the game has ended
-  if (newTarget === player.player) {
-   // call something here for victory
-    lobby.setGameStatus(false);
-  } else {
-    lobby.assignNewTarget(player, lobby.game[newTarget]);
-    // lobby.eliminatePlayer(assassinObj, targetObj);
-    // remove from active game
-
-    if (lobby.queue.length) {
-      var head = lobby.queue[0].player;
-      var tail = lobby.assignTargets();
-      lobby.assignNewTarget(tail, lobby.game[newTarget]);
-      lobby.assignNewTarget(player, lobby.game[head]);
-    }
-  }
+  
  };
 
 /*
