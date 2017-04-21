@@ -37,12 +37,13 @@ angular.module('main')
   // };
 
   // A confirm dialog
-  $scope.showConfirm = function(message, image) {
+  $scope.showConfirm = function(title, text, image) {
+    var imageTemplate = '<center><img ng-src="' + image + '" style="width: 100%; padding: 5px"/></center>' || '';
     var confirmPopup = $ionicPopup.confirm({
-      title: message,
-      template: image
+      title: title,
+      subTitle: text,
+      template: imageTemplate
     });
-
     confirmPopup.then(function(res) {
       if (res) {
         console.log('You are sure');
@@ -53,18 +54,10 @@ angular.module('main')
   };
 
   // An alert dialog
-  $scope.showAlert = function(title, text, image) {
-    var imageTemplate = '';
-
-    if (image) {
-      imageTemplate = '<center><img ng-src="' + image + '" style="width: 100%; padding: 5px"/></center>';
-    }
-
-    // only adds an image if one was passed in, otherwise just render the title and text
-    var template = '<h4>' + text + '</h4>' + imageTemplate;
+  $scope.showAlert = function(title, message) {
     var alertPopup = $ionicPopup.alert({
       title: title,
-      template: template
+      subTitle: message,
     });
     alertPopup.then(function(res) {
       console.log(res);
@@ -81,7 +74,12 @@ angular.module('main')
       })
       .success(function(data) {
         console.log('Data from get', data);
-        $scope.showAlert(title, text, data);
+        if (title === 'Your New Target') {
+          $rootScope.target = text;
+          $rootScope.mugshot = data;
+          Location.getTargetLocation();
+        }
+        $scope.showConfirm(title, text, data);
       })
       .error(function (err) {
         console.log(err);
@@ -107,12 +105,15 @@ angular.module('main')
     $scope.showAlert('Please Log In', 'You must be signed in to play');
   });
 
+  $rootScope.$on('rootScope: alert', function (event, data) {
+    $scope.showAlert(data.title, data.message);
+  });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.message.title === 'Your New Target') {
-      $scope.getTargetPhoto(data.message.title, data.message.text);
-      Location.getTargetLocation();
-    } else if (data.message.title === 'You\'ve Been Killed!') {
+    if (data.message.title === 'Victory!') {
+      $scope.showAlert(data.message.title, data.message.text);
+      $scope.$emit('rootScope:queue');
+    } else if (data) {
       $scope.getTargetPhoto(data.message.title, data.message.text);
     } else {
       $scope.showAlert('Ooops', 'There was an error');
