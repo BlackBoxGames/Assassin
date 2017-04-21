@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera) {
+.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera, $cordovaDevice) {
 
   $rootScope.loggedIn = false;
   $scope.announcer = '';
@@ -45,6 +45,9 @@ angular.module('main')
       if ($scope.user.username === '') {
         return alert('you must enter a valid username.');
       }
+      this.user.image = $scope.image;
+      this.user.deviceId = $cordovaDevice.getDevice().uuid;
+      
       $http({
         method: 'PUT',
         url: 'http://35.162.247.27:4000/users',

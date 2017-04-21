@@ -7,6 +7,7 @@ var request = require('request');
 
 var User = require('../models/user');
 var Game = require('../models/game');
+var lobby = require('../helpers/lobby.js')
 
 router.get('/', (request, response) => {
   var data = db.connectToDb();
@@ -29,6 +30,7 @@ router.get('/', (request, response) => {
 router.put('/', (request, response) => {
   var data = db.connectToDb();
   var username = request.body.username
+  lobby.addSelfie(request.body.deviceId, request.body.image);
   User.insertUser(username)
   .then(data => {
     response.status(201).send(username)
