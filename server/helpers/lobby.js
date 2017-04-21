@@ -119,14 +119,50 @@ lobby.setGameStatus = (active) => {
   lobby.gameActive = active;
   if (lobby.gameActive) {
     lobby.assignTargets();
+  } else {
+    var title = 'Victory!';
+    var message = 'You are the last one standing... for now.'
+    // game is over if this is called
+    // send victory push to user who wins and adds him to the queue
+    var winToken;
+    for (var key in lobby.game) {
+      winToken = lobby.game[key].token;
+      lobby.addToQueue(lobby.game[key]);
+      delete lobby.game[key];
+    }
+
+    var options = {
+      method: 'POST',
+      url: 'https://api.ionic.io/push/notifications',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      json: {
+        tokens: [winToken],
+        profile: 'nathan',
+        notification: {
+          android: {
+            message: message,
+            title: title
+          }
+        }
+      }
+    };
+
+    if (winToken) {
+    Request(options, (error, res, body) => {
+      console.log('To the victor', body);
+      // for push notifications
+    });
+  }
   }
 };
 
 /*
 ***
 Input: {player: playerObject, target: playerObject}
-Should remove player from active game
-Should change live player's target to eliminated player's target
+Should remove target from active game
 ***
  */
 lobby.eliminatePlayer = (player, target) => {
@@ -165,8 +201,9 @@ lobby.eliminatePlayer = (player, target) => {
   }
 
   lobby.assignNewTarget(player, lobby.game[newTarget]);
-  //lobby.eliminatePlayer(assassinObj, targetObj);
-  lobby.game[target.player] = 'eliminated';
+  // lobby.eliminatePlayer(assassinObj, targetObj);
+  // remove from active game
+  delete lobby.game[target.player];
 
   if (lobby.queue.length) {
     var head = lobby.queue[0].player;

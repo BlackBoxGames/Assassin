@@ -15,7 +15,6 @@ router.put('/in', (request, response) => {
 	helper.addOrUpdatePlayer(client);
 	// var data = db.connectToDb();
 	var player = Game.mapLocationToPlayer(client);
-	console.log('The player', player);
 	lobby.addToQueue(player);
 	response.status(200).send();
 	/*Game.insertPlayer(player)
