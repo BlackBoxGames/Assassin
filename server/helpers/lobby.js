@@ -128,10 +128,46 @@ Should remove player from active game
 Should change live player's target to eliminated player's target
 ***
  */
-lobby.eliminatePlayer = (player, target) => {
+lobby.eliminatePlayer = (player, target, image) => {
   var newTarget = target.target;
-  lobby.assignNewTarget(player, lobby.game[newTarget]);
-  lobby.game[target.player] = 'eliminated';
+  if (newTarget === player.player) {
+    var message = 'You have killed the last person!';
+    var title = 'Victory!';
+  } else {
+    lobby.assignNewTarget(player, lobby.game[newTarget]);
+    var message = 'You were assassinated by ' + player.username;
+    var title = 'You\'ve Been Killed!';
+  }
+
+  var options = {
+    method: 'POST',
+    url: 'https://api.ionic.io/push/notifications',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    json: {
+      tokens: [target.token],
+      profile: 'nathan',
+      notification: {
+        android: {
+          message: message,
+          title: title,
+          image: image
+        }
+      }
+    }
+  };
+  
+  if (target.token) {
+    Request(options, (error, res, body) => {
+      console.log('To the killed', body);
+      //lobby.eliminatePlayer(assassinObj, targetObj);
+      lobby.game[target.player] = 'eliminated';
+      // for push notifications
+    });
+    
+  }
 
   if (lobby.queue.length) {
     var head = lobby.queue[0].player;
@@ -141,9 +177,9 @@ lobby.eliminatePlayer = (player, target) => {
   }
 
 
-  if (player.target === player.player) {
+  /*if (player.target === player.player) {
     lobby.setGameStatus(false);
-  }
+  }*/
  };
 
 /*

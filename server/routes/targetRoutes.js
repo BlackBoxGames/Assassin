@@ -23,40 +23,10 @@ router.post('/', (request, response) => {
   var targetObj = players[targetId];
   var assassinObj = players[assassinId];
 
-  var victimToken = targetObj.token;
+  lobby.eliminatePlayer(assassinObj, targetObj, image);
+  response.status(200).send();
 
-  var options = {
-    method: 'POST',
-    url: 'https://api.ionic.io/push/notifications',
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'Content-Type': 'application/json'
-    },
-    json: {
-      tokens: [victimToken],
-      profile: 'nathan',
-      notification: {
-        android: {
-          message: 'You were assassinated by ' + assassinObj.username,
-          title: 'You\'ve Been Killed!',
-          //sound: gunshot.wmv?
-          image: image
-        }
-      }
-    }
-  };
   
-
-  if (targetObj.token) {
-    Request(options, (error, res, body) => {
-      console.log('Before', targetObj.token);
-      console.log('To the killed', body);
-      lobby.eliminatePlayer(assassinObj, targetObj);
-      console.log('After', targetObj.token);
-      // for push notifications
-    });
-    
-  }
 
   
 });
