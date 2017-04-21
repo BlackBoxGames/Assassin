@@ -190,6 +190,36 @@ describe('Game managing logic tests', () => {
     done();
   });
 
+  it('Game should automatically restart after there are enough queued', done => {
+    for (var i = 0; i < 2; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    lobby.setGameStatus(true);
+    var players = lobby.getPlayers();
+    lobby.eliminatePlayer(players[0], players[players[0].target]);
+    expect(lobby.getGameStatus()).to.equal(false);
+    expect(lobby.getQueue().length).to.equal(1);
+    for (var i = 1; i < 3; i++) {
+      lobby.addToQueue({
+        player: i,
+        target: null,
+        active: 1,
+        deviceId: i
+      });
+    }
+    expect(lobby.getQueue().length).to.equal(3);
+    clock.tick(5 * minute);
+    expect(lobby.getGameStatus()).to.equal(true);
+    expect(lobby.getQueue().length).to.equal(0);
+    expect(lobby.getPlayers()[0].deviceId).to.equal(0)
+    done();
+  });
+
   it('Should be able to clear queue if player logs out', done => {
     var player = {
       player: 0,

@@ -167,11 +167,6 @@ Should remove target from active game
  */
 lobby.eliminatePlayer = (player, target) => {
   var newTarget = target.target;
-  if (newTarget === player.player) {
-   // call something here for victory
-  } else {
-    
-  }
   var message = 'You were assassinated by ' + player.username;
   var title = 'You\'ve Been Killed!';
   var options = {
@@ -199,21 +194,23 @@ lobby.eliminatePlayer = (player, target) => {
       // for push notifications
     });
   }
-
-  lobby.assignNewTarget(player, lobby.game[newTarget]);
-  // lobby.eliminatePlayer(assassinObj, targetObj);
-  // remove from active game
   delete lobby.game[target.player];
 
-  if (lobby.queue.length) {
-    var head = lobby.queue[0].player;
-    var tail = lobby.assignTargets();
-    lobby.assignNewTarget(tail, lobby.game[newTarget]);
-    lobby.assignNewTarget(player, lobby.game[head]);
-  }
-
-  if (player.target === player.player) {
+  // if this is true, the game has ended
+  if (newTarget === player.player) {
+   // call something here for victory
     lobby.setGameStatus(false);
+  } else {
+    lobby.assignNewTarget(player, lobby.game[newTarget]);
+    // lobby.eliminatePlayer(assassinObj, targetObj);
+    // remove from active game
+
+    if (lobby.queue.length) {
+      var head = lobby.queue[0].player;
+      var tail = lobby.assignTargets();
+      lobby.assignNewTarget(tail, lobby.game[newTarget]);
+      lobby.assignNewTarget(player, lobby.game[head]);
+    }
   }
  };
 
