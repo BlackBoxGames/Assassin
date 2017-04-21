@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera, $cordovaDevice, $ionicPopup) {
+.controller('UserCtrl', function ($log, $http, $rootScope, $scope, $cordovaCamera, $cordovaDevice) {
 
   $rootScope.loggedIn = false;
   $scope.announcer = '';
@@ -40,14 +40,14 @@ angular.module('main')
 
   $scope.signIn = function() {
     if (!$scope.image) {
-      alert('You must send your photo before the game assigns you a target.');
+      $rootScope.$emit('rootScope: alert', {title: 'Almost There', message: 'We need you to take a selfie.'});
       return $scope.takePhoto();
-    } else {
+    } else
     if ($scope.user.username === '') {
       $rootScope.$emit('rootScope: alert', {title: 'Oops', message: 'You must enter a valid username.'});
     }
-    $rootScope.$emit('rootScope: alert', {title: 'Almost There', message: 'We need you to take a selfie.'});
-    $scope.takePhoto();
+    this.user.image = $scope.image;
+    this.user.deviceId = $cordovaDevice.getDevice().uuid;
     $http({
       method: 'PUT',
       url: 'http://35.162.247.27:4000/users',
