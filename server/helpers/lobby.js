@@ -12,6 +12,8 @@ lobby.gameActive = false;
 lobby.queue = [];
 lobby.timer = null;
 lobby.game = {};
+lobby.selfies = {};
+lobby.killshots = {};
 
 const second = 1000;
 const minute = second * 60;
@@ -156,8 +158,7 @@ lobby.eliminatePlayer = (player, target, image) => {
       notification: {
         android: {
           message: message,
-          title: title,
-          image: newImage
+          title: title
         }
       }
     }

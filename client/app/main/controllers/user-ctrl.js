@@ -23,8 +23,8 @@ angular.module('main')
 
     $cordovaCamera.getPicture(options).then(function (imageData) {
       $scope.image = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.photo = 'data:image/jpeg;base64,' + imageData;
-      $rootScope.$emit('rootScope: photo', $rootScope.photo);
+      $rootScope.image = 'data:image/jpeg;base64,' + imageData;
+      $rootScope.$emit('rootScope: image', $rootScope.image);
     }, function (err) {
       console.error(err);
     });
