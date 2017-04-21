@@ -204,7 +204,6 @@ angular.module('main')
         $scope.marker.setMap($scope.map);
       }
     } else {
-      alert('assassinated');
       $scope.players[point.deviceId].setIcon('main/assets/images/skull.png');
       $scope.players[point.deviceId].setAnimation(google.maps.Animation.DROP);
     }
@@ -251,7 +250,7 @@ angular.module('main')
   });
 
   $scope.$on('cloud:push:notification', function(event, data) {
-    if (data.message.title !== 'Your New Target') {
+    if (data.message.title === 'You\'ve Been Killed!') {
       $scope.removeAllPoints();
       $scope.marker.setIcon('main/assets/images/skull.png');
     } else if (data.message.title === 'Your New Target') {
